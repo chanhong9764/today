@@ -8,7 +8,7 @@ from app.routers.spell_checker.spell_checker import spell_check
 router = APIRouter(prefix="/api/data/translator")
 # translator_instance = Translator()
 
-auth_key = "912f84f9-6467-461c-919f-78f96d895d73:fx"
+auth_key = ""
 
 
 @router.get("/test")
@@ -25,7 +25,8 @@ def test():
 #     return Trans_output(content_eng=res.text)
 
 @router.get("")
-def trans():
+def trans(data: Trans_input):
+    s = spell_check(data.content_ko)
     translator = deepl.Translator(auth_key)
-    result = translator.translate_text("안녕하세요", target_lang='EN-US')
+    result = translator.translate_text(s, target_lang='EN-US')
     print(result.text)
