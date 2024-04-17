@@ -1,6 +1,5 @@
 import requests
 
-
 def spell_check(content: str):
     s = content.split(' ')
     res = ''
@@ -28,3 +27,5 @@ def spell_check(content: str):
     #         print(result['suggestions'][0])
     # else:
     #     print(f"Error Code: {response.errorcode}")
+
+# def spell_check_gpt(content: str):
