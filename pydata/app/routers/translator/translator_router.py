@@ -10,11 +10,9 @@ translator_instance = Translator()
 def test():
     print("test!!")
 
-@router.post("/get", response_model=Trans_output)
+@router.post("", response_model=Trans_output)
 def translator(data: Trans_input):
-    print(data.trans_ko)
 
-    res = translator_instance.translate(data.trans_ko, dest='en', src='auto')
-    print(res.text)
+    res = translator_instance.translate(data.content_ko, dest='en', src='auto')
 
-    return Trans_output(trans_eng=res.text)
+    return Trans_output(content_eng=res.text)

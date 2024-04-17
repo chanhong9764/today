@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class Trans_input(BaseModel) :
-    trans_ko : str
+    content_ko : str
 
 class Trans_output(BaseModel) :
-    trans_eng : str
+    content_eng : str
