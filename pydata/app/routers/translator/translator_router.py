@@ -3,7 +3,7 @@ import deepl
 # from googletrans import Translator
 
 from app.routers.translator.translator_schema import Trans_output, Trans_input
-from app.routers.spell_checker.spell_checker import spell_check
+from app.routers.spell_checker.spell_checker import spell_check, spell_check_gpt
 
 router = APIRouter(prefix="/api/data/translator")
 # translator_instance = Translator()
@@ -24,9 +24,10 @@ def test():
 #
 #     return Trans_output(content_eng=res.text)
 
-@router.get("")
+@router.post("")
 def trans(data: Trans_input):
-    s = spell_check(data.content_ko)
-    translator = deepl.Translator(auth_key)
-    result = translator.translate_text(s, target_lang='EN-US')
-    print(result.text)
+    spell_check_gpt(data.content_ko)
+    # s = spell_check(data.content_ko)
+    # translator = deepl.Translator(auth_key)
+    # result = translator.translate_text(s, target_lang='EN-US')
+    # print(result.text)
