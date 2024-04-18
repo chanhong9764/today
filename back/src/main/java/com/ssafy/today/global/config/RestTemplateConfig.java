@@ -1,4 +1,4 @@
-package com.ssafy.today.global.security.config;
+package com.ssafy.today.global.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
