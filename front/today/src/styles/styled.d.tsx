@@ -3,10 +3,7 @@ import 'styled-components';
 // 예시 코드 입니다.
 declare module 'styled-components' {
   export interface DefaultTheme {
-    mainBlue: string;
-    mainDarkGrey: string;
-    mainLightGrey: string;
-    mainRed: string;
+    mainPink: string;
 
     fontLarge: number;
     fontMedium: number;

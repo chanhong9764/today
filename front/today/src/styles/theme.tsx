@@ -1,11 +1,7 @@
 import { DefaultTheme } from 'styled-components/native';
 
-// 예시 코드 입니다.
 const theme: DefaultTheme = {
-  mainBlue: '#065e85',
-  mainDarkGrey: '#3e3e3e',
-  mainLightGrey: '#c4c4c4',
-  mainRed: '#e01e1e',
+  mainPink: 'rgb(255, 125, 125, 0.8)',
 
   fontLarge: 26,
   fontMedium: 22,

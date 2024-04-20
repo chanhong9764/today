@@ -1,5 +1,5 @@
 import React from 'react';
 
-function Index() {
+function Month() {
   return <div></div>;
 }
