@@ -1,5 +1,5 @@
 import React from 'react';
 
-function Index() {
+export default function Navigator() {
   return <div></div>;
 }

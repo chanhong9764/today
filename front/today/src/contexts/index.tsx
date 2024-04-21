@@ -1,7 +1,5 @@
-import React from 'react';
+import axios, { Axios } from 'axios';
 
-const Contexts = () => {
-  return <div></div>;
-};
-
-export default Contexts;
+const client: Axios = axios.create({
+  baseURL: 'https://localhost:',
+});
