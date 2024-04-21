@@ -1,12 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// App.tsx
+import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import Navigator from './src/navigator/Navigator';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>시작해볼까욥</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Navigator />
+    </NavigationContainer>
   );
 }
 
