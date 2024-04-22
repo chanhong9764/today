@@ -16,36 +16,46 @@ import Mypage from '../screens/user/Mypage';
 
 type BottomTabParamList = {
   Calendar: undefined;
-  DiaryList: undefined;
-  Mypage: undefined;
+  Diary: undefined;
+  User: undefined;
 };
 
-const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
+const DiaryStack = createNativeStackNavigator();
+const UserStack = createNativeStackNavigator();
 
-function ButtomNavigator() {
+const Diary = () => {
   return (
-    <Tab.Navigator initialRouteName="Calendar">
-      <Tab.Screen name="Calendar" component={Calendar} />
-      <Tab.Screen name="DiaryList" component={DiaryList} />
-      <Tab.Screen name="Mypage" component={Mypage} />
-    </Tab.Navigator>
+    <DiaryStack.Navigator screenOptions={{ headerShown: false }}>
+      <DiaryStack.Screen name="DiaryList" component={DiaryList} />
+      <DiaryStack.Screen name="SelectEmotion" component={SelectEmotion} />
+      <DiaryStack.Screen name="SelectImage" component={SelectImage} />
+      <DiaryStack.Screen name="DiaryEdit" component={DiaryEdit} />
+      <DiaryStack.Screen name="WriteDiary" component={WriteDiary} />
+      <DiaryStack.Screen name="DiaryDetail" component={DiaryDetail} />
+    </DiaryStack.Navigator>
   );
-}
+};
+
+const User = () => {
+  return (
+    <UserStack.Navigator screenOptions={{ headerShown: false }}>
+      <UserStack.Screen name="Mypage" component={Mypage} />
+      <UserStack.Screen name="Login" component={Login} />
+    </UserStack.Navigator>
+  );
+};
 
 function Navigaior() {
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator>
-        <Stack.Screen name="ButtomNavigator" component={ButtomNavigator} />
-        <Stack.Screen name="DiaryDetail" component={DiaryDetail} />
-        <Stack.Screen name="SelectEmotion" component={SelectEmotion} />
-        <Stack.Screen name="SelectImage" component={SelectImage} />
-        <Stack.Screen name="DiaryEdit" component={DiaryEdit} />
-        <Stack.Screen name="WriteDiary" component={WriteDiary} />
-        <Stack.Screen name="Login" component={Login} />
-      </Stack.Navigator>
+      <Tab.Navigator initialRouteName="Calendar">
+        <Tab.Screen name="Calendar" component={Calendar} />
+        <Tab.Screen name="Diary" component={Diary} />
+        <Tab.Screen name="User" component={User} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
+
 export default Navigaior;
