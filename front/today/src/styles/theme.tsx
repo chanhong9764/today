@@ -1,19 +1,30 @@
-import { DefaultTheme } from 'styled-components/native';
+import { DefaultTheme } from 'styled-components';
+
+const colors = {
+  mainPink: 'rgba(255, 125, 125, 0.8)',
+};
+
+const fontSize = {
+  large: 26,
+  medium: 22,
+  regular: 18,
+  small: 12,
+};
+
+const fontWeight = {
+  bold: 700,
+  medium: 500,
+  regular: 400,
+};
+
+export type ColorTypes = typeof colors;
+export type FontSizeTypes = typeof fontSize;
+export type FontWeightTypes = typeof fontWeight;
 
 const theme: DefaultTheme = {
-  mainPink: 'rgb(255, 125, 125, 0.8)',
-
-  fontLarge: 26,
-  fontMedium: 22,
-  fontRegular: 18,
-  fontSmall: 12,
-
-  weightBold: 700,
-  weightMedium: 500,
-  weightRegular: 400,
-
-  lineHeightRegular: 27,
-  lineHeightMicro: 18,
+  colors,
+  fontSize,
+  fontWeight,
 };
 
 export default theme;
