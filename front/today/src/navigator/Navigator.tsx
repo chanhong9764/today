@@ -18,6 +18,7 @@ type BottomTabParamList = {
   Calendar: undefined;
   Diary: undefined;
   User: undefined;
+  Login: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -53,6 +54,7 @@ function Navigaior() {
         <Tab.Screen name="Calendar" component={Calendar} />
         <Tab.Screen name="Diary" component={Diary} />
         <Tab.Screen name="User" component={User} />
+        <Tab.Screen name="Login" component={Login} />
       </Tab.Navigator>
     </NavigationContainer>
   );
