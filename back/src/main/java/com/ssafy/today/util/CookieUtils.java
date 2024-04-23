@@ -1,4 +1,4 @@
-package com.ssafy.today.global.security.oauth2.util;
+package com.ssafy.today.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

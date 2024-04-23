@@ -1,4 +1,4 @@
-package com.ssafy.today.global.security.config;
+package com.ssafy.today.global.config;
 
 
 import com.ssafy.today.global.security.jwt.JwtAuthorizationFilter;
@@ -59,7 +59,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors((cors) -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable)
-            .formLogin(formLogin -> formLogin.loginPage("/api/login"))
             .httpBasic(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((requests) -> requests
                 .requestMatchers(antMatcher("/**")).permitAll()

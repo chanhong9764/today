@@ -3,7 +3,7 @@ package com.ssafy.today.global.security.oauth2.handler;
 
 
 import com.ssafy.today.global.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
-import com.ssafy.today.global.security.oauth2.util.CookieUtils;
+import com.ssafy.today.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

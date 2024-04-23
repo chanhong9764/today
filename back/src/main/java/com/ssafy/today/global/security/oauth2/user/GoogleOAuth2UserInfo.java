@@ -8,14 +8,14 @@ public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
     private final String accessToken;
     private final String id;
     private final String email;
-    private final String name;
+    private final String nickname;
 
     public GoogleOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
         this.accessToken = accessToken;
         this.attributes = attributes;
         this.id = (String) attributes.get("sub");
         this.email = (String) attributes.get("email");
-        this.name = (String) attributes.get("name");
+        this.nickname = (String) attributes.get("nickname");
     }
 
     @Override
@@ -44,8 +44,8 @@ public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
     }
 
     @Override
-    public String getName() {
-        return name;
+    public String getNickName() {
+        return nickname;
     }
 
 

@@ -47,6 +47,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
 
+        // OAuth2UserInfo field value validation
+        if (!StringUtils.hasText(oAuth2UserInfo.getNickName())) {
+            throw new OAuth2AuthenticationProcessingException("Nickname not found from OAuth2 provider");
+        }
+
+
+
         return new OAuth2UserPrincipal(oAuth2UserInfo);
     }
 }
