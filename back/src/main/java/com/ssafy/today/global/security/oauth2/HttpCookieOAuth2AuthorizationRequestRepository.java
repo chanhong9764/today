@@ -1,7 +1,7 @@
 package com.ssafy.today.global.security.oauth2;
 
 
-import com.ssafy.today.global.security.oauth2.util.CookieUtils;
+import com.ssafy.today.util.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

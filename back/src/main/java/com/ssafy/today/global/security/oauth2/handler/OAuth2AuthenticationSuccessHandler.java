@@ -2,12 +2,15 @@ package com.ssafy.today.global.security.oauth2.handler;
 
 
 
+import com.ssafy.today.domain.member.dto.request.MemberRequestDto;
+import com.ssafy.today.domain.member.service.MemberService;
 import com.ssafy.today.global.security.jwt.TokenProvider;
 import com.ssafy.today.global.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.ssafy.today.global.security.oauth2.service.OAuth2UserPrincipal;
 import com.ssafy.today.global.security.oauth2.user.OAuth2Provider;
+import com.ssafy.today.global.security.oauth2.user.OAuth2UserInfo;
 import com.ssafy.today.global.security.oauth2.user.OAuth2UserUnlinkManager;
-import com.ssafy.today.global.security.oauth2.util.CookieUtils;
+import com.ssafy.today.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,7 +35,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
     private final OAuth2UserUnlinkManager oAuth2UserUnlinkManager;
     private final TokenProvider tokenProvider;
-
+    private static final int ACCESS_TOKEN_COOKIE_EXPIRE_SECONDS =  60 * 60 * 24; // 1day
+    private static final int REFRESH_TOKEN_EXPIRE_EXPIRE_SECONDS = 30* 60 * 60* 24; // 30day
+    private final MemberService memberService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -76,11 +81,31 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             // TODO: 액세스 토큰, 리프레시 토큰 발급
             // TODO: 리프레시 토큰 DB 저장
             String accessToken = tokenProvider.createAccessToken(authentication);
-            String refreshToken = "test_refresh_token";
+            String refreshToken = tokenProvider.createRefreshToken(authentication);
+            OAuth2UserInfo testOAuth2UserInfo = principal.getUserInfo();
+            MemberRequestDto memberRequestDto = MemberRequestDto.builder()
+                    .email(principal.getName())
+                    .nickname(principal.getNickName())
+                    .build();
+            if(memberService.isMemberExists(principal.getName())){
+                System.out.println("있다");
+            }else{
+                System.out.println("없다");
+                memberService.createMember(memberRequestDto);
+            }
+
+            // 엑세스 토큰 쿠키저장
+            CookieUtils.addCookie(response,
+                    "access_token",
+                    accessToken,
+                    ACCESS_TOKEN_COOKIE_EXPIRE_SECONDS);
+            // 리프레쉬 토큰 쿠키저장
+            CookieUtils.addCookie(response,
+                    "refresh_token",
+                    refreshToken,
+                    REFRESH_TOKEN_EXPIRE_EXPIRE_SECONDS);
 
             return UriComponentsBuilder.fromUriString(targetUrl)
-                    .queryParam("access_token", accessToken)
-                    .queryParam("refresh_token", refreshToken)
                     .build().toUriString();
 
         } else if ("unlink".equalsIgnoreCase(mode)) {
@@ -92,7 +117,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 
             oAuth2UserUnlinkManager.unlink(provider, accessToken);
-
             return UriComponentsBuilder.fromUriString(targetUrl)
                     .build().toUriString();
         }
@@ -104,6 +128,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private OAuth2UserPrincipal getOAuth2UserPrincipal(Authentication authentication) {
         Object principal = authentication.getPrincipal();
+
         if (principal instanceof OAuth2UserPrincipal) {
             return (OAuth2UserPrincipal) principal;
         }

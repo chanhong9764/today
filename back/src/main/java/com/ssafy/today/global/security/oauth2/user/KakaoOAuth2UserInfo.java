@@ -8,23 +8,24 @@ public class KakaoOAuth2UserInfo implements OAuth2UserInfo {
     private final String accessToken;
     private final String id;
     private final String email;
-    private final String name;
+    private final String nickname;
 
 
     public KakaoOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
         this.accessToken = accessToken;
         // attributes 맵의 kakao_account 키의 값에 실제 attributes 맵이 할당되어 있음
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-
+        Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
         this.attributes = kakaoAccount;
 
         this.id = ((Long) attributes.get("id")).toString();
         this.email = (String) kakaoAccount.get("email");
 
-        this.name = null;
+        this.nickname = (String) profile.get("nickname");
 
         this.attributes.put("id", id);
         this.attributes.put("email", this.email);
+        this.attributes.put("nickname", this.nickname);
     }
 
     @Override
@@ -53,8 +54,9 @@ public class KakaoOAuth2UserInfo implements OAuth2UserInfo {
     }
 
     @Override
-    public String getName() {
-        return name;
+    public String getNickName() {
+        return nickname;
     }
+
 
 }

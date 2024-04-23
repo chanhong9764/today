@@ -68,6 +68,12 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
         return userInfo.getEmail();
     }
 
+    public String getNickName(){
+        return userInfo.getNickName();
+    }
+
+
+
     public OAuth2UserInfo getUserInfo() {
         return userInfo;
     }

@@ -24,6 +24,7 @@ import java.util.Date;
 public class TokenProvider {
 
     private static final long ACCESS_TOKEN_EXPIRE_TIME_IN_MILLISECONDS = 1000 * 60 * 30; // 30min
+    private static final long REFRESH_TOKEN_EXPIRE_TIME_IN_MILLISECONDS = 1000 * 60 * 60 * 24; // 1day
     @Value("${jwt.secret}")
     private String secret;
     private Key key;
@@ -68,7 +69,19 @@ public class TokenProvider {
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
-        System.out.println("jwtToken : " + jwtToken);
+        return jwtToken;
+    }
+
+    public String createRefreshToken(Authentication authentication) {
+
+        Date date = new Date();
+        Date expiryDate = new Date(date.getTime() + REFRESH_TOKEN_EXPIRE_TIME_IN_MILLISECONDS);
+        String jwtToken  = Jwts.builder()
+                .setSubject(authentication.getName())
+                .setIssuedAt(date)
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS256, key)
+                .compact();
         return jwtToken;
     }
 
