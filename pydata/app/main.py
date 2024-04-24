@@ -1,25 +1,21 @@
-import os.path
-
-from fastapi import FastAPI, Request, APIRouter, HTTPException
+from fastapi import FastAPI
 from app.routers.translator import translator_router
+from app.routers.diary import diary_router
 from app.routers.mbti import mbti_router
-
 app = FastAPI(docs_url='/api/data/docs', redoc_url='/api/data/redoc')
 
-router = APIRouter(prefix="/api/data")
+
+@app.on_event("startup")
+def startup():
+    print("HIHI")
+
+
+app.include_router(diary_router.router)
+app.include_router(translator_router.router)
 
 
 # main은 깔끔하게 사용하기
 # main은 routers에서 호출만!!!!!!!
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-@router.get("/test")
-def test():
-    return {"message": "this is just test"}
-
-app.include_router(router)
+app.include_router(diary_router.router)
 app.include_router(translator_router.router)
 app.include_router(mbti_router.router)
