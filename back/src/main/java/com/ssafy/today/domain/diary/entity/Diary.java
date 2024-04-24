@@ -7,10 +7,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -29,6 +26,9 @@ public class Diary extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private Feel feel;
+
+    @ColumnDefault("false")
+    private Boolean important;
 
     @Column(length = 500)
     private String img_url;
