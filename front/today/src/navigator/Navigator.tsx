@@ -26,7 +26,7 @@ const UserStack = createNativeStackNavigator();
 
 const Diary = () => {
   return (
-    <DiaryStack.Navigator screenOptions={{ headerShown: false }}>
+    <DiaryStack.Navigator initialRouteName="DiaryList" screenOptions={{ headerShown: false }}>
       <DiaryStack.Screen name="DiaryList" component={DiaryList} />
       <DiaryStack.Screen name="SelectEmotion" component={SelectEmotion} />
       <DiaryStack.Screen name="SelectImage" component={SelectImage} />
