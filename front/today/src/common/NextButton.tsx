@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
 export type Props = {
+  content: string;
   onPress?: (data?: any) => void;
 };
 
@@ -17,10 +18,10 @@ const StyledText = styled.Text`
   color: white;
 `;
 
-function NextButton({ onPress }: Props) {
+function NextButton({ content, onPress }: Props) {
   return (
     <StyledBtn onPress={onPress}>
-      <StyledText>다음</StyledText>
+      <StyledText>{content}</StyledText>
     </StyledBtn>
   );
 }

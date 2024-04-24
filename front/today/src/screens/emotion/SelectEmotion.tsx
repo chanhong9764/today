@@ -49,7 +49,7 @@ function SelectEmotion() {
       />
 
       <S.ButtonContainer>
-        <NextButton />
+        <NextButton content="다 음" />
       </S.ButtonContainer>
     </S.Container>
   );
