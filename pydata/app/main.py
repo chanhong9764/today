@@ -2,6 +2,7 @@ import os.path
 
 from fastapi import FastAPI, Request, APIRouter, HTTPException
 from app.routers.translator import translator_router
+from app.routers.mbti import mbti_router
 
 app = FastAPI(docs_url='/api/data/docs', redoc_url='/api/data/redoc')
 
@@ -21,3 +22,4 @@ def test():
 
 app.include_router(router)
 app.include_router(translator_router.router)
+app.include_router(mbti_router.router)
