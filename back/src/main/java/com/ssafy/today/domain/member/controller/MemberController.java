@@ -17,7 +17,7 @@ import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEnt
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
