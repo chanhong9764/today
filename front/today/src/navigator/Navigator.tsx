@@ -8,9 +8,9 @@ import Calendar from '../screens/calendar/Calendar';
 import DiaryDetail from '../screens/diary/DiaryDetail';
 import DiaryEdit from '../screens/diary/DiaryEdit';
 import DiaryList from '../screens/diary/DiaryList';
-import SelectEmotion from '../screens/diary/SelectEmotion';
 import SelectImage from '../screens/diary/SelectImage';
 import WriteDiary from '../screens/diary/WriteDiary';
+import SelectEmotion from '../screens/emotion/SelectEmotion';
 import Login from '../screens/user/Login';
 import Mypage from '../screens/user/Mypage';
 
@@ -18,7 +18,6 @@ type BottomTabParamList = {
   Calendar: undefined;
   Diary: undefined;
   User: undefined;
-  Login: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -27,7 +26,7 @@ const UserStack = createNativeStackNavigator();
 
 const Diary = () => {
   return (
-    <DiaryStack.Navigator screenOptions={{ headerShown: false }}>
+    <DiaryStack.Navigator initialRouteName="DiaryList" screenOptions={{ headerShown: false }}>
       <DiaryStack.Screen name="DiaryList" component={DiaryList} />
       <DiaryStack.Screen name="SelectEmotion" component={SelectEmotion} />
       <DiaryStack.Screen name="SelectImage" component={SelectImage} />
@@ -54,7 +53,6 @@ function Navigaior() {
         <Tab.Screen name="Calendar" component={Calendar} />
         <Tab.Screen name="Diary" component={Diary} />
         <Tab.Screen name="User" component={User} />
-        <Tab.Screen name="Login" component={Login} />
       </Tab.Navigator>
     </NavigationContainer>
   );

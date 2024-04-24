@@ -1,12 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import CalendarBody from '../../components/calendar/CalendarBody';
 
 function Calendar() {
-  return (
-    <View>
-      <Text>캘린더 입니다.</Text>
-    </View>
-  );
+  return <CalendarBody />;
 }
 
 export default Calendar;
