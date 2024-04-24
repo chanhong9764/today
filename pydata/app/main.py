@@ -14,11 +14,6 @@ def startup():
     # 초기 Stable Diffusion XL 설정
     load_sdxl()
 
-
-app.include_router(diary_router.router)
-app.include_router(translator_router.router)
-
-
 # main은 깔끔하게 사용하기
 # main은 routers에서 호출만!!!!!!!
 app.include_router(diary_router.router)
