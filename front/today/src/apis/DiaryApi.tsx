@@ -1,3 +1,4 @@
+// DiaryApi.tsx
 import { instance, responseBody } from './api';
 
 export interface Diary {
