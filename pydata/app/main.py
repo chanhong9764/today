@@ -15,7 +15,6 @@ def startup():
     load_env()
     # 초기 Stable Diffusion XL 설정
     base = load_sdxl()
-    print(base)
 
 
 # main은 깔끔하게 사용하기
