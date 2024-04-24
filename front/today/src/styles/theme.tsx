@@ -2,8 +2,9 @@ import { DefaultTheme } from 'styled-components/native';
 
 const colors = {
   pink: 'rgb(255, 125, 125)',
-  mainPink: 'rgba(255, 125, 125, 0.8)',
-  lightPink: 'rgba(255, 125, 125, 0.1)',
+  mainPink: 'rgb(255, 151, 151)',
+  middlePink: 'rgb(255, 221, 221)',
+  lightPink: 'rgb(255, 244, 244)',
 };
 
 const fontSize = {
@@ -16,7 +17,7 @@ const fontSize = {
 
 const fontWeight = {
   bold: 700,
-  medium: 500,
+  medium: 600,
   regular: 400,
 };
 
