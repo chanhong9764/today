@@ -1,6 +1,10 @@
 from pathlib import Path
 
 
+def test():
+    global base
+    print(base)
+
 def create_image(prompt):
     global base
     # 이미지 타입
