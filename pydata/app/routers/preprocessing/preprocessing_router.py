@@ -1,19 +1,20 @@
 from fastapi import APIRouter
 from app.routers.preprocessing.preprocessing_schema import Input_content
+from dotenv import load_dotenv
 import openai
+import os
 
 router = APIRouter(prefix="/api/data/preprocessing")
 
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
+client = openai.OpenAI(api_key=openai_api_key)
 
 @router.get("/test")
 def test():
     st = "success test!"
     print(st)
     return {"msg": st}
-
-
-client = openai.OpenAI(api_key='')
-
 
 @router.post("")
 def preprocessing(data: Input_content):
