@@ -2,7 +2,7 @@ package com.ssafy.today.global.security.oauth2.handler;
 
 
 
-import com.ssafy.today.domain.member.dto.request.MemberRequestDto;
+import com.ssafy.today.domain.member.dto.request.MemberRequest;
 import com.ssafy.today.domain.member.service.MemberService;
 import com.ssafy.today.global.security.jwt.TokenProvider;
 import com.ssafy.today.global.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
@@ -82,16 +82,17 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             // TODO: 리프레시 토큰 DB 저장
             String accessToken = tokenProvider.createAccessToken(authentication);
             String refreshToken = tokenProvider.createRefreshToken(authentication);
-            OAuth2UserInfo testOAuth2UserInfo = principal.getUserInfo();
-            MemberRequestDto memberRequestDto = MemberRequestDto.builder()
+
+            MemberRequest memberRequest = MemberRequest.builder()
                     .email(principal.getName())
                     .nickname(principal.getNickName())
                     .build();
             if(memberService.isMemberExists(principal.getName())){
-                System.out.println("있다");
+                // 해당 유저가 이미 존재할때
             }else{
-                System.out.println("없다");
-                memberService.createMember(memberRequestDto);
+                // 유저가 존재하지 않을때
+                // 회원가입 처리
+                memberService.createMember(memberRequest);
             }
 
             // 엑세스 토큰 쿠키저장
