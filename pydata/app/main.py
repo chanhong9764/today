@@ -5,16 +5,17 @@ from app.routers.diary import diary_router
 from app.routers.preprocessing import preprocessing_router
 from app.utils.init import load_env, load_sdxl
 
-app = FastAPI(docs_url='/api/data/docs', redoc_url='/api/data/redoc')
 
+app = FastAPI(docs_url='/api/data/docs', redoc_url='/api/data/redoc')
+# 307 Redirect 오류 처리
+app.router.redirect_slashes = False
 
 @app.on_event("startup")
 def startup():
-    global base
     # 초기 환경변수 설정
     load_env()
     # 초기 Stable Diffusion XL 설정
-    base = load_sdxl()
+    load_sdxl()
 
 
 # main은 깔끔하게 사용하기

@@ -1,10 +1,14 @@
+import app.utils.global_vars
+
 from fastapi import APIRouter
-from app.services.diary.diary_image import test
+from pathlib import Path
+from app.services.diary.diary_image import create_image
+from app.routers.diary.diary_schema import createImageDto
 
 router = APIRouter(prefix="/api/data/diary")
 
 
-@router.get("/")
-def create_image():
-    print("이미지 생성")
-    test()
+@router.post("/")
+def make_image(data: createImageDto):
+    print(data.prompt)
+    #create_image()
