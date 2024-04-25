@@ -3,6 +3,8 @@ package com.ssafy.today.domain.diary.controller;
 import com.ssafy.today.domain.diary.dto.request.DiaryImageRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
+import com.ssafy.today.domain.diary.dto.response.DiaryResposne;
+import com.ssafy.today.domain.diary.entity.Diary;
 import com.ssafy.today.domain.diary.service.DiaryService;
 import com.ssafy.today.util.response.SuccessCode;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,28 +39,23 @@ public class DiaryController {
     }
 
     @PatchMapping("/{diaryId}")
-    public ResponseEntity<?> updateDiary(HttpServletRequest request, @RequestBody DiaryUpdateRequest diaryUpdateRequest, @PathVariable("diaryId") Long diaryId){
-        Long memberId = (Long) request.getAttribute("memberId");
-        // TODO : 다이어리 ID에 해당하는 데이터 불러오기
-        // TODO : 업데이트 내용 적용하기
-
+    public ResponseEntity<?> updateDiary(@RequestBody DiaryUpdateRequest diaryUpdateRequest, @PathVariable("diaryId") Long diaryId){
+        diaryService.updateDiaryContent(diaryId, diaryUpdateRequest);
         return getResponseEntity(SuccessCode.OK);
     }
 
     @DeleteMapping("/{diaryId}")
-    public ResponseEntity<?> deleteDiary(HttpServletRequest request, @PathVariable("diaryId") Long diaryId) {
-        Long memberId = (Long) request.getAttribute("memberId");
-        // TODO : diaryId에 해당하는 다이어리 삭제
-
+    public ResponseEntity<?> deleteDiary(@PathVariable("diaryId") Long diaryId) {
+        diaryService.deleteDiary(diaryId);
         return getResponseEntity(SuccessCode.OK);
 
     }
 
     @GetMapping("/{diaryId}")
-    public ResponseEntity<?> getDiary(HttpServletRequest request, @PathVariable("diaryId") Long diaryId){
+    public ResponseEntity<?> getDiary(@PathVariable("diaryId") Long diaryId){
         // TODO : diaryId에 해당하는 다이어리 불러와서 보내주기
-
-        return getResponseEntity(SuccessCode.OK);
+        DiaryResposne diaryResposne = diaryService.getDiaryById(diaryId);
+        return getResponseEntity(SuccessCode.OK, diaryResposne);
     }
 
     //TODO : 페이징 처리한 무한스크롤 일기 불러오기 컨트롤러 구현

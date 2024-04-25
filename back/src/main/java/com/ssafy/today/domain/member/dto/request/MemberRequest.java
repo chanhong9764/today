@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Builder
 @AllArgsConstructor
-public class MemberRequestDto {
+public class MemberRequest {
 
     private String nickname;
 
