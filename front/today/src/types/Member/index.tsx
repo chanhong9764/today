@@ -1,6 +1,6 @@
-export interface Member {
+export interface MemberData {
   memberId: number;
   email: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
