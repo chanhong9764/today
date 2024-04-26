@@ -35,8 +35,7 @@ public class Diary extends BaseTimeEntity {
 
 
     @Builder
-    public Diary(Long id, Member member, Feel feel, Boolean important, String imgUrl, String content) {
-        this.id = id;
+    public Diary(Member member, Feel feel, Boolean important, String imgUrl, String content) {
         this.member = member;
         this.feel = feel;
         this.important = important;
