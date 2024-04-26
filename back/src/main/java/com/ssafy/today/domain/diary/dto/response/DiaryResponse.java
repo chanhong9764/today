@@ -2,14 +2,13 @@ package com.ssafy.today.domain.diary.dto.response;
 
 import com.ssafy.today.domain.diary.entity.Diary;
 import com.ssafy.today.domain.diary.entity.Feel;
-import com.ssafy.today.domain.member.entity.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class DiaryResposne {
+public class DiaryResponse {
 
     private Long id;
     private Long memberId;
@@ -20,8 +19,8 @@ public class DiaryResposne {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public static DiaryResposne fromEntity(Diary diary){
-        DiaryResposne diaryResposne = DiaryResposne.builder()
+    public static DiaryResponse fromEntity(Diary diary){
+        DiaryResponse diaryResponse = DiaryResponse.builder()
                 .id(diary.getId())
                 .memberId(diary.getMember().getId())
                 .feel(diary.getFeel())
@@ -32,6 +31,6 @@ public class DiaryResposne {
                 .updatedAt(diary.getUpdatedAt())
                 .build();
 
-        return diaryResposne;
+        return diaryResponse;
     }
 }
