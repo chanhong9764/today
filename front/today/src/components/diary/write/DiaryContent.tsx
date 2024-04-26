@@ -4,7 +4,7 @@ import * as S from './style';
 interface CuntomInputProps {
   value: string | undefined;
   onChangeText: (data: string) => void;
-  onSubmitEditing: (data: string) => void;
+  onSubmitEditing: () => void;
 }
 
 function DiaryContent({ value, onChangeText, onSubmitEditing }: CuntomInputProps) {

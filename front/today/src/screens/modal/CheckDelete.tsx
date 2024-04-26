@@ -2,6 +2,7 @@ import { Text } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ModalComponent from '../../components/modal/Modal';
 import Colors from '../../styles/theme';
+import { ModalProps } from '../../types/modal';
 import * as S from './style';
 
 function CheckDeleteContent() {
@@ -13,7 +14,7 @@ function CheckDeleteContent() {
   );
 }
 
-function CheckDelete({ modalVisible, setModalVisible }) {
+function CheckDelete({ modalVisible, setModalVisible }: ModalProps) {
   return (
     <ModalComponent
       modalVisible={modalVisible}

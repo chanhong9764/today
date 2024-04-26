@@ -8,7 +8,7 @@ type EmotionProps = {
   emotion: Data;
   onPress: () => void;
   backgroundColor: string;
-  textColor: string;
+  textColor?: string;
 };
 
 function Emotion({ emotion, onPress, backgroundColor, textColor }: EmotionProps) {

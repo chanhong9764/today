@@ -4,6 +4,6 @@
     "strict": true,
     "jsx": "react-native",
     // "noImplicitAny": false,
-    "typeRoots": ["./node_modules/@types", "./src/@types"]
+    "typeRoots": ["./src/@types"]
   }
 }

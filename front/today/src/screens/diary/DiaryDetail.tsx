@@ -4,17 +4,18 @@ import { Container } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 
-import { Books, Diary } from '../../apis/DiaryApi';
+import { Diarys } from '../../apis/DiaryApi';
 import DetailContent from '../../components/diary/detail/DetailContent';
 import DetailHeader from '../../components/diary/detail/DetailHeader';
+import { DiaryData } from '../../types/diary';
 
 function DiaryDetail() {
-  const [diary, setDiary] = useState<Diary | null>(null);
+  const [diary, setDiary] = useState<DiaryData | null>(null);
   const route = useRoute();
 
   useEffect(() => {
     const { diaryId } = route.params;
-    Books.getSingleDiary(diaryId)
+    Diarys.getSingleDiary(diaryId)
       .then(data => {
         setDiary(data);
       })
