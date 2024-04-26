@@ -29,7 +29,7 @@ public class CalenderController {
     @GetMapping("/day/{date}")
     public ResponseEntity<?> getDiariesDay(HttpServletRequest request, @PathVariable("date") LocalDate date){
         Long memberId = (Long) request.getAttribute("memberId");
-        // TODO : 해당 memberId의 한달간의 일기 정보 가져오기(이미지, 날짜)
+        // TODO : 해당 memberId의 하루 동안의 일기 가져오기
 
         return getResponseEntity(SuccessCode.OK);
     }

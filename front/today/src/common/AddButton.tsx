@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled, { DefaultTheme } from 'styled-components/native';
 
 export type Props = {
   onPress?: (data?: any) => void;
@@ -8,12 +8,12 @@ const StyledBtn = styled.TouchableOpacity`
   align-self: center;
   padding: 10px 15px;
   border-radius: 25%;
-  background-color: ${({ theme }) => theme.colors.mainPink};
+  background-color: ${({ theme }: { theme: DefaultTheme }) => theme.colors.mainPink};
 `;
 
 const StyledText = styled.Text`
   text-align: center;
-  font-size: ${({ theme }) => theme.fontSize.medium};
+  font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSize.medium};
   color: white;
 `;
 

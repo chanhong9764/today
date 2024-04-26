@@ -51,6 +51,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 request.setAttribute("memberId", memberId);
 
                 filterChain.doFilter(request, response);
+                return ;
             } catch (GlobalException e) {
                 e.printStackTrace();
             }

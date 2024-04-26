@@ -9,7 +9,7 @@ const colors = {
 
 const fontSize = {
   large: 80,
-  big: 24,
+  big: 40,
   medium: 22,
   regular: 18,
   small: 12,

@@ -1,5 +1,6 @@
 package com.ssafy.today.domain.member.entity;
 
+import com.ssafy.today.domain.member.dto.response.MemberResponse;
 import com.ssafy.today.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +23,7 @@ public class Member extends BaseTimeEntity {
 
     private String nickname;
 
+    @Column(unique = true)
     private String email;
 
     @Builder
@@ -29,4 +31,5 @@ public class Member extends BaseTimeEntity {
         this.nickname = nickname;
         this.email = email;
     }
-}
+
+    }

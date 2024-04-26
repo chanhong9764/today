@@ -1,11 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import * as S from './style';
 
 function Mypage() {
   return (
-    <View>
-      <Text>마이페이지 입니다.</Text>
-    </View>
+    <S.MyPageContainer>
+      <S.MyPageTitle>MY PAGE</S.MyPageTitle>
+      <S.MyPageSubTitle>김유정 님의 성향은</S.MyPageSubTitle>
+      <S.MyPageSubTitle>김유정 님의 감정은</S.MyPageSubTitle>
+    </S.MyPageContainer>
   );
 }
 

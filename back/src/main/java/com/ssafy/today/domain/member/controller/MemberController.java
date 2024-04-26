@@ -25,14 +25,7 @@ public class MemberController {
     @GetMapping
     public ResponseEntity<?> getMemberInfo(HttpServletRequest request){
         Long memberid = (Long) request.getAttribute("memberId");
-        Member member = memberService.getMember(memberid);
-        MemberResponse memberResponse = MemberResponse.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .nickName(member.getNickname())
-                .createAt(member.getCreatedAt())
-                .updatedAt(member.getUpdatedAt())
-                .build();
+        MemberResponse memberResponse = memberService.getMember(memberid);
         return getResponseEntity(SuccessCode.OK,memberResponse);
     }
 

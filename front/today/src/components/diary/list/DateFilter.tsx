@@ -1,26 +1,28 @@
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 import React, { useState } from 'react';
-import { Button } from 'react-native';
-import DatePicker from 'react-native-date-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import * as S from './style';
 
 function DateFilter() {
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(false);
+
+  function onConfirm(selectedDate: any) {
+    setShow(false);
+    setDate(selectedDate);
+  }
+
+  function onCancel() {
+    setShow(false);
+  }
 
   return (
     <>
-      <Button title="Open" onPress={() => setOpen(true)} />
-      <DatePicker
-        modal
-        open={open}
-        date={date}
-        onConfirm={date => {
-          setOpen(false);
-          setDate(date);
-        }}
-        onCancel={() => {
-          setOpen(false);
-        }}
-      />
+      <S.DiaryListTitleContainer onPress={() => setShow(!show)}>
+        <S.DiaryListTitle>{format(new Date(date), 'PPP', { locale: ko })} </S.DiaryListTitle>
+      </S.DiaryListTitleContainer>
+      <DateTimePickerModal isVisible={show} date={date} mode="date" onConfirm={onConfirm} onCancel={onCancel} />
     </>
   );
 }

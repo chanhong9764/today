@@ -3,10 +3,7 @@ package com.ssafy.today.domain.diary.entity;
 import com.ssafy.today.domain.member.entity.Member;
 import com.ssafy.today.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
@@ -30,10 +27,24 @@ public class Diary extends BaseTimeEntity {
     @ColumnDefault("false")
     private Boolean important;
 
-    @Column(length = 500)
-    private String img_url;
+    @Column(name = "img_url",length = 500)
+    private String imgUrl;
 
     @Column(length = 1000)
     private String content;
 
+
+    @Builder
+    public Diary(Long id, Member member, Feel feel, Boolean important, String imgUrl, String content) {
+        this.id = id;
+        this.member = member;
+        this.feel = feel;
+        this.important = important;
+        this.imgUrl = imgUrl;
+        this.content = content;
+    }
+
+    public void updateContent(String content){
+        this.content = content;
+    }
 }
