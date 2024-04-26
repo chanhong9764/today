@@ -1,5 +1,9 @@
 import styled, { css, DefaultTheme } from 'styled-components/native';
 
+interface EmotionContainerProps {
+  backgroundColor: string;
+}
+
 export const center = css`
   justify-content: center;
   align-items: center;
@@ -20,11 +24,11 @@ export const EmotionsContainer = styled.View`
   flex: 5;
 `;
 
-export const EmotionContainer = styled.TouchableOpacity`
+export const EmotionContainer = styled.TouchableOpacity<EmotionContainerProps>`
   ${center}
   padding: 20px;
   margin: 10px;
-  background-color: ${({ backgroundColor }: { backgroundColor: string }) => backgroundColor || 'transparent'};
+  background-color: ${props => props.backgroundColor || 'transparent'};
 `;
 
 export const ButtonContainer = styled.View`

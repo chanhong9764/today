@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { SingleDiary } from '../../../components/diary/list/SingleDiary';
 import SearchBar from '../../../components/diary/search/SearchBar';
 import dummy from '../../../db/data.json';
-import { DiaryData } from '../../../types/Diary';
+import { DiaryData } from '../../../types/diary';
 import * as S from './style';
 
 function DiaryList() {
