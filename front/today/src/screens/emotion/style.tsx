@@ -1,8 +1,8 @@
 import styled, { css, DefaultTheme } from 'styled-components/native';
 
-interface EmotionContainerProps {
+type EmotionContainerProps = {
   backgroundColor: string;
-}
+};
 
 export const center = css`
   justify-content: center;
