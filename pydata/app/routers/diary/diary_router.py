@@ -10,5 +10,7 @@ router = APIRouter(prefix="/api/data/diary")
 
 @router.post("")
 def make_image(data: createImageDto):
+    # 핵심 단어 추출
     keyword = diary_translate(data.prompt)
+    # 이미지 추출 및 저장
     create_image(keyword)

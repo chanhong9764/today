@@ -1,14 +1,15 @@
-import app.utils.global_vars
-from pathlib import Path
+from fastapi import HTTPException
 from dotenv import load_dotenv
+import app.utils.global_vars
 import openai
 import os
-
-load_dotenv()
+import uuid
+import io
 
 def create_image(prompt):
     # 모델 설정
     base = app.utils.global_vars.base
+    s3 = app.utils.global_vars.s3
     # 이미지 타입
     types = ["childrens_book_illustration, ", "Aardman Animations Style page, ", "pixel art, 64 bit, ", "realistic, "]
     # Lora 타입
@@ -19,9 +20,8 @@ def create_image(prompt):
     negative_prompt = "ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, extra limbs, disfigured, deformed, body out of frame, bad anatomy, watermark, signature, cut off, low contrast, underexposed, overexposed, bad art, beginner, amateur, distorted face, b&w, watermark EasyNegative"
     
     images = []
-
-    save_path = Path("/home/j-k10b108/image")
-
+    
+    # 이미지 생성
     for i in range(4):
         base.set_adapters(lora_types[i])
         image = base(
@@ -31,11 +31,24 @@ def create_image(prompt):
             num_inference_steps=n_steps,
         ).images[0]
         images.append(image)
+    
+    # 이미지 저장
+    for image in images:
+        # 경로 및 파일명 지정
+        file_name = f"{str(uuid.uuid4())}.jpg"
+        s3_key = f"temp/{file_name}"
 
-    for i, image in enumerate(images):
-        file_name = f"image_{i}.png"
-        file_path = save_path / file_name
-        image.save(file_path)
+        # Convert PIL Image to JPG
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='JPEG')
+        img_byte_arr.seek(0)
+        
+        # S3 Image Upload
+        try:
+            s3.upload_fileobj(img_byte_arr, os.getenv("AWS_S3_BUCKET"), s3_key)
+        except Exception as e:
+            raise HTTPException(status_code = 500, detail=f"S3 upload failed: {str(e)}")
+
 
 def diary_translate(content):
     openai_api_key = os.getenv("OPENAI_API_KEY")

@@ -1,6 +1,8 @@
 import os
 import torch
+import boto3
 import app.utils.global_vars
+from dotenv import load_dotenv
 from diffusers import DPMSolverMultistepScheduler, StableDiffusionXLPipeline
 from diffusers.models import AutoencoderKL
 
@@ -27,4 +29,13 @@ def load_env():
     os.environ['CUDA_VISIBLE_DEVICES']='7'
     os.environ['CUDA_HOME']='/home/j-k10b108/.conda/envs/sd'
     os.environ['LD_LIBRARY_PATH']='/home/j-k10b108/.conda/envs/sd/lib'
+    load_dotenv()
     print("=================== env loaded end ===================")
+
+def connect_s3():
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=os.getenv("AWS_S3_ACCESS_KEY"),
+        aws_secret_access_key=os.getenv("AWS_S3_PRIVATE_KEY")
+    )
+    app.utils.global_vars.s3 = s3
