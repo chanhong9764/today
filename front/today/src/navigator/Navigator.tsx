@@ -9,7 +9,6 @@ import DiaryDetail from '../screens/diary/DiaryDetail';
 import DiaryEdit from '../screens/diary/DiaryEdit';
 import SelectImage from '../screens/diary/SelectImage';
 import WriteDiary from '../screens/diary/WriteDiary';
-import OneDayDiary from '../screens/diary/day/OneDayDiary';
 import DiaryList from '../screens/diary/list/DiaryList';
 import SelectEmotion from '../screens/emotion/SelectEmotion';
 import Login from '../screens/user/Login';
@@ -19,7 +18,7 @@ type BottomTabParamList = {
   Calendar: undefined;
   Diary: undefined;
   User: undefined;
-  OneDay: undefined;
+  Login: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -55,7 +54,7 @@ function Navigaior() {
         <Tab.Screen name="Calendar" component={Calendar} />
         <Tab.Screen name="Diary" component={Diary} />
         <Tab.Screen name="User" component={User} />
-        <Tab.Screen name="OneDay" component={OneDayDiary} />
+        <Tab.Screen name="Login" component={Login} />
       </Tab.Navigator>
     </NavigationContainer>
   );

@@ -20,13 +20,14 @@ function WriteDiary() {
     setContent(data);
   };
 
-  function onPressWrite(data: string) {
-    setContent(data);
-  }
+  function onPressWrite() {}
   return (
     <S.WriteDiaryContainer
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      onStartShouldSetResponder={Keyboard.dismiss}>
+      onStartShouldSetResponder={event => {
+        Keyboard.dismiss();
+        return false;
+      }}>
       <S.WriteDiaryInner>
         <CustomDate />
         <S.WriteDiaryTitle>오늘 하루는 어땠나요?</S.WriteDiaryTitle>

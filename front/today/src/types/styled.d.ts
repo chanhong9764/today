@@ -1,5 +1,5 @@
 import 'styled-components/native';
-import { ColorTypes, FontSizeTypes, FontWeightTypes } from '../src/styles/theme';
+import { ColorTypes, FontSizeTypes, FontWeightTypes } from '../styles/theme';
 
 declare module 'styled-components/native' {
   export interface DefaultTheme {
