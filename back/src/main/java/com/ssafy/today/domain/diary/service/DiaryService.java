@@ -34,9 +34,7 @@ public class DiaryService {
     public DiaryResponse getDiaryById(Long diaryId) {
         Diary diary = diaryRepository.findById(diaryId).orElseThrow(
                 () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
-        DiaryResponse diaryResponse = DiaryResponse.fromEntity(diary);
-        diaryRepository.findAll();
-        return diaryResponse;
+        return DiaryResponse.fromEntity(diary);
     }
 
     public Page<DiaryResponse> getDiaryPage(Long memberId, Pageable pageable){
