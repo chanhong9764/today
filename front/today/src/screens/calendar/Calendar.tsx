@@ -1,10 +1,8 @@
 import React from 'react';
-// import CalendarBody from '../../components/calendar/CalendarBody';
-import Graph from '../../components/user/Graph';
+import CalendarBody from '../../components/calendar/CalendarBody';
 
 function Calendar() {
-  //   return <CalendarBody />;
-  return <Graph />;
+  return <CalendarBody />;
 }
 
 export default Calendar;
