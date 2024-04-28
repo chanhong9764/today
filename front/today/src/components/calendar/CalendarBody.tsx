@@ -21,7 +21,7 @@ const CalendarBody = () => {
       markedDates={{
         [selected]: { selected: true, selectedColor: '#ff7d7d' },
       }}
-      style={{ height: '100%' }}
+      // style={{ height: '100%' }}
     />
   );
 };

@@ -8,15 +8,15 @@ const colors = {
 };
 
 const fontSize = {
-  large: 80,
-  big: 40,
-  medium: 22,
-  regular: 18,
-  small: 12,
+  large: '80px',
+  big: '40px',
+  medium: '25px',
+  regular: '18px',
+  small: '12px',
 };
 
 const fontWeight = {
-  bold: 700,
+  bold: 800,
   medium: 600,
   regular: 400,
 };

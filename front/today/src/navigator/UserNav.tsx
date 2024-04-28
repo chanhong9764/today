@@ -2,8 +2,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Login from '../screens/user/Login';
 import Mypage from '../screens/user/Mypage';
+import { UserStackParam } from '../types/stack';
 
-const UserStack = createNativeStackNavigator();
+const UserStack = createNativeStackNavigator<UserStackParam>();
 
 export const UserNav = () => {
   return (

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Keyboard, Platform } from 'react-native';
-import NextButton from '../../common/NextButton';
+import NextButton from '../../common/CommonButton';
 import DiaryContent from '../../components/diary/write/DiaryContent';
+import { CalendarProp } from '../../types/stack';
 import * as S from './style';
 
 function CustomDate() {
@@ -11,7 +12,7 @@ function CustomDate() {
   return <S.TodayDate>{formattedDate}</S.TodayDate>;
 }
 
-function WriteDiary() {
+function WriteDiary({ navigation }: CalendarProp) {
   // 일기 내용 상태 관리
   const [content, setContent] = useState<string | undefined>('');
 
@@ -33,7 +34,7 @@ function WriteDiary() {
         <S.WriteDiaryTitle>오늘 하루는 어땠나요?</S.WriteDiaryTitle>
         <DiaryContent value={content} onChangeText={onChangeContent} onSubmitEditing={onPressWrite} />
         <S.WriteDiaryButton>
-          <NextButton content="다 음" />
+          <NextButton content="다 음" onPress={() => navigation.push('SelectImage')} />
         </S.WriteDiaryButton>
       </S.WriteDiaryInner>
     </S.WriteDiaryContainer>

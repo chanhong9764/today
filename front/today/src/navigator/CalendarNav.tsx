@@ -1,25 +1,24 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Calendar from '../screens/calendar/Calendar';
 import DiaryDetail from '../screens/diary/DiaryDetail';
 import DiaryEdit from '../screens/diary/DiaryEdit';
 import WriteDiary from '../screens/diary/WriteDiary';
-import DiaryList from '../screens/diary/list/DiaryList';
 import SelectImage from '../screens/diary/select/SelectImage';
 import SelectEmotion from '../screens/emotion/SelectEmotion';
 
-import { DiaryStackParam } from '../types/stack';
+import { CalendarStackParam } from '../types/stack';
 
-const DiaryStack = createNativeStackNavigator<DiaryStackParam>();
+const DiaryStack = createNativeStackNavigator<CalendarStackParam>();
 
-export const DiaryNav = () => {
+export const CalendarNav = () => {
   return (
     <DiaryStack.Navigator
-      initialRouteName="DiaryList"
+      initialRouteName="Calendar"
       screenOptions={{
-        // headerShown: false,
         headerBackTitle: 'Back',
       }}>
-      <DiaryStack.Screen name="DiaryList" component={DiaryList} />
+      <DiaryStack.Screen name="Calendar" component={Calendar} />
       <DiaryStack.Screen name="SelectEmotion" component={SelectEmotion} />
       <DiaryStack.Screen name="SelectImage" component={SelectImage} />
       <DiaryStack.Screen name="DiaryEdit" component={DiaryEdit} />
