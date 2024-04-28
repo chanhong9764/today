@@ -1,5 +1,6 @@
 package com.ssafy.today.domain.diary.service;
 
+import com.ssafy.today.domain.calender.dto.response.CalenderResponse;
 import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
 import com.ssafy.today.domain.diary.entity.Diary;
@@ -49,17 +50,6 @@ public class DiaryService {
         return all.map(DiaryResponse::fromEntity);
     }
 
-    public List<DiaryResponse> getDiaryMemberIdAndDay(Long memberId, LocalDate day){
-        LocalDateTime startOfDay = day.atStartOfDay();
-        LocalDateTime endOfDay = day.atTime(LocalTime.MAX);
-
-        List<Diary> diaries = diaryRepository.findAllByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay);
-        return diaries.stream()
-                .map(DiaryResponse::fromEntity)
-                .collect(Collectors.toList());
-    }
-
-
     public void updateImportantDiary(Long memberId, Long diaryId) {
         // diary1 : import 지정 될 다이어리
         Diary diary1 = diaryRepository.findById(diaryId).orElseThrow(
@@ -76,4 +66,5 @@ public class DiaryService {
         diary1.updateImportant(true);
         diary2.updateImportant(false);
     }
+
 }
