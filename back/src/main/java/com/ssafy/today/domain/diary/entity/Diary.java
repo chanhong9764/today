@@ -46,4 +46,8 @@ public class Diary extends BaseTimeEntity {
     public void updateContent(String content){
         this.content = content;
     }
+
+    public void updateImportant(boolean important){
+        this.important = important;
+    }
 }

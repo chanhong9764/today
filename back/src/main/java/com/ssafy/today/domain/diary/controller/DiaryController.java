@@ -62,21 +62,19 @@ public class DiaryController {
     }
 
     @GetMapping
-    public Page<DiaryResponse> getDiaryList(HttpServletRequest request, Pageable pageable){
+    public ResponseEntity<?> getDiaryList(HttpServletRequest request, Pageable pageable){
         Long memberId = (Long) request.getAttribute("memberId");
         Page<DiaryResponse> diaryPage = diaryService.getDiaryPage(memberId, pageable);
-        return diaryPage;
+        return getResponseEntity(SuccessCode.OK,diaryPage);
     }
 
     @PatchMapping("/important/{diaryId}")
     public ResponseEntity<?> updateImportant(HttpServletRequest request, @PathVariable("diaryId") Long diaryId){
         Long memberId = (Long) request.getAttribute("memberId");
-        // TODO : 해당 유저의 동일한 날짜의 중요일기 불러와서 서로 true, false 값 바꿔주기
-
+        // 해당 유저의 동일한 날짜의 중요일기 불러와서 서로 true, false 값 바꿔주기
+        diaryService.updateImportantDiary(memberId, diaryId);
 
         return getResponseEntity(SuccessCode.OK);
     }
-
-
 
 }

@@ -12,6 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -40,8 +47,33 @@ public class DiaryService {
     public Page<DiaryResponse> getDiaryPage(Long memberId, Pageable pageable){
         Page<Diary> all = diaryRepository.findAllByMemberId(memberId, pageable);
         return all.map(DiaryResponse::fromEntity);
+    }
 
+    public List<DiaryResponse> getDiaryMemberIdAndDay(Long memberId, LocalDate day){
+        LocalDateTime startOfDay = day.atStartOfDay();
+        LocalDateTime endOfDay = day.atTime(LocalTime.MAX);
+
+        List<Diary> diaries = diaryRepository.findAllByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay);
+        return diaries.stream()
+                .map(DiaryResponse::fromEntity)
+                .collect(Collectors.toList());
     }
 
 
+    public void updateImportantDiary(Long memberId, Long diaryId) {
+        // diary1 : import 지정 될 다이어리
+        Diary diary1 = diaryRepository.findById(diaryId).orElseThrow(
+                () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+        LocalDate day = diary1.getCreatedAt().toLocalDate();
+        LocalDateTime startOfDay = day.atStartOfDay();
+        LocalDateTime endOfDay = day.atTime(LocalTime.MAX);
+
+        // diary2 : 기존의 import 지정 되어 있는 다이어리
+        Diary diary2 = diaryRepository.findFirstByMemberIdAndCreatedAtBetweenAndImportant(memberId,startOfDay,endOfDay,true);
+        if(diary2 == null){
+            throw new GlobalException(ErrorCode.DIARY_NOT_FOUND);
+        }
+        diary1.updateImportant(true);
+        diary2.updateImportant(false);
+    }
 }

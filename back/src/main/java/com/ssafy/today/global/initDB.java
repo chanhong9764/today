@@ -46,17 +46,26 @@ public class initDB {
               .build();
       em.persist(member2);
 
-      for (int i = 0 ; i < 100 ; i ++) {
+      Diary diary1 = Diary.builder()
+              .member(member1)
+              .content(lolem)
+              .imgUrl("https://mimgnews.pstatic.net/image/origin/001/2024/04/25/14651374.jpg?type=nf220_150")
+              .feel(SURPRISE) // 예시로 번갈아 가면서 감정 설정
+              .important(true)
+              .build();
+      em.persist(diary1);
+
+      for (int i = 0 ; i < 10 ; i ++) {
         Diary diary = Diary.builder()
                 .member(member1)
                 .content(lolem)
                 .imgUrl("https://mimgnews.pstatic.net/image/origin/001/2024/04/25/14651374.jpg?type=nf220_150")
                 .feel(i % 2 == 0 ? SAD : SURPRISE) // 예시로 번갈아 가면서 감정 설정
-                .important(false) // 예시로 중요 여부를 번갈아 가면서 설정
+                .important(false)
                 .build();
         em.persist(diary);
       }
-      for (int i = 0 ; i < 100 ; i ++) {
+      for (int i = 0 ; i < 10 ; i ++) {
         Diary diary = Diary.builder()
                 .member(member2)
                 .content(lolem)
