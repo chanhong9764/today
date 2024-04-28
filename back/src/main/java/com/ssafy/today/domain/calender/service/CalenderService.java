@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,4 +27,15 @@ public class CalenderService {
                 .collect(Collectors.toList());
     }
 
+    public List<CalenderResponse> getDiaryMemberIdAndMonth(Long memberId, LocalDate date) {
+        // TODO : 해당유저의 해당 달에 해당하는 important 컬럼이 true 인 모든 다이어리 가져오기
+        YearMonth yearMonth = YearMonth.from(date);
+        LocalDateTime startOfMonth = date.atStartOfDay();
+        LocalDateTime endOfMonth = date.plusMonths(1).atStartOfDay().minusNanos(1);
+
+        List<Diary> diaries = diaryRepository.findByMemberIdAndImportantIsTrueAndCreatedAtBetween(memberId, startOfMonth, endOfMonth);
+        return diaries.stream()
+                .map(CalenderResponse::fromEntity)
+                .collect(Collectors.toList());
+    }
 }

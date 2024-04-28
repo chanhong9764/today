@@ -31,8 +31,8 @@ public class CalenderController {
     public ResponseEntity<?> getDiariesMonth(HttpServletRequest request, @PathVariable("date") LocalDate date){
         Long memberId = (Long) request.getAttribute("memberId");
         // TODO : 해당 memberId의 한달간의 일기 정보 가져오기
-        Month month = date.getMonth();
-        return getResponseEntity(SuccessCode.OK);
+        List<CalenderResponse> diaryList = calenderService.getDiaryMemberIdAndMonth(memberId, date);
+        return getResponseEntity(SuccessCode.OK, diaryList);
     }
 
     @GetMapping("/day/{date}")
