@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import { SingleDiary } from '../../../components/diary/list/SingleDiary';
 import SearchBar from '../../../components/diary/search/SearchBar';
 import dummy from '../../../db/data.json';
 import { DiaryData } from '../../../types/diary';
-import * as S from './style';
 
 function DiaryList() {
   // 검색
@@ -18,10 +17,10 @@ function DiaryList() {
   });
 
   return (
-    <S.DiaryListContainer>
+    <SafeAreaView>
       <SearchBar filterText={filterText} setFilterText={setFilterText} />
       <FlatList data={filteredData} renderItem={SingleDiary} keyExtractor={item => item.diaryId.toString()} />
-    </S.DiaryListContainer>
+    </SafeAreaView>
   );
 }
 

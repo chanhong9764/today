@@ -1,27 +1,14 @@
-import styled, { DefaultTheme } from 'styled-components/native';
+import * as S from './Style';
 
-export type Props = {
+export type AddButtonProps = {
   onPress?: (data?: any) => void;
 };
 
-const StyledBtn = styled.TouchableOpacity`
-  align-self: center;
-  padding: 10px 15px;
-  border-radius: 25%;
-  background-color: ${({ theme }: { theme: DefaultTheme }) => theme.colors.mainPink};
-`;
-
-const StyledText = styled.Text`
-  text-align: center;
-  font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSize.medium};
-  color: white;
-`;
-
-function AddButton({ onPress }: Props) {
+function AddButton({ onPress }: AddButtonProps) {
   return (
-    <StyledBtn onPress={onPress}>
-      <StyledText>+</StyledText>
-    </StyledBtn>
+    <S.StyledAddBtn onPress={onPress}>
+      <S.StyledBtnText>+</S.StyledBtnText>
+    </S.StyledAddBtn>
   );
 }
 

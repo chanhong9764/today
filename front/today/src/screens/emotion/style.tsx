@@ -1,4 +1,4 @@
-import styled, { css, DefaultTheme } from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 type EmotionContainerProps = {
   backgroundColor: string;
@@ -38,6 +38,6 @@ export const ButtonContainer = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSize.big};
-  font-weight: ${({ theme }: { theme: DefaultTheme }) => theme.fontWeight.bold};
+  font-size: ${({ theme }) => theme.fontSize.medium};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
 `;

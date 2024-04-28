@@ -4,33 +4,34 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components/native';
 
-import Calendar from '../screens/calendar/Calendar';
+import { CalendarNav } from './CalendarNav';
 import { DiaryNav } from './DairyNav';
 import { UserNav } from './UserNav';
 
-interface BottomTabParamList {
-  Calendar: undefined;
+type BottomTabParamList = {
+  Main: undefined;
   Diary: undefined;
   User: undefined;
-}
+};
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 function Navigaior() {
   const theme = useTheme();
   return (
     <Tab.Navigator
-      initialRouteName="Calendar"
+      initialRouteName="Main"
       screenOptions={{
         tabBarActiveTintColor: theme.colors.mainPink,
         tabBarShowLabel: false,
+        headerShown: false,
         tabBarStyle: {
           padding: 12,
         },
       }}>
       <Tab.Screen
-        name="Calendar"
-        component={Calendar}
+        name="Main"
+        component={CalendarNav}
         options={{
           tabBarIcon: ({ color }) => <Icon name="calendar" size={27} color={color} />,
         }}
