@@ -1,8 +1,7 @@
-package com.ssafy.today.domain.calender.dto.response;
+package com.ssafy.today.domain.calendar.dto.response;
 
 
 import com.ssafy.today.domain.diary.entity.Diary;
-import com.ssafy.today.domain.diary.entity.Feel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class CalenderResponse {
+public class CalendarResponse {
     private Long id;
     private Long memberId;
     private Boolean important;
@@ -18,8 +17,8 @@ public class CalenderResponse {
     private String content;
     private LocalDateTime createdAt;
 
-    public static CalenderResponse fromEntity(Diary diary){
-        CalenderResponse calenderResponse = CalenderResponse.builder()
+    public static CalendarResponse fromEntity(Diary diary){
+        CalendarResponse calendarResponse = CalendarResponse.builder()
                 .id(diary.getId())
                 .memberId(diary.getMember().getId())
                 .important(diary.getImportant())
@@ -28,7 +27,7 @@ public class CalenderResponse {
                 .createdAt(diary.getCreatedAt())
                 .build();
 
-        return calenderResponse;
+        return calendarResponse;
     }
 }
 
