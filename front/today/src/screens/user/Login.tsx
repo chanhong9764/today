@@ -1,10 +1,10 @@
-import { BASE_URL } from '@env';
 import * as Linking from 'expo-linking';
 import React from 'react';
 import { Text } from 'react-native';
 import * as S from './style';
 
 function Login() {
+  const BASE_URL = process.env.BASE_URL;
   const kakaoURL = `${BASE_URL}/oauth2/authorization/kakao?mode=login`;
   // const naverURL = `${VITE_SERVICE_BASE_URL}/oauth2/authorization/naver?redirect_uri=${VITE_REDIRECT_URL}&mode=login`;
 

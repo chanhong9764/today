@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FlatList, Text } from 'react-native';
 import { useTheme } from 'styled-components';
 import NextButton from '../../common/CommonButton';
+import { AddDiaryContext } from '../../contexts/AppointmentContext';
 import { Data, EmotionData } from '../../contexts/EmotionData';
 import { DiaryStackParam } from '../../types/stack';
 import * as S from './style';
@@ -27,6 +28,7 @@ function SelectEmotion() {
   const theme = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<DiaryStackParam>>();
   const [selectedFeel, setSelectedFeel] = useState<string>();
+  const { addDiary, setAddDiary } = useContext(AddDiaryContext);
 
   // 감정 선택시 색 변화
   function renderEmotion({ item }: { item: Data }) {
