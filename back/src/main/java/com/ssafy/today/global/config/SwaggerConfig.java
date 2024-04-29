@@ -26,6 +26,6 @@ public class SwaggerConfig {
     return new OpenAPI()
         .components(new Components().addSecuritySchemes(AUTHORIZATION_HEADER, securityScheme))
         .security(Collections.singletonList(securityRequirement))
-        .servers(Collections.singletonList(new Server().url("https://newstar.world/api")));
+        .servers(Collections.singletonList(new Server().url("http://localhost:8080/api")));
   }
 }
