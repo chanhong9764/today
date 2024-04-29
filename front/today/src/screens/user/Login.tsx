@@ -1,50 +1,35 @@
+import { BASE_URL } from '@env';
+import * as Linking from 'expo-linking';
 import React from 'react';
-import { Dimensions, Text } from 'react-native';
-import styled from 'styled-components/native';
-
-const LoginContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.lightPink};
-`;
-
-const Logo = styled.Text`
-  font-family: title;
-  font-size: ${({ theme }) => theme.fontSize.large};
-`;
-
-const PointWord = styled.Text`
-  color: ${({ theme }) => theme.colors.pink};
-`;
-
-const LoginButtonsContainer = styled.View`
-  width: 100%;
-  align-items: center;
-  padding: 10px;
-`;
-
-const windowWidth = Dimensions.get('window').width;
-
-const LoginButton = styled.Image`
-  width: 80%;
-  height: 70px;
-  box-shadow: 2px 2px 2px #acacac;
-  margin: 5px 0px;
-`;
+import { Text } from 'react-native';
+import * as S from './style';
 
 function Login() {
+  const kakaoURL = `${BASE_URL}/oauth2/authorization/kakao?mode=login`;
+  // const naverURL = `${VITE_SERVICE_BASE_URL}/oauth2/authorization/naver?redirect_uri=${VITE_REDIRECT_URL}&mode=login`;
+
+  const kakaoLoginClick = () => {
+    Linking.openURL(kakaoURL);
+  };
+
+  // const naverLoginClick = () => {
+  //     window.location.href = naverURL;
+  // };
   return (
-    <LoginContainer>
-      <Logo>당일</Logo>
+    <S.LoginContainer>
+      <S.Logo>당일</S.Logo>
       <Text>
-        <PointWord>당</PointWord>신만의 특별한 <PointWord>일</PointWord>기를 작성하세요
+        <S.PointWord>당</S.PointWord>신만의 특별한 <S.PointWord>일</S.PointWord>기를 작성하세요
       </Text>
-      <LoginButtonsContainer>
-        <LoginButton source={require('../../../assets/kakao-logo.png')} resizeMode="stretch" />
-        <LoginButton source={require('../../../assets/naver-logo.png')} resizeMode="stretch" />
-      </LoginButtonsContainer>
-    </LoginContainer>
+      <S.LoginButtonsContainer>
+        <S.LinkButton onPress={kakaoLoginClick}>
+          <S.LoginButton source={require('../../../assets/kakao-logo.png')} resizeMode="stretch" />
+        </S.LinkButton>
+        <S.LinkButton>
+          <S.LoginButton source={require('../../../assets/naver-logo.png')} resizeMode="stretch" />
+        </S.LinkButton>
+      </S.LoginButtonsContainer>
+    </S.LoginContainer>
   );
 }
 

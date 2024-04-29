@@ -1,4 +1,4 @@
-import styled, { css, DefaultTheme } from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 export const center = css`
   justify-content: center;
@@ -22,7 +22,7 @@ export const SingleDiaryContent = styled.View`
 export const SingleDiaryDates = styled.View``;
 
 export const SingleDiaryDate = styled.Text`
-  font-weight: ${({ theme }: { theme: DefaultTheme }) => theme.fontWeight.bold};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
 `;
 
 export const DiaryListTitleContainer = styled.Pressable`
@@ -30,6 +30,6 @@ export const DiaryListTitleContainer = styled.Pressable`
   padding: 30px 0px;
 `;
 export const DiaryListTitle = styled.Text`
-  font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSize.big};
-  font-weight: ${({ theme }: { theme: DefaultTheme }) => theme.fontWeight.bold};
+  font-size: ${({ theme }) => theme.fontSize.big};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
 `;

@@ -2,10 +2,10 @@
 import { Text, VStack } from 'native-base';
 import React from 'react';
 
-import { Diary } from '../../../apis/DiaryApi';
+import { DiaryData } from '../../../types/diary';
 
 interface DetailContentProps {
-  diary: Diary;
+  diary: DiaryData;
 }
 
 const DetailContent = ({ diary }: DetailContentProps) => {

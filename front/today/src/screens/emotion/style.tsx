@@ -1,4 +1,8 @@
-import styled, { css, DefaultTheme } from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
+
+type EmotionContainerProps = {
+  backgroundColor: string;
+};
 
 export const center = css`
   justify-content: center;
@@ -20,11 +24,11 @@ export const EmotionsContainer = styled.View`
   flex: 5;
 `;
 
-export const EmotionContainer = styled.TouchableOpacity`
+export const EmotionContainer = styled.TouchableOpacity<EmotionContainerProps>`
   ${center}
   padding: 20px;
   margin: 10px;
-  background-color: ${({ backgroundColor }: { backgroundColor: string }) => backgroundColor || 'transparent'};
+  background-color: ${props => props.backgroundColor || 'transparent'};
 `;
 
 export const ButtonContainer = styled.View`
@@ -34,6 +38,6 @@ export const ButtonContainer = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSize.big};
-  font-weight: ${({ theme }: { theme: DefaultTheme }) => theme.fontWeight.bold};
+  font-size: ${({ theme }) => theme.fontSize.medium};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
 `;
