@@ -20,6 +20,16 @@ function SelectImage({ navigation }: DiaryProp) {
     return <Images item={item} onPress={() => setSelected(item.diaryId)} backgroundColor={backgroundColor} />;
   }
 
+  function createDiary() {
+    // Diarys.addDiary(data)
+    //   .then(res => {})
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+
+    navigation.navigate('DiaryDetail');
+  }
+
   return (
     <S.SelectImageContainer>
       <S.TodayDate>{today}</S.TodayDate>
@@ -32,7 +42,7 @@ function SelectImage({ navigation }: DiaryProp) {
           keyExtractor={item => item.diaryId.toString()}
         />
       </S.ImagesContainer>
-      <NextButton content="일기 작성 완료하기" onPress={() => navigation.navigate('DiaryDetail')} />
+      <NextButton content="일기 작성 완료하기" onPress={createDiary} />
     </S.SelectImageContainer>
   );
 }

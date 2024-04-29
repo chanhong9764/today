@@ -11,6 +11,14 @@ function Calendar({ navigation }: CalendarProp) {
     navigation.push('SelectEmotion');
   }
 
+  // useEffect(() => {
+  //   Calendars.getCalendars('2024-04-29')
+  //     .then(res => {})
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
   return (
     <SafeAreaView>
       <CalendarBody />

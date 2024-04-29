@@ -21,7 +21,15 @@ function WriteDiary({ navigation }: CalendarProp) {
     setContent(data);
   };
 
-  function onPressWrite() {}
+  function onPressWrite() {
+    navigation.push('SelectImage');
+
+    // Diarys.addDiary(content)
+    //   .then(res => {})
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+  }
   return (
     <S.WriteDiaryContainer
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -34,7 +42,7 @@ function WriteDiary({ navigation }: CalendarProp) {
         <S.WriteDiaryTitle>오늘 하루는 어땠나요?</S.WriteDiaryTitle>
         <DiaryContent value={content} onChangeText={onChangeContent} onSubmitEditing={onPressWrite} />
         <S.WriteDiaryButton>
-          <NextButton content="다 음" onPress={() => navigation.push('SelectImage')} />
+          <NextButton content="다 음" onPress={onPressWrite} />
         </S.WriteDiaryButton>
       </S.WriteDiaryInner>
     </S.WriteDiaryContainer>
