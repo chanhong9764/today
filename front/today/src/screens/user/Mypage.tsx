@@ -4,6 +4,14 @@ import Graph from '../../components/user/Graph';
 import * as S from './style';
 
 function Mypage() {
+  // useEffect(() => {
+  //   Members.getMembers()
+  //     .then(res => {})
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // });
+
   return (
     <S.MyPageContainer>
       <S.MyPageTitle>MY PAGE</S.MyPageTitle>

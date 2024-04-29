@@ -26,6 +26,7 @@
     "react-native-calendars": "^1.1304.1",
     "react-native-date-picker": "^5.0.2",
     "react-native-dotenv": "^3.4.11",
+    "react-native-encrypted-storage": "^4.0.3",
     "react-native-modal": "^13.0.1",
     "react-native-modal-datetime-picker": "^17.1.0",
     "react-native-plotly": "^6.0.0",
