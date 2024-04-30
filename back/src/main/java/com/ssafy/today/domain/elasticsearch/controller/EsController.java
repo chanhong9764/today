@@ -1,14 +1,14 @@
 package com.ssafy.today.domain.elasticsearch.controller;
 
 import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
+import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
 import com.ssafy.today.util.response.SuccessCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEntity;
 
@@ -25,10 +25,10 @@ public class EsController {
         return getResponseEntity(SuccessCode.OK);
     }
 
-//    @PatchMapping("/update")
-//    public ResponseEntity<?> updateDiary(@RequestBody Long diaryId) throws IOException {
-//        String c = "change content";
-//        UpdateRequest request = new UpdateRequest("diary", diaryId)
-//                .doc("content", c);
-//    }
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateEs(@RequestBody UpdateDiaryRequest updateDiaryRequest) {
+        System.out.println(LocalDateTime.now());
+        esService.update(updateDiaryRequest);
+        return getResponseEntity(SuccessCode.OK);
+    }
 }
