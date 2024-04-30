@@ -1,9 +1,14 @@
 package com.ssafy.today.domain.diary.service;
 
+import com.ssafy.today.domain.diary.dto.request.DiaryContentRequest;
+import com.ssafy.today.domain.diary.dto.request.DiaryImageRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
 import com.ssafy.today.domain.diary.entity.Diary;
 import com.ssafy.today.domain.diary.repository.DiaryRepository;
+import com.ssafy.today.domain.member.entity.Member;
+import com.ssafy.today.domain.member.repository.MemberRepository;
+import com.ssafy.today.global.security.oauth2.user.GoogleOAuth2UserInfo;
 import com.ssafy.today.util.response.ErrorCode;
 import com.ssafy.today.util.response.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +28,24 @@ import java.time.LocalTime;
 public class DiaryService {
 
     private final DiaryRepository diaryRepository;
+    private final MemberRepository memberRepository;
 
+    public DiaryResponse createDiary(Long memberId, DiaryContentRequest diaryContentRequest){
+        Diary save;
+
+        Member member = memberRepository.findById(memberId).orElseThrow(
+                () -> new GlobalException(ErrorCode.MEMBER_NOT_FOUND));
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
+
+        if(diaryRepository.existsByImportantIsTrueAndMemberIdAndCreatedAtBetween(memberId,startOfDay,endOfDay)){
+            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, false));
+        }else{
+            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, true));
+        }
+        return DiaryResponse.fromEntity(save);
+    }
     public void updateDiaryContent(Long diaryId, DiaryUpdateRequest diaryUpdateRequest) {
         Diary diary = diaryRepository.findById(diaryId).orElseThrow(
                 () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
@@ -63,4 +85,9 @@ public class DiaryService {
         diary2.updateImportant(false);
     }
 
+    public void updateDiartImg(DiaryImageRequest diaryRequest) {
+        Diary diary = diaryRepository.findById(diaryRequest.getId()).orElseThrow(
+                () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+        diary.updateImg(diaryRequest.getImgUrl());
+    }
 }

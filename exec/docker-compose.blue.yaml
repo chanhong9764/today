@@ -1,11 +1,12 @@
 services:
-
   spring:
-    container_name: today_back
-    restart: always
+    container_name: spring_blue
     image: spring:latest
+    restart: always
+    env_file:
+      - /env/spring.env
     expose:
-      - 8080"
+      - 8080
     environment:
       TZ: Asia/Seoul
 
