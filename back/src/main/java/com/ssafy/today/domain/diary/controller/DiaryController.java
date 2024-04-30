@@ -1,10 +1,9 @@
 package com.ssafy.today.domain.diary.controller;
 
 import com.ssafy.today.domain.diary.dto.request.DiaryImageRequest;
-import com.ssafy.today.domain.diary.dto.request.DiaryRequest;
+import com.ssafy.today.domain.diary.dto.request.DiaryContentRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
-import com.ssafy.today.domain.diary.entity.Diary;
 import com.ssafy.today.domain.diary.service.DiaryService;
 import com.ssafy.today.util.response.SuccessCode;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,20 +24,21 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
-    @PostMapping("/img")
-    public ResponseEntity<?> createImg(HttpServletRequest request, @RequestBody DiaryRequest diaryContentRequest){
+    @PostMapping
+    public ResponseEntity<?> createDiary(HttpServletRequest request, @RequestBody DiaryContentRequest diaryContentRequest){
         Long memberId = (Long) request.getAttribute("memberId");
-        // TODO : gpu서버에 이미지 생성 요청 보내기
-        // TODO : 이미지를 제외한 diary 생성
+        // gpu 서버에 이미지 생성 요청 보내기
+        // 이미지를 제외한 diary 생성
+        DiaryResponse diaryResponse = diaryService.createDiary(memberId, diaryContentRequest);
 
-        return getResponseEntity(SuccessCode.OK);
+        return getResponseEntity(SuccessCode.OK, diaryResponse);
     }
 
-    @PostMapping
-    public ResponseEntity<?> createDiary(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest){
+    @PostMapping("/img")
+    public ResponseEntity<?> updateImgUrl(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest){
         Long memberId = (Long) request.getAttribute("memberId");
         // TODO : 다이어리에 이미지 업데이트
-
+        diaryService.updateDiartImg(diaryRequest);
         return getResponseEntity(SuccessCode.OK);
     }
 
