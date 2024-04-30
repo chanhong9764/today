@@ -1,7 +1,6 @@
 services:
-
   spring:
-    container_name: today_back
+    container_name: spring_blue
     image: spring:latest
     restart: always
     env_file:
