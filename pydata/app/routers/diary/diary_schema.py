@@ -1,4 +1,8 @@
 from pydantic import BaseModel
+from typing import List
 
-class createImageDto(BaseModel):
+class createImageIn(BaseModel):
     prompt: str
+
+class createImageOut(BaseModel):
+    imageUrl: List[str]

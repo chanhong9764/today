@@ -19,8 +19,11 @@ def create_image(prompt):
     # 부정 프롬프트
     negative_prompt = "ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, extra limbs, disfigured, deformed, body out of frame, bad anatomy, watermark, signature, cut off, low contrast, underexposed, overexposed, bad art, beginner, amateur, distorted face, b&w, watermark EasyNegative"
     
+    # 생성된 이미지 저장
     images = []
-    
+    # S3에 저장된 이미지 URL
+    images_url = []
+
     # 이미지 생성
     for i in range(4):
         base.set_adapters(lora_types[i])
@@ -46,9 +49,10 @@ def create_image(prompt):
         # S3 Image Upload
         try:
             s3.upload_fileobj(img_byte_arr, os.getenv("AWS_S3_BUCKET"), s3_key)
+            images_url.append(os.getenv("AWS_S3_URL") + s3_key)
         except Exception as e:
             raise HTTPException(status_code = 500, detail=f"S3 upload failed: {str(e)}")
-
+    return images_url
 
 def diary_translate(content):
     openai_api_key = os.getenv("OPENAI_API_KEY")
