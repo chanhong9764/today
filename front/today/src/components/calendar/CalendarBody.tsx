@@ -19,6 +19,7 @@ const CalendarBody = ({
   moveToPreviousMonth,
   moveToSpecificYearAndMonth,
 }: Header) => {
+  // 날짜별 이미지 URL 매핑 객체 생성
   const imageUrlByDate: { [key: string]: string } = {};
   dummy.data.forEach(data => {
     const date = new Date(data.createdAt);
@@ -52,6 +53,7 @@ const CalendarBody = ({
     date: 0,
   });
 
+  // 연도와 월에 따른 전달, 현재달, 다음달 일수와 정보 세팅
   const getTotalDays = (year: number, month: number) => {
     const previousMonthLastDate = new Date(year, month - 1, 0).getDate(); // 이전 달의 마지막 날짜 체크
     const previousMonthLastDay = new Date(year, month - 1, 0).getDay(); // 이전 달의 마지막 날짜의 요일
@@ -177,7 +179,7 @@ const styles = StyleSheet.create({
   },
   dayBoxContainer: {
     width: '14.2%',
-    height: 100,
+    height: 90,
     justifyContent: 'center',
     alignItems: 'center',
   },
