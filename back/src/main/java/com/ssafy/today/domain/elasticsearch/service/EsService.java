@@ -4,13 +4,14 @@ import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
 import com.ssafy.today.domain.elasticsearch.entity.DiaryEs;
 import com.ssafy.today.domain.elasticsearch.repository.EsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class EsService {
 
-    private final EsRepository esRepository;
+    @Autowired
+    private EsRepository esRepository;
 
     public void saveEs(DiaryEsRequest diaryEsRequest) {
         esRepository.save(DiaryEs.builder()
@@ -21,4 +22,8 @@ public class EsService {
             .createdAt(diaryEsRequest.getCreatedAt())
             .build());
     }
+
+//    public void update(Long diaryId) {
+//
+//    }
 }
