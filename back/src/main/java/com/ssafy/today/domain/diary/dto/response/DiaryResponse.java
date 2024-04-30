@@ -17,7 +17,6 @@ public class DiaryResponse {
     private String imgUrl;
     private String content;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     public static DiaryResponse fromEntity(Diary diary){
         DiaryResponse diaryResponse = DiaryResponse.builder()
@@ -28,7 +27,6 @@ public class DiaryResponse {
                 .imgUrl(diary.getImgUrl())
                 .content(diary.getContent())
                 .createdAt(diary.getCreatedAt())
-                .updatedAt(diary.getUpdatedAt())
                 .build();
 
         return diaryResponse;
