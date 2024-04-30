@@ -37,7 +37,7 @@ public class DiaryController {
     @PostMapping("/img")
     public ResponseEntity<?> updateImgUrl(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest){
         Long memberId = (Long) request.getAttribute("memberId");
-        // TODO : 다이어리에 이미지 업데이트
+        // 다이어리에 이미지 업데이트
         diaryService.updateDiartImg(diaryRequest);
         return getResponseEntity(SuccessCode.OK);
     }
