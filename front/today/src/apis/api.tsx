@@ -3,8 +3,11 @@ import { Apis } from '../types/apis';
 
 const apis: Apis = {
   members: '/members',
+  // 최종 다이어리 생성
   image: '/diary/img',
+  // 이미지 생성, 다이어리 list
   diary: '/diary',
+  search: '/search',
   singleDiary: diaryId => `/diary/${diaryId}`,
   important: diaryId => `/diary/important/${diaryId}`,
   month: date => `/diary/calendars/${date}`,

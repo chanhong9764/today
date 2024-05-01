@@ -11,7 +11,7 @@ const fontSize = {
   large: '80px',
   big: '40px',
   medium: '25px',
-  regular: '18px',
+  regular: '16px',
   small: '12px',
 };
 
