@@ -5,7 +5,9 @@ export type DiaryStackParam = {
   SelectEmotion?: undefined;
   SelectImage?: undefined;
   DiaryEdit?: undefined;
-  WriteDiary?: undefined;
+  WriteDiary?: {
+    feel: string | undefined;
+  };
   DiaryDetail?: undefined;
 };
 
@@ -19,7 +21,9 @@ export type CalendarStackParam = {
   SelectEmotion?: undefined;
   SelectImage?: undefined;
   DiaryEdit?: undefined;
-  WriteDiary?: undefined;
+  WriteDiary?: {
+    feel: string | undefined;
+  };
   DiaryDetail?: undefined;
 };
 
