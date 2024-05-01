@@ -2,6 +2,7 @@ import axios, { Axios, AxiosResponse } from 'axios';
 import { Apis } from '../types/apis';
 
 const apis: Apis = {
+  login: '/login',
   members: '/members',
   // 최종 다이어리 생성
   image: '/diary/img',

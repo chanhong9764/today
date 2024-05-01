@@ -1,20 +1,9 @@
-import * as Linking from 'expo-linking';
 import React from 'react';
 import { Text } from 'react-native';
+import { UserProp } from '../../types/stack';
 import * as S from './style';
 
-function Login() {
-  const BASE_URL = process.env.BASE_URL;
-  const kakaoURL = `${BASE_URL}/oauth2/authorization/kakao?mode=login`;
-  // const naverURL = `${VITE_SERVICE_BASE_URL}/oauth2/authorization/naver?redirect_uri=${VITE_REDIRECT_URL}&mode=login`;
-
-  const kakaoLoginClick = () => {
-    Linking.openURL(kakaoURL);
-  };
-
-  // const naverLoginClick = () => {
-  //     window.location.href = naverURL;
-  // };
+function LoginPage({ navigation }: UserProp) {
   return (
     <S.LoginContainer>
       <S.Logo>당일</S.Logo>
@@ -22,7 +11,7 @@ function Login() {
         <S.PointWord>당</S.PointWord>신만의 특별한 <S.PointWord>일</S.PointWord>기를 작성하세요
       </Text>
       <S.LoginButtonsContainer>
-        <S.LinkButton onPress={kakaoLoginClick}>
+        <S.LinkButton onPress={() => navigation.navigate('KakaoLogin')}>
           <S.LoginButton source={require('../../../assets/kakao-logo.png')} resizeMode="stretch" />
         </S.LinkButton>
         <S.LinkButton>
@@ -33,4 +22,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginPage;

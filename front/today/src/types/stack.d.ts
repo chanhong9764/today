@@ -12,6 +12,8 @@ export type DiaryStackParam = {
 };
 
 export type UserStackParam = {
+  KakaoLogin?: undefined;
+  NaverLogin?: undefined;
   Login?: undefined;
   Mypage?: undefined;
 };

@@ -1,4 +1,5 @@
 export interface Apis {
+  login: string;
   members: string;
   image: string;
   diary: string;
