@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Text } from 'react-native';
 import DetailContent from '../../components/diary/detail/DetailContent';
 import DetailHeader from '../../components/diary/detail/DetailHeader';
-import { DiaryData } from '../../types/diary';
+import { DiaryData } from '../../types/datatype';
 
 function DiaryDetail() {
   const [diary, setDiary] = useState<DiaryData | null>(null);

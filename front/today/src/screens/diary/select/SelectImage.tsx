@@ -6,7 +6,7 @@ import NextButton from '../../../common/CommonButton';
 import Images from '../../../components/diary/select/ResultImage';
 import dummy from '../../../db/data.json';
 import { DiaryData } from '../../../types/diary';
-import { DiaryProp } from '../../../types/stack';
+import { DiaryProp } from '../../../types/navigatortype/stack';
 import * as S from './style';
 
 function SelectImage({ navigation }: DiaryProp) {

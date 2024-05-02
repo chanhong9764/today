@@ -5,7 +5,7 @@ import { Alert, FlatList } from 'react-native';
 import { useTheme } from 'styled-components';
 import NextButton from '../../common/CommonButton';
 import { Data, EmotionData } from '../../contexts/EmotionData';
-import { DiaryStackParam } from '../../types/stack';
+import { DiaryStackParam } from '../../types/navigatortype/stack';
 import * as S from './style';
 
 type EmotionProps = {

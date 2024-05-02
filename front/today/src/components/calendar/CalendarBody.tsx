@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import dummy from '../../db/data.json';
-import { Header, PressedDate, dayType } from '../../types/calendar';
+import { Header, PressedDate, dayType } from '../../types/calendartype/calendar';
 
 const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
