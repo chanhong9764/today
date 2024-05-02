@@ -25,7 +25,7 @@ def create_image(prompt):
     images_url = []
 
     # 이미지 생성
-    for i in range(4):
+    for i in range(2):
         base.set_adapters(lora_types[i])
         image = base(
             prompt=types[i] + prompt,

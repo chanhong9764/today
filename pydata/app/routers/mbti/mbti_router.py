@@ -7,10 +7,6 @@ router = APIRouter(prefix="/api/data/mbti")
 with open('./app/routers/mbti/mbti_model', 'rb') as f:
     model = pickle.load(f)
 
-@router.get("/test")
-def test():
-    print("success test!")
-
 
 @router.post("/getMbti")
 def predict(data: Content):

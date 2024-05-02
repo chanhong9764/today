@@ -16,5 +16,4 @@ def make_image(data: createImageIn):
     keyword = diary_translate(data.prompt)
     # 이미지 추출 및 저장
     images_url = create_image(keyword)
-    
-    return successResponse(successResponseCode.createImage, createImageOut(imageUrl=images_url).model_dump_json())
+    return successResponse(successResponseCode.createImage, createImageOut(imageUrl=images_url))

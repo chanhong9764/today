@@ -9,7 +9,7 @@ from diffusers.models import AutoencoderKL
 
 def load_sdxl():
     print("=================== Checkpoint loaded start ===================")
-    base_dir = "/home/j-k10b108/"
+    base_dir = "/home/b108today/"
     base = StableDiffusionXLPipeline.from_single_file(base_dir + "checkpoint/stable-diffusion-xl-base-1.0.safetensors", torch_dtype=torch.float16, variant="fp16")
     base.to("cuda")
     base.scheduler = DPMSolverMultistepScheduler.from_config(base.scheduler.config, use_karras_sigmas="true", algorithm_type="sde-dpmsolver++")
@@ -26,9 +26,6 @@ def load_sdxl():
 
 def load_env():
     print("=================== env loaded start ===================")
-    os.environ['CUDA_VISIBLE_DEVICES']='7'
-    os.environ['CUDA_HOME']='/home/j-k10b108/.conda/envs/sd'
-    os.environ['LD_LIBRARY_PATH']='/home/j-k10b108/.conda/envs/sd/lib'
     load_dotenv()
     print("=================== env loaded end ===================")
 

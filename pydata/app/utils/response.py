@@ -1,5 +1,4 @@
 from fastapi.responses import JSONResponse
-import json
 
 def successResponse(responseCode, data):
     return JSONResponse(
@@ -8,7 +7,7 @@ def successResponse(responseCode, data):
                 "statusCode": responseCode.status,
                 "statusName": responseCode.name,
                 "message": responseCode.message,
-                "data": json.dumps(data)
+                "data": data.model_dump(mode='dict')
             }
         )
 
