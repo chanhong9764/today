@@ -7,7 +7,7 @@ import DiaryList from '../screens/diary/list/DiaryList';
 import SelectImage from '../screens/diary/select/SelectImage';
 import SelectEmotion from '../screens/emotion/SelectEmotion';
 
-import { DiaryStackParam } from '../types/stack';
+import { DiaryStackParam } from '../types/navigatortype/stack';
 
 const DiaryStack = createNativeStackNavigator<DiaryStackParam>();
 

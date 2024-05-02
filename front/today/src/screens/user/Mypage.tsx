@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import Graph from '../../components/user/Graph';
-import { UserProp } from '../../types/stack';
+import { UserProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
 function Mypage({ navigation }: UserProp) {

@@ -4,8 +4,8 @@ import { Alert, Keyboard, Platform } from 'react-native';
 import { Diarys } from '../../apis/DiaryApi';
 import NextButton from '../../common/CommonButton';
 import DiaryContent from '../../components/diary/write/DiaryContent';
-import { ParamProps } from '../../types/params';
-import { CalendarProp } from '../../types/stack';
+import { ParamProps } from '../../types/navigatortype/params';
+import { CalendarProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
 function CustomDate() {

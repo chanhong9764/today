@@ -1,5 +1,5 @@
-import { DiaryData } from '../types/diary';
-import { SearchWord } from '../types/search';
+import { DiaryData } from '../types/datatype';
+import { SearchWord } from '../types/diarytype/search';
 import { apis, instance, responseBody } from './api';
 
 const calendarRequests = {
