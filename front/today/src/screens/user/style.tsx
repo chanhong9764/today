@@ -10,9 +10,14 @@ export const shadow = css`
 `;
 
 // 마이페이지
-export const MyPageContainer = styled.SafeAreaView`
+export const MyPage = styled.SafeAreaView`
   flex: 1;
   padding: 30px;
+`;
+
+export const MyPageContainer = styled.View`
+  flex: 1;
+  padding: 10px 30px;
 `;
 
 export const MyPageTitle = styled.Text`
@@ -25,11 +30,14 @@ export const MyPageSubTitle = styled.Text`
   font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   ${shadow}
+  margin: 20px 0px;
 `;
 
 export const MyInfoTitle = styled.Text`
-  font-size: ${({ theme }) => theme.fontSize.small};
-  font-weight: ${({ theme }) => theme.fontWeight.medium};
+  font-size: ${({ theme }) => theme.fontSize.regular};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  margin-right: 20px;
+  flex: 2;
 `;
 
 export const MyInfoContent = styled.View`
@@ -37,12 +45,17 @@ export const MyInfoContent = styled.View`
   ${shadow}
   background-color: white;
   border: 1px black solid;
-  border-radius: 8px;
-  width: 80%;
+  border-radius: 10px;
+  padding: 10px 15px;
+  flex: 8;
 `;
 
 export const MyInfo = styled.View`
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px;
+  margin-bottom: 10px;
 `;
 
 // 로그인 페이지
