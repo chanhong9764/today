@@ -23,12 +23,12 @@ public class EsService {
             .build());
     }
 
-    public void update(UpdateDiaryRequest updateDiaryRequest) {
-        DiaryEs diaryEs = esRepository.findByMemberIdAndDiaryId(
-                updateDiaryRequest.getMemberId(), updateDiaryRequest.getDiaryId());
-
-        diaryEs.updateContent(updateDiaryRequest.getContent());
-        System.out.println(diaryEs.getContent());
-        esRepository.save(diaryEs);
-    }
+//    public void update(UpdateDiaryRequest updateDiaryRequest) {
+//        DiaryEs diaryEs = esRepository.findByMemberIdAndDiaryId(
+//                updateDiaryRequest.getMemberId(), updateDiaryRequest.getDiaryId());
+//
+//        diaryEs.updateContent(updateDiaryRequest.getContent());
+//        System.out.println(diaryEs.getContent());
+//        esRepository.save(diaryEs);
+//    }
 }

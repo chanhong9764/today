@@ -25,10 +25,10 @@ public class EsController {
         return getResponseEntity(SuccessCode.OK);
     }
 
-    @PatchMapping("/update")
-    public ResponseEntity<?> updateEs(@RequestBody UpdateDiaryRequest updateDiaryRequest) {
-        System.out.println(LocalDateTime.now());
-        esService.update(updateDiaryRequest);
-        return getResponseEntity(SuccessCode.OK);
-    }
+//    @PatchMapping("/update")
+//    public ResponseEntity<?> updateEs(@RequestBody UpdateDiaryRequest updateDiaryRequest) {
+//        System.out.println(LocalDateTime.now());
+//        esService.update(updateDiaryRequest);
+//        return getResponseEntity(SuccessCode.OK);
+//    }
 }
