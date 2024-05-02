@@ -1,4 +1,3 @@
-cd ../exec
 # Working container check
 # docker compose -p deploy-blue -f docker-compose.blue.yaml ps 컴포즈 작동 확인
 EXIST_BLUE=$(docker compose -p deploy-blue -f docker-compose.blue.yaml ps | grep Up)
