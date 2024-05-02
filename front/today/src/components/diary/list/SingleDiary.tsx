@@ -1,5 +1,5 @@
 import { Image, Text } from 'react-native';
-import { DiaryData } from '../../../types/diary';
+import { DiaryData } from '../../../types/datatype';
 import * as S from './style';
 
 export function SingleDiary({ item }: { item: DiaryData }) {

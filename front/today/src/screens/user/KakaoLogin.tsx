@@ -1,6 +1,5 @@
 import WebView from 'react-native-webview';
 
-// const REDIRECT_URI = "http://2.2.2.3:7777/api/auth/login/tmp";
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { Members } from '../../apis/MemberApi';

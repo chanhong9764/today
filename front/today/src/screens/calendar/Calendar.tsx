@@ -4,7 +4,7 @@ import AddButton from '../../common/AddButton';
 
 import CalendarBody from '../../components/calendar/CalendarBody';
 import CalendarHeader from '../../components/calendar/CalendarHeader';
-import { CalendarProp } from '../../types/stack';
+import { CalendarProp } from '../../types/navigatortype/stack';
 
 function Calendar({ navigation }: CalendarProp) {
   // 일기 생성 페이지로 이동

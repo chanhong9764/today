@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import KakaoLogin from '../screens/user/KakaoLogin';
 import Login from '../screens/user/LoginPage';
 import Mypage from '../screens/user/Mypage';
-import { UserStackParam } from '../types/stack';
+import { UserStackParam } from '../types/navigatortype/stack';
 
 const UserStack = createNativeStackNavigator<UserStackParam>();
 

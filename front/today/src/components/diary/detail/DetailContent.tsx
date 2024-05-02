@@ -2,7 +2,7 @@
 import { Text, VStack } from 'native-base';
 import React from 'react';
 
-import { DiaryData } from '../../../types/diary';
+import { DiaryData } from '../../../types/datatype';
 
 interface DetailContentProps {
   diary: DiaryData;

@@ -1,4 +1,4 @@
-import { MemberData } from '../types/member';
+import { MemberData } from '../types/datatype';
 import { apis, instance, responseBody } from './api';
 
 const memberRequests = {

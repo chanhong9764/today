@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { UserProp } from '../../types/stack';
+import { UserProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
 function LoginPage({ navigation }: UserProp) {

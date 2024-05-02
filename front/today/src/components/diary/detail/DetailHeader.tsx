@@ -2,7 +2,7 @@
 import { Center, Container, Divider, HStack, Image, VStack } from 'native-base';
 import React from 'react';
 
-import { DiaryData } from '../../../types/diary';
+import { DiaryData } from '../../../types/datatype';
 
 type DetailHeaderProps = {
   diary: DiaryData;
