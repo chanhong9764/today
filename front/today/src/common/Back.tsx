@@ -6,7 +6,6 @@ import styled, { DefaultTheme } from 'styled-components/native';
 const StyledBtn = styled.TouchableOpacity`
   align-self: center;
   padding: 10px 15px;
-  border-radius: 25%;
   background-color: ${({ theme }: { theme: DefaultTheme }) => theme.colors.mainPink};
 `;
 

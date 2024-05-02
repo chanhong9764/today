@@ -18,7 +18,7 @@
     "expo": "~50.0.14",
     "expo-linking": "~6.2.2",
     "expo-status-bar": "~1.11.1",
-    "lottie-react-native": "^6.7.2",
+    "lottie-react-native": "^6.5.1",
     "native-base": "^3.4.28",
     "nl2br": "^0.0.3",
     "react": "18.2.0",

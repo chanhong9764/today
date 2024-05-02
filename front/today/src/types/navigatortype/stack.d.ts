@@ -23,6 +23,7 @@ export type CalendarStackParam = {
   SelectEmotion?: undefined;
   SelectImage?: undefined;
   DiaryEdit?: undefined;
+  WaitImage?: undefined;
   WriteDiary?: {
     feel: string | undefined;
   };
