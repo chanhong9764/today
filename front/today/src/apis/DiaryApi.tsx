@@ -15,14 +15,14 @@ export const Diarys = {
   // 일기 하나 상세페이지
   getSingleDiary: (diaryId: number): Promise<DiaryData> => diaryRequests.get(apis.singleDiary(diaryId)),
   // 일기 생성
-  addDiary: (diary: DiaryData): Promise<DiaryData> => diaryRequests.post(apis.diary, diary),
+  addDiary: (diary: DiaryData): Promise<DiaryData> => diaryRequests.post(apis.image, diary),
   // 일기 삭제
   deleteDiary: (diaryId: number): Promise<DiaryData> => diaryRequests.delete(apis.singleDiary(diaryId)),
   // 일기 수정
   editDiary: (diaryId: number): Promise<DiaryData> => diaryRequests.patch(apis.singleDiary(diaryId)),
 
   // 이미지 생성 요청
-  getImage: (): Promise<DiaryData[]> => diaryRequests.get(apis.image),
+  getImage: (diary: DiaryData): Promise<DiaryData> => diaryRequests.post(apis.diary, diary),
   // 메인 일기 지정
   mainDiary: (diaryId: number): Promise<DiaryData> => diaryRequests.patch(apis.important(diaryId)),
 };

@@ -18,7 +18,7 @@ function DiaryContent({ value, onChangeText, onSubmitEditing }: CuntomInputProps
         onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}
       />
-      <S.CountText>{value && value.length} / 200</S.CountText>
+      <S.CountText>{value ? value.length : 0} / 200</S.CountText>
     </>
   );
 }

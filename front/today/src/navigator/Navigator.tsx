@@ -4,6 +4,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components/native';
 
+import LoginPage from '../screens/user/LoginPage';
 import { CalendarNav } from './CalendarNav';
 import { DiaryNav } from './DairyNav';
 import { UserNav } from './UserNav';
@@ -12,6 +13,7 @@ type BottomTabParamList = {
   Main: undefined;
   Diary: undefined;
   User: undefined;
+  Login: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -46,6 +48,13 @@ function Navigaior() {
       <Tab.Screen
         name="User"
         component={UserNav}
+        options={{
+          tabBarIcon: ({ color }) => <Icon name="user" size={27} color={color} />,
+        }}
+      />
+      <Tab.Screen
+        name="Login"
+        component={LoginPage}
         options={{
           tabBarIcon: ({ color }) => <Icon name="user" size={27} color={color} />,
         }}

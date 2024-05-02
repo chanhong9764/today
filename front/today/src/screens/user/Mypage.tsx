@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import Graph from '../../components/user/Graph';
+import { UserProp } from '../../types/stack';
 import * as S from './style';
 
-function Mypage() {
+function Mypage({ navigation }: UserProp) {
   // useEffect(() => {
   //   Members.getMembers()
   //     .then(res => {})
@@ -36,6 +37,9 @@ function Mypage() {
         data={[8, 7, 9, 5, 6, 10]}
         chartTitle="나의 감정통계"
       />
+      <TouchableOpacity onPress={() => navigation.navigate('KakaoLogin')}>
+        <Text>버튼</Text>
+      </TouchableOpacity>
     </S.MyPageContainer>
   );
 }
