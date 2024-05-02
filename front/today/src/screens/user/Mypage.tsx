@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { Button, Text } from 'react-native';
 import { Members } from '../../apis/MemberApi';
@@ -8,17 +9,22 @@ import ResultModal from '../modal/Result';
 import * as S from './style';
 
 function Mypage({ navigation }: UserProp) {
-  const [memberInfo, setMemberInfo] = useState<MemberData[]>([]);
+  const [memberInfo, setMemberInfo] = useState<MemberData['data'] | undefined>();
 
   useEffect(() => {
     Members.getMembers()
-      .then(res => {
-        setMemberInfo(res);
+      .then(response => {
+        setMemberInfo(response.data);
       })
       .catch(err => {
         console.log(err);
       });
-  });
+  }, []);
+
+  async function Logout() {
+    await AsyncStorage.removeItem('accessToken');
+    console.log('로그아웃함');
+  }
 
   const [resultOpen, setResultOpen] = useState<boolean>(false);
   return (
@@ -28,13 +34,13 @@ function Mypage({ navigation }: UserProp) {
         <S.MyInfo>
           <S.MyInfoTitle>닉네임</S.MyInfoTitle>
           <S.MyInfoContent>
-            <Text>{memberInfo[0]?.nickname}</Text>
+            <Text>{memberInfo?.nickName}</Text>
           </S.MyInfoContent>
         </S.MyInfo>
         <S.MyInfo>
           <S.MyInfoTitle>이메일</S.MyInfoTitle>
           <S.MyInfoContent>
-            <Text>{memberInfo[0]?.email}</Text>
+            <Text>{memberInfo?.email}</Text>
           </S.MyInfoContent>
         </S.MyInfo>
 
@@ -46,6 +52,7 @@ function Mypage({ navigation }: UserProp) {
           chartTitle="나의 감정통계"
         />
         <Button title="카카오 로그인 버튼" onPress={() => navigation.navigate('KakaoLogin')} />
+        <Button title="로그아웃 버튼" onPress={Logout} />
 
         <Button title="분석 결과 모달" onPress={() => setResultOpen(!resultOpen)} />
         <ResultModal modalVisible={resultOpen} setModalVisible={setResultOpen} />

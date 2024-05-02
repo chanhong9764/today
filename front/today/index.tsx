@@ -1,17 +1,10 @@
 // import React from 'react';
 // import { AppRegistry } from 'react-native';
 
-// import { ThemeProvider } from 'styled-components';
-// import Navigator from './src/navigator/Navigator';
-// import theme from './src/styles/theme';
+// import App from './App';
 
-// // 예시 코드 입니다.
-// const ProvidedNavigator = () => {
-//   return (
-//     <ThemeProvider theme={{ ...theme }}>
-//       <Navigator />
-//     </ThemeProvider>
-//   );
+// const RootComponent = () => {
+//   return <App />;
 // };
 
-// AppRegistry.registerComponent('today', () => ProvidedNavigator);
+// AppRegistry.registerComponent('today', () => RootComponent);

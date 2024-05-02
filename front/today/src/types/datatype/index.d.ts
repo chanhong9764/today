@@ -1,9 +1,11 @@
 export interface MemberData {
-  memberId: number;
-  nickname: string;
-  email: string;
-  createdAt?: string;
-  updatedAt?: string;
+  data: {
+    memberId: number;
+    nickName: string;
+    email: string;
+    createdAt?: string;
+    updatedAt?: string;
+  };
 }
 
 export interface DiaryData {
@@ -17,6 +19,15 @@ export interface DiaryData {
   updatedAt?: string | date;
 }
 
+export interface ImageData {
+  feel: string | undefined;
+  content: string;
+}
+
 export interface DiaryEntries {
   data: DiaryData[];
+}
+
+export interface MemberEntries {
+  data: MemberData[];
 }

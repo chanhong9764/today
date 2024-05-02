@@ -18,20 +18,22 @@ function DiaryList() {
     }
     setLoading(true);
 
-    Diarys.getDiarys({
-      page: page,
-      size: 5,
-    })
+    Diarys.getDiarys(page, 5)
       .then(result => {
+        console.log(result);
         setData(data.concat(result));
         setPage(page + 1);
       })
       .then(() => setLoading(false))
-      .catch(err => setLoading(false));
+      .catch(err => {
+        setLoading(false);
+        console.log(err);
+      });
   }
 
   useEffect(() => {
     getData();
+    console.log('데이터 가져오기');
   }, []);
 
   // 검색
