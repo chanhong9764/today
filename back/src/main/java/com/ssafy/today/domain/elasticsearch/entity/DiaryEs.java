@@ -2,6 +2,7 @@ package com.ssafy.today.domain.elasticsearch.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -29,16 +30,16 @@ public class DiaryEs {
     @Field(type = FieldType.Keyword)
     private String imgUrl;
 
-//    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second_millis)
-//    private LocalDateTime createdAt;
+    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second_millis)
+    private LocalDateTime createdAt;
 
     @Builder
-    public DiaryEs(String content, Long memberId, Long diaryId, String imgUrl) {
+    public DiaryEs(String content, Long memberId, Long diaryId, String imgUrl, LocalDateTime createdAt) {
         this.content = content;
         this.memberId = memberId;
         this.diaryId = diaryId;
         this.imgUrl = imgUrl;
-//        this.createdAt = createdAt;
+        this.createdAt = createdAt;
     }
 
     public void updateContent(String content){
