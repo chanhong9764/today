@@ -11,7 +11,7 @@ export const StyledBtn = styled.TouchableOpacity`
 export const StyledAddBtn = styled.TouchableOpacity`
   align-self: center;
   padding: 10px 16px;
-  border-radius: 25%;
+  border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.mainPink};
 `;
 
