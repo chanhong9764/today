@@ -5,6 +5,7 @@ import com.ssafy.today.global.security.jwt.JwtAuthorizationFilter;
 import com.ssafy.today.global.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.ssafy.today.global.security.oauth2.handler.OAuth2AuthenticationFailureHandler;
 import com.ssafy.today.global.security.oauth2.handler.OAuth2AuthenticationSuccessHandler;
+import com.ssafy.today.global.security.oauth2.handler.OAuth2AuthenticationSuccessHandler2;
 import com.ssafy.today.global.security.oauth2.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,7 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationSuccessHandler2 oAuth2AuthenticationSuccessHandler2;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
@@ -70,7 +72,7 @@ public class SecurityConfig {
                 configure.authorizationEndpoint(
                         config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
                     .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
-                    .successHandler(oAuth2AuthenticationSuccessHandler)
+                    .successHandler(oAuth2AuthenticationSuccessHandler2)
                     .failureHandler(oAuth2AuthenticationFailureHandler)
             );
 

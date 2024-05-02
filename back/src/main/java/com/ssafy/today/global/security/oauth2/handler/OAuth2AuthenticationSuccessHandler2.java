@@ -8,7 +8,6 @@ import com.ssafy.today.global.security.jwt.TokenProvider;
 import com.ssafy.today.global.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.ssafy.today.global.security.oauth2.service.OAuth2UserPrincipal;
 import com.ssafy.today.global.security.oauth2.user.OAuth2Provider;
-import com.ssafy.today.global.security.oauth2.user.OAuth2UserInfo;
 import com.ssafy.today.global.security.oauth2.user.OAuth2UserUnlinkManager;
 import com.ssafy.today.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
@@ -30,7 +29,7 @@ import static com.ssafy.today.global.security.oauth2.HttpCookieOAuth2Authorizati
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class OAuth2AuthenticationSuccessHandler2 extends SimpleUrlAuthenticationSuccessHandler {
 
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
     private final OAuth2UserUnlinkManager oAuth2UserUnlinkManager;
@@ -43,10 +42,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
-        String targetUrl;
-
-        targetUrl = determineTargetUrl(request, response, authentication);
-        System.out.println("targetUrl : " + targetUrl);
+        String targetUrl = determineTargetUrl(request, response, authentication);
 
         if (response.isCommitted()) {
             logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
@@ -54,7 +50,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
 
         clearAuthenticationAttributes(request, response);
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().write(targetUrl);
     }
 
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
@@ -91,19 +88,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 memberService.createMember(memberRequest);
             }
 
-            // 엑세스 토큰 쿠키저장
-            CookieUtils.addCookie(response,
-                    "access_token",
-                    accessToken,
-                    ACCESS_TOKEN_COOKIE_EXPIRE_SECONDS);
-            // 리프레쉬 토큰 쿠키저장
-            CookieUtils.addCookie(response,
-                    "refresh_token",
-                    refreshToken,
-                    REFRESH_TOKEN_EXPIRE_EXPIRE_SECONDS);
-
-            return UriComponentsBuilder.fromUriString(targetUrl)
-                    .build().toUriString();
+            return String.format(
+                    "<html><body><script>" +
+                            "window.ReactNativeWebView.postMessage(JSON.stringify({" +
+                            "accessToken: '%s', refreshToken: '%s'}));" +
+                            "</script></body></html>", accessToken, refreshToken);
 
         } else if ("unlink".equalsIgnoreCase(mode)) {
 
