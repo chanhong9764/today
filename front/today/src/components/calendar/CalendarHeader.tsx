@@ -1,7 +1,7 @@
 // CalendarHeader.tsx
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Header } from '../../types/calendar';
+import { Header } from '../../types/calendartype/calendar';
 
 const monthToString = [
   'January',

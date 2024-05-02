@@ -1,4 +1,4 @@
-import { MemberData } from '../types/member';
+import { MemberData } from '../types/datatype';
 import { apis, instance, responseBody } from './api';
 
 const memberRequests = {
@@ -7,4 +7,8 @@ const memberRequests = {
 
 export const Members = {
   getMembers: (): Promise<MemberData[]> => memberRequests.get(apis.members),
+  kakaoLogin: (requestCode: string): Promise<MemberData[]> =>
+    memberRequests.get(`${apis.login}/kakao?code=${requestCode}`),
+  naverLogin: (requestCode: string): Promise<MemberData[]> =>
+    memberRequests.get(`${apis.login}/naver?code=${requestCode}`),
 };

@@ -1,1 +1,1 @@
-set $spring_color blue
+set $spring_color blue;

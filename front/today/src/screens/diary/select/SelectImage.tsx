@@ -1,33 +1,42 @@
 import { format } from 'date-fns';
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 import { useTheme } from 'styled-components';
 import NextButton from '../../../common/CommonButton';
 import Images from '../../../components/diary/select/ResultImage';
 import dummy from '../../../db/data.json';
 import { DiaryData } from '../../../types/diary';
-import { DiaryProp } from '../../../types/stack';
+import { DiaryProp } from '../../../types/navigatortype/stack';
 import * as S from './style';
 
 function SelectImage({ navigation }: DiaryProp) {
   const theme = useTheme();
   const today: string = format(new Date(), 'yyyy. MM. dd');
-  const [selected, setSelected] = useState<number>();
+  const [selectedImg, setSelectedImg] = useState<number>();
 
   function renderImage({ item }: { item: DiaryData }) {
-    const backgroundColor = item.diaryId === selected ? theme.colors.middlePink : 'white';
+    const backgroundColor = item.diaryId === selectedImg ? theme.colors.middlePink : 'white';
 
-    return <Images item={item} onPress={() => setSelected(item.diaryId)} backgroundColor={backgroundColor} />;
+    return <Images item={item} onPress={() => setSelectedImg(item.diaryId)} backgroundColor={backgroundColor} />;
   }
 
   function createDiary() {
-    // Diarys.addDiary(data)
-    //   .then(res => {})
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-
-    navigation.navigate('DiaryDetail');
+    if (selectedImg) {
+      navigation.navigate('DiaryDetail');
+      // Diarys.addDiary(data)
+      //   .then(res => {})
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+    } else {
+      Alert.alert(
+        '그림 선택', // 제목
+        '오늘의 그림을 선택해주세요.', // 메시지
+        [
+          { text: '확인' }, // 확인 버튼
+        ],
+      );
+    }
   }
 
   return (
