@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components/native';
 
+type EmotionContainerProps = {
+  backgroundColor: string;
+};
+
 export const center = css`
   justify-content: center;
   align-items: center;
@@ -12,19 +16,29 @@ export const Container = styled.SafeAreaView`
 
 export const TitleContainer = styled.View`
   ${center}
-  flex: 2;
+  flex: 3;
 `;
 
 export const EmotionsContainer = styled.View`
   ${center}
-  flex: 5;
+  flex: 4;
 `;
 
-export const EmotionContainer = styled.TouchableOpacity`
-  ${center}
-  padding: 20px;
+export const EmotionContainer = styled.TouchableOpacity<EmotionContainerProps>`
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
   margin: 10px;
-  background-color: ${({ backgroundColor }) => backgroundColor || 'transparent'};
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px ${({ theme }) => theme.colors.middlePink};
+  background-color: ${props => props.backgroundColor || 'transparent'};
+`;
+
+export const EmotionsTitle = styled.Text`
+  ${center}
+  color: #555555;
+  font-size: ${({ theme }) => theme.fontSize.regular};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
 `;
 
 export const ButtonContainer = styled.View`
@@ -34,6 +48,14 @@ export const ButtonContainer = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${({ theme }) => theme.fontSize.big};
+  font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
+  padding: 5px;
+`;
+
+export const SubTitle = styled.Text`
+  font-size: ${({ theme }) => theme.fontSize.regular};
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
+  color: gray;
+  padding: 5px;
 `;

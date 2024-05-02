@@ -19,7 +19,7 @@ export const WriteDiaryInner = styled.View`
 
 export const WriteDiaryTitle = styled.Text`
   flex: 1;
-  font-size: ${({ theme }) => theme.fontSize.big};
+  font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
 `;
 

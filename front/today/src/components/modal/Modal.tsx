@@ -1,7 +1,8 @@
 import Modal from 'react-native-modal';
+import { ModalProps } from '../../types/modal';
 import * as S from './style';
 
-function ModalComponent({ modalVisible, setModalVisible, modalContent }) {
+function ModalComponent({ modalVisible, setModalVisible, modalContent }: ModalProps) {
   return (
     <Modal
       isVisible={modalVisible}

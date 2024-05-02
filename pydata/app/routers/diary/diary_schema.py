@@ -6,3 +6,5 @@ class createImageIn(BaseModel):
 
 class createImageOut(BaseModel):
     imageUrl: List[str]
+    emotion: dict
+    mbti: str

@@ -38,19 +38,19 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetails principal = getUserDetailsPrincipal(authentication);
 
-            String name = principal.getUsername();
+
 
             try {
+                String name = principal.getUsername();
                 Long memberId = null;
-                if (memberId == null) {
-                    Member member = memberRepository.findByEmail(principal.getUsername()).orElseThrow(
-                            () -> new GlobalException(ErrorCode.MEMBER_NOT_FOUND));
-                    memberId = member.getId();
-                }
+                Member member = memberRepository.findByEmail(principal.getUsername()).orElseThrow(
+                        () -> new GlobalException(ErrorCode.MEMBER_NOT_FOUND));
+                memberId = member.getId();
 
                 request.setAttribute("memberId", memberId);
 
                 filterChain.doFilter(request, response);
+                return ;
             } catch (GlobalException e) {
                 e.printStackTrace();
             }
