@@ -1,5 +1,6 @@
 package com.ssafy.today.domain.elasticsearch.dto.request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +10,15 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class DiaryEsRequest {
+    @NotNull
     private String content;
+    @NotNull
     private Long memberId;
+    @NotNull
     private Long diaryId;
+    @NotNull
     private String imgUrl;
+    @NotNull
     private LocalDateTime createdAt;
 
     @Builder

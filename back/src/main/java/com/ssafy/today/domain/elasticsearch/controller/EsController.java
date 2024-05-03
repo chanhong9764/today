@@ -1,5 +1,6 @@
 package com.ssafy.today.domain.elasticsearch.controller;
 
+import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.SearchRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
@@ -29,12 +30,12 @@ public class EsController {
         return getResponseEntity(SuccessCode.OK);
     }
 
-    @PatchMapping("/update")
-    public ResponseEntity<?> updateEs(@RequestBody UpdateDiaryRequest updateDiaryRequest) {
-        System.out.println(LocalDateTime.now());
-        esService.update(updateDiaryRequest);
-        return getResponseEntity(SuccessCode.OK);
-    }
+//    @PatchMapping("/update")
+//    public ResponseEntity<?> updateEs(@RequestBody UpdateDiaryRequest updateDiaryRequest) {
+//        System.out.println(LocalDateTime.now());
+//        esService.update(updateDiaryRequest);
+//        return getResponseEntity(SuccessCode.OK);
+//    }
 
     @PostMapping("/search/test")
     public ResponseEntity<?> searchTest(@RequestBody SearchRequest searchRequest) {
@@ -50,5 +51,21 @@ public class EsController {
                 .memberId(memberId)
                 .build());
         return getResponseEntity(SuccessCode.OK, searchRes);
+    }
+
+    @PostMapping("/delete/test")
+    public ResponseEntity<?> deleteTest(HttpServletRequest request, @RequestBody DeleteRequest deleteRequest) {
+        esService.delete(deleteRequest);
+        return getResponseEntity(SuccessCode.OK);
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(HttpServletRequest request, @RequestBody Long diaryId) {
+        Long memberId = (Long) request.getAttribute("memberId");
+        esService.delete(DeleteRequest.builder()
+                .memberId(memberId)
+                .diaryId(diaryId)
+                .build());
+        return getResponseEntity(SuccessCode.OK);
     }
 }

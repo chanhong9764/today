@@ -1,5 +1,6 @@
 package com.ssafy.today.domain.elasticsearch.service;
 
+import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.SearchRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
@@ -45,5 +46,9 @@ public class EsService {
         }
 
         return searchRes;
+    }
+
+    public void delete(DeleteRequest deleteRequest) {
+        esRepository.deleteByMemberIdAndDiaryId(deleteRequest.getMemberId(), deleteRequest.getDiaryId());
     }
 }
