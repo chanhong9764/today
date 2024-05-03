@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components';
 import NextButton from '../../../common/CommonButton';
 import Images from '../../../components/diary/select/ResultImage';
 import dummy from '../../../db/data.json';
-import { DiaryData } from '../../../types/diary';
+import { DiaryData } from '../../../types/datatype';
 import { DiaryProp } from '../../../types/navigatortype/stack';
 import * as S from './style';
 

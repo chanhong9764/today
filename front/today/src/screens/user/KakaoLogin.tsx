@@ -1,14 +1,15 @@
 import WebView from 'react-native-webview';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LottieView from 'lottie-react-native';
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-
+import { SafeAreaView, View } from 'react-native';
+import { UserProp } from '../../types/navigatortype/stack';
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('안녕')`;
 // 로그인에 성공하게 되면 어떤 주소로 이동 => injectedJavaScript에 적은 코드가 실행
 
-function KakaoLogin() {
-  const REDIRECT_URI = `${process.env.BASE_URL}/api/diary/tmp`;
+function KakaoLogin({ navigation }: UserProp) {
+  const REDIRECT_URI = `${process.env.BASE_URL}/tmp`;
   const KAKAO_AUTH_URL = `${process.env.BASE_URL}/oauth2/authorization/kakao?redirect_uri=${REDIRECT_URI}&mode=login`;
 
   // requestToken을 가져오는 함수
@@ -20,10 +21,22 @@ function KakaoLogin() {
     } catch (error) {
       console.log(error);
     }
+    navigation.navigate('Mypage');
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+        <LottieView
+          source={require('../../../assets/lotties/making.json')}
+          autoPlay
+          loop
+          style={{
+            width: 300,
+            height: 300,
+          }}
+        />
+      </View>
       <WebView
         style={{ flex: 1 }}
         source={{

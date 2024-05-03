@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Login from '../screens/LoginScreen';
 import KakaoLogin from '../screens/user/KakaoLogin';
-import Login from '../screens/user/LoginPage';
 import Mypage from '../screens/user/Mypage';
 import { UserStackParam } from '../types/navigatortype/stack';
 

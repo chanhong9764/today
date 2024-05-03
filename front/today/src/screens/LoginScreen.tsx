@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { UserProp } from '../../types/navigatortype/stack';
-import * as S from './style';
+import { UserProp } from '../types/navigatortype/stack';
+import * as S from './user/style';
 
-function LoginPage({ navigation }: UserProp) {
+function LoginScreen({ navigation }: UserProp) {
   return (
     <S.LoginContainer>
       <S.Logo>당일</S.Logo>
@@ -22,4 +22,4 @@ function LoginPage({ navigation }: UserProp) {
   );
 }
 
-export default LoginPage;
+export default LoginScreen;
