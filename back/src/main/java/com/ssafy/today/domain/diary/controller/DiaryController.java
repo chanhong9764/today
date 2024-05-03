@@ -39,9 +39,9 @@ public class DiaryController {
 
     @PostMapping("/img")
     public ResponseEntity<?> updateImgUrl(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest){
-//        Long memberId = (Long) request.getAttribute("memberId");
+        Long memberId = (Long) request.getAttribute("memberId");
 //        // 다이어리에 이미지 업데이트
-//        diaryService.updateDiartImg(diaryRequest);
+        diaryService.updateDiartImg(diaryRequest);
         
         //elasticsearch에 저장
         DiaryResponse diaryResponse = diaryService.getDiaryById(diaryRequest.getId());
