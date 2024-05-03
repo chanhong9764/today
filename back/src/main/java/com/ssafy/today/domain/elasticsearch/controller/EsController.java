@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEntity;
@@ -30,12 +29,12 @@ public class EsController {
         return getResponseEntity(SuccessCode.OK);
     }
 
-//    @PatchMapping("/update")
-//    public ResponseEntity<?> updateEs(@RequestBody UpdateDiaryRequest updateDiaryRequest) {
-//        System.out.println(LocalDateTime.now());
-//        esService.update(updateDiaryRequest);
-//        return getResponseEntity(SuccessCode.OK);
-//    }
+    @PatchMapping("/update/test")
+    public ResponseEntity<?> updateTest(@RequestBody UpdateDiaryRequest updateDiaryRequest) {
+        esService.update(updateDiaryRequest);
+
+        return getResponseEntity(SuccessCode.OK);
+    }
 
     @PostMapping("/search/test")
     public ResponseEntity<?> searchTest(@RequestBody SearchRequest searchRequest) {
@@ -53,13 +52,13 @@ public class EsController {
         return getResponseEntity(SuccessCode.OK, searchRes);
     }
 
-    @PostMapping("/delete/test")
+    @DeleteMapping("/delete/test")
     public ResponseEntity<?> deleteTest(HttpServletRequest request, @RequestBody DeleteRequest deleteRequest) {
         esService.delete(deleteRequest);
         return getResponseEntity(SuccessCode.OK);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<?> delete(HttpServletRequest request, @RequestBody Long diaryId) {
         Long memberId = (Long) request.getAttribute("memberId");
         esService.delete(DeleteRequest.builder()
@@ -68,4 +67,5 @@ public class EsController {
                 .build());
         return getResponseEntity(SuccessCode.OK);
     }
+
 }

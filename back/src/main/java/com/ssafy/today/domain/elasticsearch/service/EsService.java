@@ -29,12 +29,8 @@ public class EsService {
     }
 
     public void update(UpdateDiaryRequest updateDiaryRequest) {
-        DiaryEs diaryEs = esRepository.findByMemberIdAndDiaryId(
-                updateDiaryRequest.getMemberId(), updateDiaryRequest.getDiaryId());
+        DiaryEs diaryEs = esRepository.deleteByMemberIdAndDiaryId(updateDiaryRequest.getMemberId(), updateDiaryRequest.getDiaryId());
 
-        diaryEs.updateContent(updateDiaryRequest.getContent());
-        System.out.println(diaryEs.getContent());
-        esRepository.save(diaryEs);
     }
 
     public List<SearchResponse> search(SearchRequest searchRequest) {
@@ -49,6 +45,6 @@ public class EsService {
     }
 
     public void delete(DeleteRequest deleteRequest) {
-        esRepository.deleteByMemberIdAndDiaryId(deleteRequest.getMemberId(), deleteRequest.getDiaryId());
+        DiaryEs diaryEs = esRepository.deleteByMemberIdAndDiaryId(deleteRequest.getMemberId(), deleteRequest.getDiaryId());
     }
 }
