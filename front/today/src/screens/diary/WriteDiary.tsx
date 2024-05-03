@@ -1,6 +1,7 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Alert, Keyboard, Platform } from 'react-native';
+import { Diarys } from '../../apis/DiaryApi';
 import NextButton from '../../common/CommonButton';
 import DiaryContent from '../../components/diary/write/DiaryContent';
 import { ParamProps } from '../../types/navigatortype/params';
@@ -20,7 +21,7 @@ function WriteDiary({ navigation }: CalendarProp) {
 
   // 일기 내용 상태 관리
   const [content, setContent] = useState({
-    feel: feel,
+    feel: 'angry',
     content: '',
   });
 
@@ -35,6 +36,7 @@ function WriteDiary({ navigation }: CalendarProp) {
   // 이미지 생성 요청
   function onPressWrite() {
     const contentLength = content.content.trim().length;
+    console.log(content);
 
     if (contentLength < 10) {
       Alert.alert('경고', '최소 10자 이상 입력해주세요.');
@@ -43,13 +45,13 @@ function WriteDiary({ navigation }: CalendarProp) {
     } else {
       navigation.navigate('WaitImage');
 
-      // Diarys.getImage(content)
-      //   .then(res => {
-      //     // 이미지 생성 성공
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
+      Diarys.getImage(content)
+        .then(res => {
+          console.log('이미지 생성 성공');
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 

@@ -92,7 +92,7 @@ public class OAuth2AuthenticationSuccessHandler2 extends SimpleUrlAuthentication
                     "<html><body><script>" +
                             "window.ReactNativeWebView.postMessage(JSON.stringify({" +
                             "accessToken: '%s', refreshToken: '%s'}));" +
-                            "</script></body></html>", accessToken, refreshToken);
+                            "</script><div>헬로</div></body></html>", accessToken, refreshToken);
 
         } else if ("unlink".equalsIgnoreCase(mode)) {
 
