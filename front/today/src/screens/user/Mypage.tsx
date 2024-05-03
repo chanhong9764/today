@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Button, Text } from 'react-native';
 import { Members } from '../../apis/MemberApi';
 import Graph from '../../components/user/Graph';
+import Pyramid from '../../components/user/Pyramid';
 import { MemberData } from '../../types/datatype';
 import { UserProp } from '../../types/navigatortype/stack';
 import ResultModal from '../modal/Result';
@@ -46,6 +47,7 @@ function Mypage({ navigation }: UserProp) {
 
         <S.MyPageSubTitle>김유정 님의 성향은</S.MyPageSubTitle>
         <S.MyPageSubTitle>김유정 님의 감정은</S.MyPageSubTitle>
+        <Pyramid />
         <Graph
           labels={['행복', '슬픔', '분노', '짜증', '불안', '놀람']}
           data={[8, 7, 9, 5, 6, 10]}
