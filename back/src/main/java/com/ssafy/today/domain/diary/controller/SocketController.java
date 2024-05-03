@@ -5,9 +5,9 @@ import com.ssafy.today.domain.diary.dto.request.DiaryContentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class SocketController {
     private final SimpMessagingTemplate simpMessagingTemplate;
