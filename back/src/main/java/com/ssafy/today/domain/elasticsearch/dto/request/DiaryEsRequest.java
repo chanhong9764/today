@@ -1,5 +1,6 @@
 package com.ssafy.today.domain.elasticsearch.dto.request;
 
+import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,5 +29,15 @@ public class DiaryEsRequest {
         this.diaryId = diaryId;
         this.imgUrl = imgUrl;
         this.createdAt = createdAt;
+    }
+
+    public static DiaryEsRequest fromDiaryResponse(DiaryResponse diaryResponse) {
+        return DiaryEsRequest.builder()
+                .content(diaryResponse.getContent())
+                .diaryId(diaryResponse.getId())
+                .memberId(diaryResponse.getMemberId())
+                .imgUrl(diaryResponse.getImgUrl())
+                .createdAt(diaryResponse.getCreatedAt())
+                .build();
     }
 }

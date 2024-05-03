@@ -5,6 +5,8 @@ import com.ssafy.today.domain.diary.dto.request.DiaryContentRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
 import com.ssafy.today.domain.diary.service.DiaryService;
+import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
+import com.ssafy.today.domain.elasticsearch.service.EsService;
 import com.ssafy.today.util.response.SuccessCode;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEnt
 public class DiaryController {
 
     private final DiaryService diaryService;
+    private final EsService esService;
 
     @PostMapping
     public ResponseEntity<?> createDiary(HttpServletRequest request, @RequestBody DiaryContentRequest diaryContentRequest){
@@ -36,9 +39,15 @@ public class DiaryController {
 
     @PostMapping("/img")
     public ResponseEntity<?> updateImgUrl(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest){
-        Long memberId = (Long) request.getAttribute("memberId");
-        // 다이어리에 이미지 업데이트
-        diaryService.updateDiartImg(diaryRequest);
+//        Long memberId = (Long) request.getAttribute("memberId");
+//        // 다이어리에 이미지 업데이트
+//        diaryService.updateDiartImg(diaryRequest);
+        
+        //elasticsearch에 저장
+        DiaryResponse diaryResponse = diaryService.getDiaryById(diaryRequest.getId());
+        System.out.println(diaryResponse);
+        esService.saveEs(DiaryEsRequest.fromDiaryResponse(diaryResponse));
+
         return getResponseEntity(SuccessCode.OK);
     }
 
