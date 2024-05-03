@@ -9,10 +9,10 @@ import org.springframework.web.socket.config.annotation.*;
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/")
+        registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
-        registry.addEndpoint("/")
+        registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("*");
     }
 
