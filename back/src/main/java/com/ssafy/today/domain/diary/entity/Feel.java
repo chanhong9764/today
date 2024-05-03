@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Feel {
-    SURPRISE("surprise"), SAD("sad"), DEPRESSED("depressed"), EXCITING("exciting"), HAPPY("happy"), ANGRY("angry");
+    ANGRY("angry"), DISGUST("disgust"), FEAR("fear"), HAPPINESS("happiness"), SADNESS("sadness"), SURPRISE("surprise");
 
     Feel(String value) {
         this.value = value;

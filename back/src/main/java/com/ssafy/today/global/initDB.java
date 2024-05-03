@@ -1,7 +1,6 @@
 package com.ssafy.today.global;
 
 import com.ssafy.today.domain.diary.entity.Diary;
-import com.ssafy.today.domain.diary.entity.Feel;
 import com.ssafy.today.domain.member.entity.Member;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -9,10 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
-import static com.ssafy.today.domain.diary.entity.Feel.SAD;
-import static com.ssafy.today.domain.diary.entity.Feel.SURPRISE;
+import static com.ssafy.today.domain.diary.entity.Feel.*;
 
 @Component
 @RequiredArgsConstructor
@@ -60,7 +56,7 @@ public class initDB {
                 .member(member1)
                 .content(lolem)
                 .imgUrl("https://mimgnews.pstatic.net/image/origin/001/2024/04/25/14651374.jpg?type=nf220_150")
-                .feel(i % 2 == 0 ? SAD : SURPRISE) // 예시로 번갈아 가면서 감정 설정
+                .feel(i % 2 == 0 ? ANGRY : SURPRISE) // 예시로 번갈아 가면서 감정 설정
                 .important(false)
                 .build();
         em.persist(diary);
@@ -70,7 +66,7 @@ public class initDB {
                 .member(member2)
                 .content(lolem)
                 .imgUrl("https://mimgnews.pstatic.net/image/origin/001/2024/04/25/14651374.jpg?type=nf220_150")
-                .feel(i % 2 == 0 ? SAD : SURPRISE) // 예시로 번갈아 가면서 감정 설정
+                .feel(i % 2 == 0 ? ANGRY : SURPRISE) // 예시로 번갈아 가면서 감정 설정
                 .important(false) // 예시로 중요 여부를 번갈아 가면서 설정
                 .build();
         em.persist(diary);
