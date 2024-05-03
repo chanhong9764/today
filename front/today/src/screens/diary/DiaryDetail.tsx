@@ -1,13 +1,16 @@
 // DiaryDetail.tsx
 import { Container } from 'native-base';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Text } from 'react-native';
+import ViewShot from 'react-native-view-shot';
+import SaveButton from '../../common/SaveButton';
 import DetailContent from '../../components/diary/detail/DetailContent';
 import DetailHeader from '../../components/diary/detail/DetailHeader';
 import { DiaryData } from '../../types/datatype';
 
 function DiaryDetail() {
   const [diary, setDiary] = useState<DiaryData | null>(null);
+  const viewShotRef = useRef(null);
 
   // useEffect(() => {
   //   Diarys.getSingleDiary(diaryId)
@@ -27,8 +30,11 @@ function DiaryDetail() {
 
   return (
     <Container>
-      <DetailHeader diary={diary} />
-      <DetailContent diary={diary} />
+      <ViewShot ref={viewShotRef} options={{ format: 'jpg', quality: 0.9 }}>
+        <DetailHeader diary={diary} />
+        <DetailContent diary={diary} />
+      </ViewShot>
+      <SaveButton viewShotRef={viewShotRef} />
     </Container>
   );
 }
