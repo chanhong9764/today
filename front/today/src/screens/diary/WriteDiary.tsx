@@ -21,7 +21,7 @@ function WriteDiary({ navigation }: CalendarProp) {
 
   // 일기 내용 상태 관리
   const [content, setContent] = useState({
-    feel: feel,
+    feel: 'angry',
     content: '',
   });
 
@@ -36,17 +36,18 @@ function WriteDiary({ navigation }: CalendarProp) {
   // 이미지 생성 요청
   function onPressWrite() {
     const contentLength = content.content.trim().length;
+    console.log(content);
 
     if (contentLength < 10) {
       Alert.alert('경고', '최소 10자 이상 입력해주세요.');
     } else if (contentLength > 200) {
       Alert.alert('경고', '200자를 초과할 수 없습니다.');
     } else {
-      navigation.push('SelectImage');
+      navigation.navigate('WaitImage');
 
       Diarys.getImage(content)
         .then(res => {
-          // 이미지 생성 성공
+          console.log('이미지 생성 성공');
         })
         .catch(err => {
           console.log(err);

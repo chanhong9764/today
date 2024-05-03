@@ -87,11 +87,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                     .email(principal.getName())
                     .nickname(principal.getNickName())
                     .build();
-            if(memberService.isMemberExists(principal.getName())){
-                // 해당 유저가 이미 존재할때
-            }else{
-                // 유저가 존재하지 않을때
-                // 회원가입 처리
+            if(!memberService.isMemberExists(principal.getName())){
                 memberService.createMember(memberRequest);
             }
 

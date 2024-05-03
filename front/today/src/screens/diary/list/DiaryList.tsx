@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView } from 'react-native';
+import { FlatList, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 import { Calendars } from '../../../apis/CalendarApi';
 import { Diarys } from '../../../apis/DiaryApi';
 import { SingleDiary } from '../../../components/diary/list/SingleDiary';
@@ -18,20 +18,22 @@ function DiaryList() {
     }
     setLoading(true);
 
-    Diarys.getDiarys({
-      page: page,
-      size: 5,
-    })
+    Diarys.getDiarys(page, 5)
       .then(result => {
+        console.log(result);
         setData(data.concat(result));
         setPage(page + 1);
       })
       .then(() => setLoading(false))
-      .catch(err => setLoading(false));
+      .catch(err => {
+        setLoading(false);
+        console.log(err);
+      });
   }
 
   useEffect(() => {
     getData();
+    console.log('데이터 가져오기');
   }, []);
 
   // 검색
@@ -47,7 +49,13 @@ function DiaryList() {
       });
   }
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      onStartShouldSetResponder={event => {
+        Keyboard.dismiss();
+        return false;
+      }}
+      style={{ flex: 1 }}>
       <SearchBar filterText={filterText} setFilterText={setFilterText} onPress={onPressSearch} />
       <FlatList
         data={data}
@@ -56,7 +64,7 @@ function DiaryList() {
         onEndReached={getData} // 지정 스크롤 지점에 도달했을 때 실행할 함수
         onEndReachedThreshold={0.6} // 스크롤 지점 지정
       />
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

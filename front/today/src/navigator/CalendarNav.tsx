@@ -5,25 +5,27 @@ import DiaryDetail from '../screens/diary/DiaryDetail';
 import DiaryEdit from '../screens/diary/DiaryEdit';
 import WriteDiary from '../screens/diary/WriteDiary';
 import SelectImage from '../screens/diary/select/SelectImage';
+import WaitImage from '../screens/diary/wait/WaitImage';
 import SelectEmotion from '../screens/emotion/SelectEmotion';
 
 import { CalendarStackParam } from '../types/navigatortype/stack';
 
-const DiaryStack = createNativeStackNavigator<CalendarStackParam>();
+const CalendarStack = createNativeStackNavigator<CalendarStackParam>();
 
 export const CalendarNav = () => {
   return (
-    <DiaryStack.Navigator
+    <CalendarStack.Navigator
       initialRouteName="Calendar"
       screenOptions={{
         headerBackTitle: 'Back',
       }}>
-      <DiaryStack.Screen name="Calendar" component={Calendar} />
-      <DiaryStack.Screen name="SelectEmotion" component={SelectEmotion} />
-      <DiaryStack.Screen name="SelectImage" component={SelectImage} />
-      <DiaryStack.Screen name="DiaryEdit" component={DiaryEdit} />
-      <DiaryStack.Screen name="WriteDiary" component={WriteDiary} />
-      <DiaryStack.Screen name="DiaryDetail" component={DiaryDetail} />
-    </DiaryStack.Navigator>
+      <CalendarStack.Screen name="Calendar" component={Calendar} />
+      <CalendarStack.Screen name="SelectEmotion" component={SelectEmotion} />
+      <CalendarStack.Screen name="SelectImage" component={SelectImage} />
+      <CalendarStack.Screen name="DiaryEdit" component={DiaryEdit} />
+      <CalendarStack.Screen name="WriteDiary" component={WriteDiary} />
+      <CalendarStack.Screen name="DiaryDetail" component={DiaryDetail} />
+      <CalendarStack.Screen name="WaitImage" component={WaitImage} options={{ headerShown: false }} />
+    </CalendarStack.Navigator>
   );
 };

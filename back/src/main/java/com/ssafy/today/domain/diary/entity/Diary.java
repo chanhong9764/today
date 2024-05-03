@@ -33,14 +33,36 @@ public class Diary extends BaseTimeEntity {
     @Column(length = 1000)
     private String content;
 
+    private Long angry;
+
+    private Long disgust;
+
+    private Long fear;
+
+    private Long happiness;
+
+    private Long sadness;
+
+    private Long surprise;
+
+    @Enumerated(EnumType.STRING)
+    private MBTI mbti;
+
 
     @Builder
-    public Diary(Member member, Feel feel, Boolean important, String imgUrl, String content) {
+    public Diary(Long id, Member member, Feel feel, Boolean important, String imgUrl, String content, Long angry, Long disgust, Long fear, Long happiness, Long sadness, Long surprise, MBTI mbti) {
         this.member = member;
         this.feel = feel;
         this.important = important;
         this.imgUrl = imgUrl;
         this.content = content;
+        this.angry = angry;
+        this.disgust = disgust;
+        this.fear = fear;
+        this.happiness = happiness;
+        this.sadness = sadness;
+        this.surprise = surprise;
+        this.mbti = mbti;
     }
 
     public void updateContent(String content){

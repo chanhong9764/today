@@ -30,9 +30,10 @@ public class CalendarService {
     public List<CalendarResponse> getDiaryMemberIdAndMonth(Long memberId, LocalDate date) {
         // TODO : 해당유저의 해당 달에 해당하는 important 컬럼이 true 인 모든 다이어리 가져오기
         YearMonth yearMonth = YearMonth.from(date);
-        LocalDateTime startOfMonth = date.atStartOfDay();
-        LocalDateTime endOfMonth = date.plusMonths(1).atStartOfDay().minusNanos(1);
-
+        LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
+        LocalDateTime endOfMonth = yearMonth.atEndOfMonth().atStartOfDay();
+        System.out.println(startOfMonth);
+        System.out.println(endOfMonth);
         List<Diary> diaries = diaryRepository.findByMemberIdAndImportantIsTrueAndCreatedAtBetween(memberId, startOfMonth, endOfMonth);
         return diaries.stream()
                 .map(CalendarResponse::fromEntity)

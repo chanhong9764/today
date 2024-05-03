@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { Axios, AxiosResponse } from 'axios';
 import { Apis } from '../types/datatype/apis';
 
@@ -9,7 +10,7 @@ const apis: Apis = {
   image: '/diary/img',
   // 이미지 생성, 다이어리 list
   diary: '/diary',
-  allDiarys: params => `/diary/${params}`,
+  allDiarys: (page, size) => `/diary?page=${page}&size=${size}&scategory=['string']`,
   singleDiary: diaryId => `/diary/${diaryId}`,
   important: diaryId => `/diary/important/${diaryId}`,
   month: date => `/diary/calendars/${date}`,
@@ -21,16 +22,17 @@ const instance: Axios = axios.create({
   withCredentials: true,
 });
 
-// instance.interceptors.request.use(
-//   config => {
-//     const accessToken = EncryptedStorage.getItem('access_token');
-//     config.headers['authorization'] = `Bearer ${accessToken}`;
-//     return config;
-//   },
-//   error => {
-//     return Promise.reject(error);
-//   },
-// );
+instance.interceptors.request.use(
+  async config => {
+    const accessToken = await AsyncStorage.getItem('accessToken');
+    console.log(accessToken);
+    config.headers['authorization'] = `Bearer ${accessToken}`;
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  },
+);
 
 const responseBody = (response: AxiosResponse) => response.data;
 
