@@ -16,7 +16,7 @@ type BottomTabParamList = {
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-function Navigaior() {
+function Navigator() {
   const theme = useTheme();
   return (
     <Tab.Navigator
@@ -54,4 +54,4 @@ function Navigaior() {
   );
 }
 
-export default Navigaior;
+export default Navigator;
