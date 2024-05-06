@@ -1,9 +1,8 @@
 import WebView from 'react-native-webview';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LottieView from 'lottie-react-native';
 import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { UserProp } from '../../types/navigatortype/stack';
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('안녕')`;
 // 로그인에 성공하게 되면 어떤 주소로 이동 => injectedJavaScript에 적은 코드가 실행
@@ -26,7 +25,7 @@ function KakaoLogin({ navigation }: UserProp) {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+      {/* <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
         <LottieView
           source={require('../../../assets/lotties/making.json')}
           autoPlay
@@ -36,7 +35,7 @@ function KakaoLogin({ navigation }: UserProp) {
             height: 300,
           }}
         />
-      </View>
+      </View> */}
       <WebView
         style={{ flex: 1 }}
         source={{

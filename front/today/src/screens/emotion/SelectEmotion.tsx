@@ -1,18 +1,15 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { Alert, FlatList } from 'react-native';
 import { useTheme } from 'styled-components';
 import NextButton from '../../common/CommonButton';
-import { Data, EmotionData } from '../../contexts/EmotionData';
-import { DiaryStackParam } from '../../types/navigatortype/stack';
+import { EmotionData, EmotionDataProp } from '../../contexts/EmotionData';
+import { CalendarProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
 type EmotionProps = {
-  emotion: Data;
+  emotion: EmotionDataProp;
   onPress: () => void;
   backgroundColor: string;
-  textColor?: string;
 };
 
 function Emotions({ emotion, onPress, backgroundColor }: EmotionProps) {
@@ -23,13 +20,12 @@ function Emotions({ emotion, onPress, backgroundColor }: EmotionProps) {
   );
 }
 
-function SelectEmotion() {
+function SelectEmotion({ navigation }: CalendarProp) {
   const theme = useTheme();
-  const navigation = useNavigation<NativeStackNavigationProp<DiaryStackParam>>();
   const [selectedFeel, setSelectedFeel] = useState<string>('');
 
   // 감정 선택시 색 변화
-  function renderEmotion({ item }: { item: Data }) {
+  function renderEmotion({ item }: { item: EmotionDataProp }) {
     const backgroundColor = item.feel === selectedFeel ? theme.colors.lightPink : '';
 
     return <Emotions emotion={item} onPress={() => setSelectedFeel(item.feel)} backgroundColor={backgroundColor} />;

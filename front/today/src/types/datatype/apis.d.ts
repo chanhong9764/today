@@ -1,5 +1,4 @@
 export interface Apis {
-  login: string;
   members: string;
   search: string;
   image: string;
@@ -9,4 +8,11 @@ export interface Apis {
   important: (diaryId: number) => Array;
   month: (date: string) => Array;
   day: (date: string) => Array;
+}
+
+export interface APIResponse<T> {
+  statusCode: number;
+  statusName: string;
+  message: string;
+  data?: T;
 }

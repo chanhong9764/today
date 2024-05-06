@@ -1,22 +1,32 @@
 export interface MemberData {
-  data: {
-    memberId: number;
-    nickName: string;
-    email: string;
-    createdAt?: string;
-    updatedAt?: string;
-  };
+  id: number;
+  email: string;
+  nickName: string;
+  createAt?: string;
+  updatedAt?: string;
 }
 
 export interface DiaryData {
-  memberId?: number;
-  diaryId: number;
+  id: number;
+  memberId: number;
   feel: string | undefined;
-  imgUrl?: string;
+  important: boolean;
+  imgUrl: string;
   content: string;
-  important?: boolean;
+  createdAt?: string | Date;
+}
+
+export interface AllDiaryData {
+  content: DiaryData[];
+}
+
+export interface CalendarData {
+  id: number;
+  memberId: number;
+  important: boolean;
+  imgUrl: string;
+  content: string;
   createdAt?: string | date;
-  updatedAt?: string | date;
 }
 
 export interface ImageData {

@@ -1,13 +1,13 @@
-type Data = {
+type EmotionDataProp = {
   feel: string;
   name: string;
   icon: string;
 };
 
-const EmotionData: Data[] = [
+const EmotionData: EmotionDataProp[] = [
   {
-    feel: 'happy',
-    name: '기쁨',
+    feel: 'happiness',
+    name: '행복',
     icon: 'smiley',
   },
   {
@@ -16,25 +16,25 @@ const EmotionData: Data[] = [
     icon: 'smiley',
   },
   {
-    feel: 'sad',
+    feel: 'sadness',
     name: '슬픔',
     icon: 'smiley',
   },
   {
-    feel: 'depressed',
-    name: '우울',
+    feel: 'disgust',
+    name: '짜증',
     icon: 'smiley',
   },
   {
-    feel: 'exciting',
-    name: '신남',
+    feel: 'fear',
+    name: '불안',
     icon: 'smiley',
   },
   {
     feel: 'angry',
-    name: '화남',
+    name: '분노',
     icon: 'smiley',
   },
 ];
 
-export { Data, EmotionData };
+export { EmotionData, EmotionDataProp };

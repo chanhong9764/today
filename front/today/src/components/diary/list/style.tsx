@@ -6,7 +6,7 @@ export const center = css`
   width: 100%;
 `;
 
-export const SingleDiaryContainer = styled.View`
+export const SingleDiaryContainer = styled.TouchableOpacity`
   background-color: white;
   box-shadow: 2px 2px 2px lightgray;
   padding: 20px;
@@ -19,7 +19,9 @@ export const SingleDiaryContent = styled.View`
   padding: 30px 0px;
 `;
 
-export const SingleDiaryDates = styled.View``;
+export const SingleDiaryDates = styled.View`
+  margin: 0px 20px;
+`;
 
 export const SingleDiaryDate = styled.Text`
   font-weight: ${({ theme }) => theme.fontWeight.bold};

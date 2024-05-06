@@ -29,8 +29,15 @@ public class EsService {
     }
 
     public void update(UpdateDiaryRequest updateDiaryRequest) {
-        DiaryEs diaryEs = esRepository.deleteByMemberIdAndDiaryId(updateDiaryRequest.getMemberId(), updateDiaryRequest.getDiaryId());
-
+        DiaryEs diaryEs = esRepository.findByMemberIdAndDiaryId(updateDiaryRequest.getMemberId(), updateDiaryRequest.getDiaryId());
+        esRepository.deleteByMemberIdAndDiaryId(updateDiaryRequest.getMemberId(), updateDiaryRequest.getDiaryId());
+        saveEs(DiaryEsRequest.builder()
+                .content(updateDiaryRequest.getContent())
+                .memberId(diaryEs.getMemberId())
+                .diaryId(diaryEs.getDiaryId())
+                .imgUrl(diaryEs.getImgUrl())
+                .createdAt(diaryEs.getCreatedAt())
+                .build());
     }
 
     public List<SearchResponse> search(SearchRequest searchRequest) {
@@ -45,6 +52,6 @@ public class EsService {
     }
 
     public void delete(DeleteRequest deleteRequest) {
-        DiaryEs diaryEs = esRepository.deleteByMemberIdAndDiaryId(deleteRequest.getMemberId(), deleteRequest.getDiaryId());
+        esRepository.deleteByMemberIdAndDiaryId(deleteRequest.getMemberId(), deleteRequest.getDiaryId());
     }
 }
