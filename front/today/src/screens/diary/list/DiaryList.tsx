@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import { Calendars } from '../../../apis/CalendarApi';
 import { Diarys } from '../../../apis/DiaryApi';
-import { SingleDiary } from '../../../components/diary/list/SingleDiary';
+import { DiaryCard } from '../../../components/diary/list/DiaryCard';
 import SearchBar from '../../../components/diary/search/SearchBar';
-import { DiaryData } from '../../../types/datatype';
+import { AllDiaryData, DiaryData } from '../../../types/datatype';
+import { DiaryProp } from '../../../types/navigatortype/stack';
 
-function DiaryList() {
+function DiaryList({ navigation }: DiaryProp) {
   // 페이지네이션
-  const [data, setData] = useState<DiaryData[]>([]);
+  const [data, setData] = useState<AllDiaryData>({ content: [] });
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -18,11 +19,15 @@ function DiaryList() {
     }
     setLoading(true);
 
-    Diarys.getDiarys(page, 5)
-      .then(result => {
-        console.log(result);
-        setData(data.concat(result));
-        setPage(page + 1);
+    Diarys.getDiarys(page, 2)
+      .then(response => {
+        console.log(response.data);
+        const newData = response.data?.content || [];
+        setData(currentData => ({
+          ...currentData,
+          content: [...currentData.content, ...newData],
+        }));
+        setPage(prevPage => prevPage + 1);
       })
       .then(() => setLoading(false))
       .catch(err => {
@@ -33,7 +38,7 @@ function DiaryList() {
 
   useEffect(() => {
     getData();
-    console.log('데이터 가져오기');
+    console.log('다이어리 데이터 가져오기');
   }, []);
 
   // 검색
@@ -48,23 +53,25 @@ function DiaryList() {
         console.error(err);
       });
   }
+
+  function renderDiary({ item }: { item: DiaryData }) {
+    function navigateToDetail() {
+      navigation.push('DiaryDetail');
+    }
+    return <DiaryCard item={item} onPress={navigateToDetail} />;
+  }
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      onStartShouldSetResponder={event => {
-        Keyboard.dismiss();
-        return false;
-      }}
-      style={{ flex: 1 }}>
+    <SafeAreaView>
       <SearchBar filterText={filterText} setFilterText={setFilterText} onPress={onPressSearch} />
       <FlatList
-        data={data}
-        renderItem={SingleDiary}
-        keyExtractor={item => item.diaryId.toString()}
+        data={data.content}
+        renderItem={renderDiary}
+        keyExtractor={item => item?.id.toString()}
         onEndReached={getData} // 지정 스크롤 지점에 도달했을 때 실행할 함수
-        onEndReachedThreshold={0.6} // 스크롤 지점 지정
+        onEndReachedThreshold={0.8} // 스크롤 지점 지정
       />
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 

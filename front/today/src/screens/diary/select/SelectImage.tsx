@@ -15,9 +15,9 @@ function SelectImage({ navigation }: DiaryProp) {
   const [selectedImg, setSelectedImg] = useState<number>();
 
   function renderImage({ item }: { item: DiaryData }) {
-    const backgroundColor = item.diaryId === selectedImg ? theme.colors.middlePink : 'white';
+    const backgroundColor = item.id === selectedImg ? theme.colors.middlePink : 'white';
 
-    return <Images item={item} onPress={() => setSelectedImg(item.diaryId)} backgroundColor={backgroundColor} />;
+    return <Images item={item} onPress={() => setSelectedImg(item.id)} backgroundColor={backgroundColor} />;
   }
 
   function createDiary() {
@@ -44,12 +44,7 @@ function SelectImage({ navigation }: DiaryProp) {
       <S.TodayDate>{today}</S.TodayDate>
       <S.SelecImageTitle>마음에 드는 그림을 선택해주세요!</S.SelecImageTitle>
       <S.ImagesContainer>
-        <FlatList
-          data={dummy.data}
-          renderItem={renderImage}
-          numColumns={2}
-          keyExtractor={item => item.diaryId.toString()}
-        />
+        <FlatList data={dummy.data} renderItem={renderImage} numColumns={2} keyExtractor={item => item.id.toString()} />
       </S.ImagesContainer>
       <NextButton content="일기 작성 완료하기" onPress={createDiary} />
     </S.SelectImageContainer>

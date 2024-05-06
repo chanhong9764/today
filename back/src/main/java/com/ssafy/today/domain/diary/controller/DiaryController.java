@@ -7,6 +7,7 @@ import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
 import com.ssafy.today.domain.diary.service.DiaryService;
 import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
+import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
 import com.ssafy.today.util.response.SuccessCode;
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,8 +52,17 @@ public class DiaryController {
     }
 
     @PatchMapping("/{diaryId}")
-    public ResponseEntity<?> updateDiary(@RequestBody DiaryUpdateRequest diaryUpdateRequest, @PathVariable("diaryId") Long diaryId) {
+    public ResponseEntity<?> updateDiary(HttpServletRequest request, @RequestBody DiaryUpdateRequest diaryUpdateRequest, @PathVariable("diaryId") Long diaryId) {
         diaryService.updateDiaryContent(diaryId, diaryUpdateRequest);
+        Long memberId = (Long) request.getAttribute("memberId");
+
+        //elasticsearch update
+        esService.update(UpdateDiaryRequest.builder()
+                .memberId(memberId)
+                .diaryId(diaryId)
+                .content(diaryUpdateRequest.getContent())
+                .build());
+
         return getResponseEntity(SuccessCode.OK);
     }
 
