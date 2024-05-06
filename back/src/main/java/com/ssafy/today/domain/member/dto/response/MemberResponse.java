@@ -17,7 +17,7 @@ public class MemberResponse {
 
     private String nickName;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
@@ -26,7 +26,7 @@ public class MemberResponse {
                 .id(memberEntity.getId())
                 .email(memberEntity.getEmail())
                 .nickName(memberEntity.getNickname())
-                .createAt(memberEntity.getCreatedAt())
+                .createdAt(memberEntity.getCreatedAt())
                 .updatedAt(memberEntity.getUpdatedAt())
                 .build();
         return memberResponse;
