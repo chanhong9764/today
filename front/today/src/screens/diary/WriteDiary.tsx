@@ -1,10 +1,9 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { Alert, Keyboard, Platform } from 'react-native';
+import { Alert } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Diarys } from '../../apis/DiaryApi';
 import NextButton from '../../common/CommonButton';
 import DiaryContent from '../../components/diary/write/DiaryContent';
-import { ParamProps } from '../../types/navigatortype/params';
 import { CalendarProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
@@ -15,13 +14,12 @@ function CustomDate() {
   return <S.TodayDate>{formattedDate}</S.TodayDate>;
 }
 
-function WriteDiary({ navigation }: CalendarProp) {
-  const route = useRoute<RouteProp<{ params: ParamProps }, 'params'>>();
-  const feel = route.params.emotion;
+function WriteDiary({ navigation, route }: CalendarProp) {
+  const { feel } = route.params;
 
   // 일기 내용 상태 관리
   const [content, setContent] = useState({
-    feel: 'angry',
+    feel: feel,
     content: '',
   });
 
@@ -36,7 +34,6 @@ function WriteDiary({ navigation }: CalendarProp) {
   // 이미지 생성 요청
   function onPressWrite() {
     const contentLength = content.content.trim().length;
-    console.log(content);
 
     if (contentLength < 10) {
       Alert.alert('경고', '최소 10자 이상 입력해주세요.');
@@ -45,7 +42,7 @@ function WriteDiary({ navigation }: CalendarProp) {
     } else {
       navigation.navigate('WaitImage');
 
-      Diarys.getImage(content)
+      Diarys.createImage(content)
         .then(res => {
           console.log('이미지 생성 성공');
         })
@@ -54,14 +51,10 @@ function WriteDiary({ navigation }: CalendarProp) {
         });
     }
   }
+  3;
 
   return (
-    <S.WriteDiaryContainer
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      onStartShouldSetResponder={event => {
-        Keyboard.dismiss();
-        return false;
-      }}>
+    <KeyboardAwareScrollView>
       <S.WriteDiaryInner>
         <CustomDate />
         <S.WriteDiaryTitle>오늘 하루는 어땠나요?</S.WriteDiaryTitle>
@@ -70,7 +63,7 @@ function WriteDiary({ navigation }: CalendarProp) {
           <NextButton content="다 음" onPress={onPressWrite} />
         </S.WriteDiaryButton>
       </S.WriteDiaryInner>
-    </S.WriteDiaryContainer>
+    </KeyboardAwareScrollView>
   );
 }
 

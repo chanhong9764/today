@@ -10,7 +10,7 @@ import ResultModal from '../modal/Result';
 import * as S from './style';
 
 function Mypage({ navigation }: UserProp) {
-  const [memberInfo, setMemberInfo] = useState<MemberData['data'] | undefined>();
+  const [memberInfo, setMemberInfo] = useState<MemberData | undefined>();
 
   useEffect(() => {
     Members.getMembers()

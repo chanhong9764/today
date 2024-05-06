@@ -19,7 +19,9 @@ export const SingleDiaryContent = styled.View`
   padding: 30px 0px;
 `;
 
-export const SingleDiaryDates = styled.View``;
+export const SingleDiaryDates = styled.View`
+  margin: 0px 20px;
+`;
 
 export const SingleDiaryDate = styled.Text`
   font-weight: ${({ theme }) => theme.fontWeight.bold};

@@ -1,20 +1,28 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { Axios, AxiosResponse } from 'axios';
-import { Apis } from '../types/datatype/apis';
+import { APIResponse, Apis } from '../types/datatype/apis';
 
 const apis: Apis = {
-  login: '/login',
+  // 유저 정보
   members: '/members',
+  // 일기 검색
   search: '/search',
-  // 최종 다이어리 생성
-  image: '/diary/img',
-  // 이미지 생성, 다이어리 list
+
+  // 이미지 생성
   diary: '/diary',
-  allDiarys: (page, size) => `/diary?page=${page}&size=${size}&scategory=['string']`,
+  // 이미지 선택 -> 최종 일기 생성
+  image: '/diary/img',
+  // 모든 일기 조회
+  allDiarys: (page, size) => `/diary?page=${page}&size=${size}`,
+  // 일기 1개 상세, 수정, 삭제
   singleDiary: diaryId => `/diary/${diaryId}`,
+
+  // main 일기 지정
   important: diaryId => `/diary/important/${diaryId}`,
-  month: date => `/diary/calendars/${date}`,
-  day: date => `/diary/calendars/day/${date}`,
+  // 한달 일기 조회
+  month: date => `/calendars/${date}`,
+  // 하루 일기 조회
+  day: date => `/calendars/day/${date}`,
 };
 
 const instance: Axios = axios.create({
@@ -34,6 +42,6 @@ instance.interceptors.request.use(
   },
 );
 
-const responseBody = (response: AxiosResponse) => response.data;
+const responseBody = <T>(response: AxiosResponse<APIResponse<T>>) => response.data;
 
 export { apis, instance, responseBody };

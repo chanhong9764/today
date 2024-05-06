@@ -12,10 +12,10 @@ function LoginScreen({ navigation }: UserProp) {
       </Text>
       <S.LoginButtonsContainer>
         <S.LinkButton onPress={() => navigation.navigate('KakaoLogin')}>
-          <S.LoginButton source={require('../../../assets/kakao-logo.png')} resizeMode="stretch" />
+          <S.LoginButton source={require('../../assets/kakao-logo.png')} resizeMode="stretch" />
         </S.LinkButton>
         <S.LinkButton>
-          <S.LoginButton source={require('../../../assets/naver-logo.png')} resizeMode="stretch" />
+          <S.LoginButton source={require('../../assets/naver-logo.png')} resizeMode="stretch" />
         </S.LinkButton>
       </S.LoginButtonsContainer>
     </S.LoginContainer>
