@@ -13,7 +13,11 @@ export interface DiaryData {
   important: boolean;
   imgUrl: string;
   content: string;
-  createdAt?: string | date;
+  createdAt?: string | Date;
+}
+
+export interface AllDiaryData {
+  content: DiaryData[];
 }
 
 export interface CalendarData {

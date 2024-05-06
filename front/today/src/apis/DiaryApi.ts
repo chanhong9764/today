@@ -1,4 +1,4 @@
-import { DiaryData, ImageData } from '../types/datatype';
+import { AllDiaryData, DiaryData, ImageData } from '../types/datatype';
 import { APIResponse } from '../types/datatype/apis';
 import { apis, instance, responseBody } from './api';
 
@@ -11,8 +11,8 @@ const diaryRequests = {
 
 export const Diarys = {
   // 모든 일기 불러오기
-  getDiarys: (page: number, size: number): Promise<APIResponse<DiaryData[]>> =>
-    diaryRequests.get<DiaryData[]>(apis.allDiarys(page, size)),
+  getDiarys: (page: number, size: number): Promise<APIResponse<AllDiaryData>> =>
+    diaryRequests.get<AllDiaryData>(apis.allDiarys(page, size)),
   // 일기 하나 상세페이지
   getSingleDiary: (diaryId: number): Promise<APIResponse<DiaryData>> =>
     diaryRequests.get<DiaryData>(apis.singleDiary(diaryId)),

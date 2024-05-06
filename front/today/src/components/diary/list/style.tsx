@@ -6,7 +6,7 @@ export const center = css`
   width: 100%;
 `;
 
-export const SingleDiaryContainer = styled.View`
+export const SingleDiaryContainer = styled.TouchableOpacity`
   background-color: white;
   box-shadow: 2px 2px 2px lightgray;
   padding: 20px;
