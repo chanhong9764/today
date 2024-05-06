@@ -1,10 +1,10 @@
 import { Image, Text } from 'react-native';
-import { DiaryData } from '../../../types/datatype';
+import { CalendarData, DiaryData } from '../../../types/datatype';
 import * as S from './style';
 
-export function SingleDiary({ item }: { item: DiaryData }) {
+export function SingleDiary({ item }: { item: DiaryData | CalendarData }) {
   const day: Date = new Date(item.createdAt);
-  const month: number = day.getMonth();
+  const month: number = day.getMonth() + 1;
   const date: number = day.getDate();
 
   return (

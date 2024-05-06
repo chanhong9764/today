@@ -9,17 +9,18 @@ interface CuntomInputProps {
 
 function DiaryContent({ value, onChangeText, onSubmitEditing }: CuntomInputProps) {
   return (
-    <>
-      <S.DiaryContainer
+    <S.DiaryContainer>
+      <S.DiaryContent
         value={value}
         multiline={true}
-        numberOfLines={4}
+        numberOfLines={10}
         placeholder="오늘의 하루를 기록해보세요."
         onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}
+        style={{ textAlignVertical: 'top' }}
       />
       <S.CountText>{value ? value.length : 0} / 200</S.CountText>
-    </>
+    </S.DiaryContainer>
   );
 }
 
