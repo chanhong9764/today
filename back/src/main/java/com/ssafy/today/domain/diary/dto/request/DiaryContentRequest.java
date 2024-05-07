@@ -9,13 +9,19 @@ import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class DiaryContentRequest {
 
+    private Long memberId;
+
     private Feel feel;
 
     private String content;
+
+    private LocalDateTime createAt;
 
     public static Diary toEntity(DiaryContentRequest diaryContentRequest, Member member, boolean importent){
         return Diary.builder()
