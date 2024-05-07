@@ -1,13 +1,15 @@
-import WebView from 'react-native-webview';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native';
-import { UserProp } from '../../types/navigatortype/stack';
+import WebView from 'react-native-webview';
+import { IsLoginContext } from '../../contexts/IsLoginContext';
+import { RootProp } from '../../types/navigatortype/stack';
+
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('안녕')`;
 // 로그인에 성공하게 되면 어떤 주소로 이동 => injectedJavaScript에 적은 코드가 실행
 
-function KakaoLogin({ navigation }: UserProp) {
+function KakaoLogin({ navigation }: RootProp) {
+  const { setIsLogin } = useContext(IsLoginContext);
   const REDIRECT_URI = `${process.env.BASE_URL}/tmp`;
   const KAKAO_AUTH_URL = `${process.env.BASE_URL}/oauth2/authorization/kakao?redirect_uri=${REDIRECT_URI}&mode=login`;
 
@@ -20,7 +22,10 @@ function KakaoLogin({ navigation }: UserProp) {
     } catch (error) {
       console.log(error);
     }
-    navigation.navigate('Mypage');
+    const token = await AsyncStorage.getItem('accessToken');
+    if (token) {
+      setIsLogin(true);
+    }
   };
 
   return (

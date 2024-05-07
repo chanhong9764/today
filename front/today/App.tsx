@@ -3,10 +3,12 @@ import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import Navigator from './src/navigator/Navigator';
+import { IsLoginProvider } from './src/contexts/IsLoginContext';
+import RootStack from './src/navigator/RootStack';
 import theme from './src/styles/theme';
 
 export default function App() {
+  // 폰트 load
   const [isFont, setIsFont] = useState(false);
 
   useEffect(() => {
@@ -19,19 +21,13 @@ export default function App() {
     loadFonts();
   }, []);
 
-  // 로그인 상태 관리
-  const [isLogin, setIsLogin] = useState(false);
-
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        {/* {isLogin ? (
-          <MainScreen /> // 로그인 되어있는 경우 홈 진입
-        ) : (
-          <LoginScreen /> // 로그인이 안 되어있는 경우 로그인 페이지 진입
-        )} */}
-        <Navigator />
-      </NavigationContainer>
+      <IsLoginProvider>
+        <NavigationContainer>
+          <RootStack />
+        </NavigationContainer>
+      </IsLoginProvider>
     </ThemeProvider>
   );
 }
