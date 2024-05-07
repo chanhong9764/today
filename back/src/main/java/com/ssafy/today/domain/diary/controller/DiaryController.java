@@ -6,6 +6,7 @@ import com.ssafy.today.domain.diary.dto.request.DiaryContentRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryImageRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
+import com.ssafy.today.domain.diary.entity.Feel;
 import com.ssafy.today.domain.diary.service.DiaryService;
 import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
@@ -20,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEntity;
 
@@ -42,7 +45,7 @@ public class DiaryController {
         diaryContentRequest.setCreateAt(diaryResponse.getCreatedAt());
 
         // gpu 서버에 소켓통신을 통한 이미지 생성 요청 보내기
-        simpMessagingTemplate.convertAndSend("/sub/diary/fastapi", diaryContentRequest);
+        simpMessagingTemplate.convertAndSend("/sub/fastapi", diaryContentRequest);
         System.out.println("Diary 생성 요청");
 
         return getResponseEntity(SuccessCode.OK, diaryResponse);
@@ -59,7 +62,31 @@ public class DiaryController {
         // TODO : 클라이언트 알람 전송
     }
 
+    @MessageMapping("/diary/test")
+    public void testDiary(){
+        System.out.println("Diary 생성 완료");
+        // 통계 DB 저장
+        // TODO : 클라이언트 알람 전송
+    }
+    @MessageMapping("/diary/test2")
+    public void test2Diary(DiaryContentCreated diaryContentCreated){
+        System.out.println("Diary 생성 완료");
+        // 통계 DB 저장
+        // TODO : 클라이언트 알람 전송
+    }
 
+    @GetMapping("/diary/test")
+    public ResponseEntity<?> ctestDiary() {
+        simpMessagingTemplate.convertAndSend("/sub/fastapi",
+                DiaryContentRequest.builder()
+                        .feel(Feel.ANGRY)
+                        .memberId(123L)
+                        .content("test")
+                        .createAt(LocalDateTime.now())
+        );
+
+        return getResponseEntity(SuccessCode.OK);
+    }
 
     @PostMapping("/img")
     public ResponseEntity<?> updateImgUrl(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest) {
