@@ -1,7 +1,6 @@
 // DiaryDetail.tsx
-import { Container } from 'native-base';
 import React, { useEffect, useRef, useState } from 'react';
-import { Text } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import ViewShot from 'react-native-view-shot';
 import { Diarys } from '../../apis/DiaryApi';
 import SaveButton from '../../common/SaveButton';
@@ -10,7 +9,7 @@ import DetailHeader from '../../components/diary/detail/DetailHeader';
 import { DiaryData } from '../../types/datatype';
 import { DiaryDetailProp } from '../../types/navigatortype/stack';
 
-function DiaryDetail({ route }: DiaryDetailProp) {
+function DiaryDetail({ navigation, route }: DiaryDetailProp) {
   const [diary, setDiary] = useState<DiaryData | undefined>();
   const viewShotRef = useRef(null);
   const { diaryId } = route.params;
@@ -26,6 +25,13 @@ function DiaryDetail({ route }: DiaryDetailProp) {
       });
   }, [route.params]);
 
+  function onPressEdit() {
+    if (diary) {
+      console.log(diary.content, diaryId);
+      navigation.navigate('EditDiary', { diaryId: diaryId, diaryContent: diary.content });
+    }
+  }
+
   // 왜 이게 없으면 diary props가 오류가 날까
   // 왜 이게 없으면 null값으로 받아질 오류가 있다는걸까...
   if (!diary) {
@@ -33,13 +39,14 @@ function DiaryDetail({ route }: DiaryDetailProp) {
   }
 
   return (
-    <Container>
+    <View>
       <ViewShot ref={viewShotRef} options={{ format: 'jpg', quality: 0.9 }}>
         <DetailHeader diary={diary} />
         <DetailContent diary={diary} />
       </ViewShot>
       <SaveButton viewShotRef={viewShotRef} />
-    </Container>
+      <Button title="수 정" onPress={onPressEdit}></Button>
+    </View>
   );
 }
 

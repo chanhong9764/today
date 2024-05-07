@@ -20,3 +20,10 @@ export const StyledBtnText = styled.Text`
   font-size: ${({ theme }) => theme.fontSize.medium};
   color: white;
 `;
+
+export const TodayDate = styled.Text`
+  text-align: center;
+  padding: 20px;
+  font-size: ${({ theme }) => theme.fontSize.regular};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
+`;

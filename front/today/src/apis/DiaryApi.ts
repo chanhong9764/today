@@ -1,4 +1,4 @@
-import { AllDiaryData, DiaryData, ImageData } from '../types/datatype';
+import { AllDiaryData, DiaryData, EditDiaryData, ImageData } from '../types/datatype';
 import { APIResponse } from '../types/datatype/apis';
 import { apis, instance, responseBody } from './api';
 
@@ -22,8 +22,8 @@ export const Diarys = {
   deleteDiary: (diaryId: number): Promise<APIResponse<DiaryData>> =>
     diaryRequests.delete<DiaryData>(apis.singleDiary(diaryId)),
   // 일기 수정
-  editDiary: (diaryId: number, diary: DiaryData): Promise<APIResponse<DiaryData>> =>
-    diaryRequests.patch<DiaryData>(apis.singleDiary(diaryId), diary),
+  editDiary: (diaryId: number, content: EditDiaryData): Promise<APIResponse<DiaryData>> =>
+    diaryRequests.patch<DiaryData>(apis.singleDiary(diaryId), content),
 
   // 이미지 생성 요청
   createImage: (diary: ImageData): Promise<APIResponse<ImageData>> => diaryRequests.post<ImageData>(apis.diary, diary),

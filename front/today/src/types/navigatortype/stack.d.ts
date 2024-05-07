@@ -10,7 +10,9 @@ export type DiaryStackParam = {
   DiaryList?: undefined;
   SelectEmotion?: undefined;
   SelectImage?: undefined;
-  DiaryEdit?: undefined;
+  EditDiary?: {
+    diaryId: number;
+  };
   WriteDiary?: {
     feel: string;
   };
@@ -30,7 +32,9 @@ export type CalendarStackParam = {
   Calendar?: undefined;
   SelectEmotion?: undefined;
   SelectImage?: undefined;
-  DiaryEdit?: undefined;
+  EditDiary?: {
+    diaryId: number;
+  };
   WaitImage?: undefined;
   WriteDiary?: {
     feel: string;
@@ -56,3 +60,4 @@ export type UserProp = {
 
 export type WriteDiaryProp = NativeStackScreenProps<CalendarStackParam, 'WriteDiary'>;
 export type DiaryDetailProp = NativeStackScreenProps<CalendarStackParam, 'DiaryDetail'>;
+export type EditDiaryProp = NativeStackScreenProps<CalendarStackParam, 'EditDiary'>;
