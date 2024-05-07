@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 @Builder
 public class DiaryContentRequest {
 
+    private Long diaryId;
+
     private Long memberId;
 
     private Feel feel;

@@ -14,6 +14,8 @@ public class DiaryContentCreated {
 
     private Long memberId;
 
+    private Long diaryId;
+
     private LocalDateTime createdAt;
 
     @JsonProperty("data.imageUrl")
