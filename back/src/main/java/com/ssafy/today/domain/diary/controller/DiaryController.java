@@ -12,7 +12,10 @@ import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
+import com.ssafy.today.util.response.ErrorCode;
+import com.ssafy.today.util.response.ErrorResponseEntity;
 import com.ssafy.today.util.response.SuccessCode;
+import com.ssafy.today.util.response.exception.GlobalException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -43,7 +46,7 @@ public class DiaryController {
         // 이미지를 제외한 diary 생성
         DiaryResponse diaryResponse = diaryService.createDiary(memberId, diaryContentRequest);
         diaryContentRequest.setCreateAt(diaryResponse.getCreatedAt());
-
+        diaryContentRequest.setDiaryId(diaryResponse.getId());
         // gpu 서버에 소켓통신을 통한 이미지 생성 요청 보내기
         simpMessagingTemplate.convertAndSend("/sub/fastapi", diaryContentRequest);
         System.out.println("Diary 생성 요청");
@@ -59,6 +62,7 @@ public class DiaryController {
         System.out.println("Diary 생성 완료");
         // 통계 DB 저장
         analysisService.createOrUpdateAnalysis(diaryContentCreated.getMemberId(), diaryContentCreated);
+        diaryService.updateAfterCreateImg(diaryContentCreated);
         // TODO : 클라이언트 알람 전송
     }
 
@@ -91,6 +95,9 @@ public class DiaryController {
     @PostMapping("/img")
     public ResponseEntity<?> updateImgUrl(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest) {
         Long memberId = (Long) request.getAttribute("memberId");
+        if(!diaryService.checkDiaryBelongsToMember(diaryRequest.getId(), memberId)){
+            //error
+        }
         // 다이어리에 이미지 업데이트
         diaryService.updateDiaryImg(diaryRequest);
 
