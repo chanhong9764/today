@@ -1,21 +1,31 @@
 package com.ssafy.today.domain.diary.controller;
 
+import com.ssafy.today.domain.analysis.service.AnalysisService;
+import com.ssafy.today.domain.diary.dto.request.DiaryContentCreated;
 import com.ssafy.today.domain.diary.dto.request.DiaryContentRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryImageRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
+import com.ssafy.today.domain.diary.entity.Feel;
 import com.ssafy.today.domain.diary.service.DiaryService;
 import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
+import com.ssafy.today.util.response.ErrorCode;
+import com.ssafy.today.util.response.ErrorResponseEntity;
 import com.ssafy.today.util.response.SuccessCode;
+import com.ssafy.today.util.response.exception.GlobalException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEntity;
 
@@ -26,22 +36,70 @@ public class DiaryController {
 
     private final DiaryService diaryService;
     private final EsService esService;
+    private final SimpMessagingTemplate simpMessagingTemplate;
+    private final AnalysisService analysisService;
 
     @PostMapping
     public ResponseEntity<?> createDiary(HttpServletRequest request, @RequestBody DiaryContentRequest diaryContentRequest) {
         Long memberId = (Long) request.getAttribute("memberId");
-        // gpu 서버에 이미지 생성 요청 보내기
+        diaryContentRequest.setMemberId(memberId);
         // 이미지를 제외한 diary 생성
         DiaryResponse diaryResponse = diaryService.createDiary(memberId, diaryContentRequest);
+        diaryContentRequest.setCreateAt(diaryResponse.getCreatedAt());
+        diaryContentRequest.setDiaryId(diaryResponse.getId());
+        // gpu 서버에 소켓통신을 통한 이미지 생성 요청 보내기
+        simpMessagingTemplate.convertAndSend("/sub/fastapi", diaryContentRequest);
+        System.out.println("Diary 생성 요청");
 
         return getResponseEntity(SuccessCode.OK, diaryResponse);
+    }
+
+    /**
+     * fastapi 서버에서 이미지 생성이후 호출 될곳
+     */
+    @MessageMapping("/diary/created")
+    public void createdDiary(DiaryContentCreated diaryContentCreated){
+        System.out.println("Diary 생성 완료");
+        // 통계 DB 저장
+        analysisService.createOrUpdateAnalysis(diaryContentCreated.getMemberId(), diaryContentCreated);
+        diaryService.updateAfterCreateImg(diaryContentCreated);
+        // TODO : 클라이언트 알람 전송
+    }
+
+    @MessageMapping("/diary/test")
+    public void testDiary(){
+        System.out.println("Diary 생성 완료");
+        // 통계 DB 저장
+        // TODO : 클라이언트 알람 전송
+    }
+    @MessageMapping("/diary/test2")
+    public void test2Diary(DiaryContentCreated diaryContentCreated){
+        System.out.println("Diary 생성 완료");
+        // 통계 DB 저장
+        // TODO : 클라이언트 알람 전송
+    }
+
+    @GetMapping("/diary/test")
+    public ResponseEntity<?> ctestDiary() {
+        simpMessagingTemplate.convertAndSend("/sub/fastapi",
+                DiaryContentRequest.builder()
+                        .feel(Feel.ANGRY)
+                        .memberId(123L)
+                        .content("test")
+                        .createAt(LocalDateTime.now())
+        );
+
+        return getResponseEntity(SuccessCode.OK);
     }
 
     @PostMapping("/img")
     public ResponseEntity<?> updateImgUrl(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest) {
         Long memberId = (Long) request.getAttribute("memberId");
-//        // 다이어리에 이미지 업데이트
-        diaryService.updateDiartImg(diaryRequest);
+        if(!diaryService.checkDiaryBelongsToMember(diaryRequest.getId(), memberId)){
+            //error
+        }
+        // 다이어리에 이미지 업데이트
+        diaryService.updateDiaryImg(diaryRequest);
 
         //elasticsearch에 저장
         DiaryResponse diaryResponse = diaryService.getDiaryById(diaryRequest.getId());

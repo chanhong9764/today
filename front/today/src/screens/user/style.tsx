@@ -12,7 +12,7 @@ export const shadow = css`
 // 마이페이지
 export const MyPage = styled.SafeAreaView`
   flex: 1;
-  padding: 30px;
+  // padding: 30px;
 `;
 
 export const MyPageContainer = styled.View`
@@ -34,7 +34,7 @@ export const MyPageSubTitle = styled.Text`
 `;
 
 export const MyInfoTitle = styled.Text`
-  font-size: ${({ theme }) => theme.fontSize.regular};
+  font-size: ${({ theme }) => theme.fontSize.small};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   margin-right: 20px;
   flex: 2;

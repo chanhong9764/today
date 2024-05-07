@@ -4,11 +4,10 @@ import { WebView } from 'react-native-webview';
 type RadarChartProps = {
   labels: string[];
   data: number[];
-  chartTitle: string;
 };
 4;
 
-const Graph = ({ labels, data, chartTitle }: RadarChartProps) => {
+const Graph = ({ labels, data }: RadarChartProps) => {
   const chartHtml = `
     <html>
       <head>
@@ -34,12 +33,12 @@ const Graph = ({ labels, data, chartTitle }: RadarChartProps) => {
           
           var layout = {
             height: 800,
-            margin: {
-              t: 150,
-              l: 50,
-              r: 50,
-              b: 50,
-            },
+            // margin: {
+            //   t: 150,
+            //   l: 50,
+            //   r: 50,
+            //   b: 50,
+            // },
             polar: {
               // 방사축
               radialaxis: {
@@ -59,13 +58,6 @@ const Graph = ({ labels, data, chartTitle }: RadarChartProps) => {
                 },
               },
               gridshape: 'linear',
-            },
-            title: {
-              text: "${chartTitle}",
-              font: {
-                size: 100,
-                color: 'rgba(23, 21, 21, 0.8)',
-              }
             },
             showlegend: false,
             paper_bgcolor: 'rgba(0, 0, 0, 0)',
