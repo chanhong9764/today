@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Diarys } from '../../apis/DiaryApi';
 import NextButton from '../../common/CommonButton';
 import DiaryContent from '../../components/diary/write/DiaryContent';
-import { CalendarProp } from '../../types/navigatortype/stack';
+import { WriteDiaryProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
 function CustomDate() {
@@ -14,7 +14,7 @@ function CustomDate() {
   return <S.TodayDate>{formattedDate}</S.TodayDate>;
 }
 
-function WriteDiary({ navigation, route }: CalendarProp) {
+function WriteDiary({ navigation, route }: WriteDiaryProp) {
   const { feel } = route.params;
 
   // 일기 내용 상태 관리
@@ -44,6 +44,7 @@ function WriteDiary({ navigation, route }: CalendarProp) {
 
       Diarys.createImage(content)
         .then(res => {
+          console.log(content);
           console.log('이미지 생성 성공');
         })
         .catch(err => {

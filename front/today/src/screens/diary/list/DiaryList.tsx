@@ -56,7 +56,7 @@ function DiaryList({ navigation }: DiaryProp) {
 
   function renderDiary({ item }: { item: DiaryData }) {
     function navigateToDetail() {
-      navigation.push('DiaryDetail');
+      navigation.push('DiaryDetail', { diaryId: item.id });
     }
     return <DiaryCard item={item} onPress={navigateToDetail} />;
   }
