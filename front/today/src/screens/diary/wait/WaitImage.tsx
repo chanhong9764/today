@@ -6,14 +6,13 @@ function WaitImage() {
     <S.WaitImage>
       <S.WaitImageContainer>
         <LottieView
-          source={require('../../../../assets/lotties/making.json')}
+          source={require('../../../../assets/lotties/new.json')}
           autoPlay
           loop
           style={{
-            width: '50%',
-            height: '50%',
-          }}
-        />
+            width: 500,
+            height: 500,
+          }}></LottieView>
         <S.WaitImageTitle>그림 그리는 중!</S.WaitImageTitle>
         <S.WaitImageContent>오늘 하루를 그리는 중입니다.</S.WaitImageContent>
         <S.WaitImageContent>잠시만 기다려주세요.</S.WaitImageContent>
