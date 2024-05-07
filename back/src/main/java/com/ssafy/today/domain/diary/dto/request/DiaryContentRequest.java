@@ -24,8 +24,7 @@ public class DiaryContentRequest {
     private Feel feel;
 
     private String content;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    
     private LocalDateTime createAt;
 
     public static Diary toEntity(DiaryContentRequest diaryContentRequest, Member member, boolean importent){
