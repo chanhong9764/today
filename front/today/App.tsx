@@ -2,7 +2,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-
 import { IsLoginProvider } from './src/contexts/IsLoginContext';
 import RootStack from './src/navigator/RootStack';
 import theme from './src/styles/theme';
