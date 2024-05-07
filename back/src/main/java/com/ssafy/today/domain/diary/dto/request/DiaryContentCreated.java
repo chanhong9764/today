@@ -6,16 +6,16 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-
 @Data
 @Builder
 public class DiaryContentCreated {
-
+    @JsonProperty("data.diary.memberId")
     private Long memberId;
 
+    @JsonProperty("data.diary.diaryId")
     private Long diaryId;
 
+    @JsonProperty("data.diary.createdAt")
     private LocalDateTime createdAt;
 
     @JsonProperty("data.imageUrl")
@@ -41,4 +41,5 @@ public class DiaryContentCreated {
 
     @JsonProperty("data.mbti")
     private String mbti;
+
 }

@@ -75,6 +75,7 @@ public class DiaryController {
     @MessageMapping("/diary/test2")
     public void test2Diary(DiaryContentCreated diaryContentCreated){
         System.out.println("Diary 생성 완료");
+        System.out.println(diaryContentCreated.getMbti() + " " + diaryContentCreated.getDiaryId() + " " + diaryContentCreated.getMemberId());
         // 통계 DB 저장
         // TODO : 클라이언트 알람 전송
     }
@@ -82,6 +83,7 @@ public class DiaryController {
     @GetMapping("/diary/test")
     public ResponseEntity<?> ctestDiary() {
         DiaryContentRequest test = DiaryContentRequest.builder()
+                .diaryId(123L)
                 .feel(Feel.ANGRY)
                 .memberId(123L)
                 .content("test")
