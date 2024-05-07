@@ -44,11 +44,3 @@ export interface ImageData {
   feel: string | undefined;
   content: string;
 }
-
-export interface DiaryEntries {
-  data: DiaryData[];
-}
-
-export interface MemberEntries {
-  data: MemberData[];
-}

@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type RootStackParam = {
   LoginScreen: undefined;
   KakaoLogin: undefined;
-  Main: undefined;
+  MainTab: undefined;
 };
 
 export type DiaryStackParam = {
@@ -30,6 +30,7 @@ export type CalendarStackParam = {
   LoginScreen?: undefined;
   KakaoLogin?: undefined;
   Calendar?: undefined;
+  OneDayDiary?: undefined;
   SelectEmotion?: undefined;
   SelectImage?: undefined;
   EditDiary?: {

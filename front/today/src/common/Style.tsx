@@ -18,6 +18,7 @@ export const StyledAddBtn = styled.TouchableOpacity`
 export const StyledBtnText = styled.Text`
   text-align: center;
   font-size: ${({ theme }) => theme.fontSize.medium};
+  font-family: title;
   color: white;
 `;
 

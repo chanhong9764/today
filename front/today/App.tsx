@@ -20,6 +20,16 @@ export default function App() {
     loadFonts();
   }, []);
 
+  if (!isFont) {
+    return null; // 폰트 로딩 중에는 렌더링을 방지
+  }
+
+  // const customTextProps = {
+  //   style: {
+  //     fontFamily: 'title',
+  //   },
+  // };
+  // setCustomText(customTextProps);
   return (
     <ThemeProvider theme={theme}>
       <IsLoginProvider>
