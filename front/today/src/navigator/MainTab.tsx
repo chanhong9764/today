@@ -4,13 +4,13 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components/native';
 
+import OneDayDiary from '../screens/diary/day/OneDayDiary';
 import { CalendarNav } from './CalendarNav';
-import { DiaryNav } from './DairyNav';
 import { UserNav } from './UserNav';
 
 type BottomTabParamList = {
   Main: undefined;
-  Diary: undefined;
+  OneDayDiary: undefined;
   User: undefined;
 };
 
@@ -38,8 +38,8 @@ function MainTab() {
         }}
       />
       <Tab.Screen
-        name="Diary"
-        component={DiaryNav}
+        name="OneDayDiary"
+        component={OneDayDiary}
         options={{
           tabBarIcon: ({ color }) => <Icon name="book" size={27} color={color} />,
         }}

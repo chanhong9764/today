@@ -81,13 +81,12 @@ public class DiaryController {
 
     @GetMapping("/diary/test")
     public ResponseEntity<?> ctestDiary() {
-        simpMessagingTemplate.convertAndSend("/sub/fastapi",
-                DiaryContentRequest.builder()
-                        .feel(Feel.ANGRY)
-                        .memberId(123L)
-                        .content("test")
-                        .createAt(LocalDateTime.now())
-        );
+        DiaryContentRequest test = DiaryContentRequest.builder()
+                .feel(Feel.ANGRY)
+                .memberId(123L)
+                .content("test")
+                .createAt(LocalDateTime.now()).build();
+        simpMessagingTemplate.convertAndSend("/sub/fastapi", test);
 
         return getResponseEntity(SuccessCode.OK);
     }

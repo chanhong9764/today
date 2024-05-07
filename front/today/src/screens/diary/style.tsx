@@ -30,10 +30,3 @@ export const WriteDiaryButton = styled.View`
   flex: 2;
   margin: 30px 0px;
 `;
-
-export const TodayDate = styled.Text`
-  text-align: center;
-  padding: 20px;
-  font-size: ${({ theme }) => theme.fontSize.regular};
-  font-weight: ${({ theme }) => theme.fontWeight.medium};
-`;

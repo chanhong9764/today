@@ -38,7 +38,6 @@ function DiaryList({ navigation }: DiaryProp) {
 
   useEffect(() => {
     getData();
-    console.log('다이어리 데이터 가져오기');
   }, []);
 
   // 검색

@@ -2,17 +2,11 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Diarys } from '../../apis/DiaryApi';
-import NextButton from '../../common/CommonButton';
+import CommonButton from '../../common/CommonButton';
+import TodayDate from '../../common/TodayDate';
 import DiaryContent from '../../components/diary/write/DiaryContent';
 import { WriteDiaryProp } from '../../types/navigatortype/stack';
 import * as S from './style';
-
-function CustomDate() {
-  const today = new Date();
-  const formattedDate = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
-
-  return <S.TodayDate>{formattedDate}</S.TodayDate>;
-}
 
 function WriteDiary({ navigation, route }: WriteDiaryProp) {
   const { feel } = route.params;
@@ -57,11 +51,11 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
   return (
     <KeyboardAwareScrollView>
       <S.WriteDiaryInner>
-        <CustomDate />
+        <TodayDate />
         <S.WriteDiaryTitle>오늘 하루는 어땠나요?</S.WriteDiaryTitle>
         <DiaryContent value={content.content} onChangeText={onChangeContent} onSubmitEditing={onPressWrite} />
         <S.WriteDiaryButton>
-          <NextButton content="다 음" onPress={onPressWrite} />
+          <CommonButton content="다 음" onPress={onPressWrite} />
         </S.WriteDiaryButton>
       </S.WriteDiaryInner>
     </KeyboardAwareScrollView>
