@@ -26,6 +26,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEntity;
 
@@ -87,7 +88,7 @@ public class DiaryController {
                 .feel(Feel.ANGRY)
                 .memberId(123L)
                 .content("test")
-                .createAt(LocalDateTime.now()).build();
+                .createAt(LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))).build();
         simpMessagingTemplate.convertAndSend("/sub/fastapi", test);
 
         return getResponseEntity(SuccessCode.OK);
