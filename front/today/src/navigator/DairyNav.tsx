@@ -16,7 +16,6 @@ export const DiaryNav = () => {
     <DiaryStack.Navigator
       initialRouteName="DiaryList"
       screenOptions={{
-        // headerShown: false,
         headerBackTitle: 'Back',
       }}>
       <DiaryStack.Screen name="DiaryList" component={DiaryList} />
