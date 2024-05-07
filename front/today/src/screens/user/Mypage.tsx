@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Button, ScrollView, Text, View } from 'react-native';
 import { Members } from '../../apis/MemberApi';
 import Graph from '../../components/user/Graph';
 import Pyramid from '../../components/user/Pyramid';
@@ -15,6 +15,7 @@ function Mypage({ navigation }: UserProp) {
     Members.getMembers()
       .then(response => {
         setMemberInfo(response.data);
+        console.log(response.data);
       })
       .catch(err => {
         console.log(err);
@@ -30,7 +31,7 @@ function Mypage({ navigation }: UserProp) {
   return (
     <ScrollView>
       <S.MyPage>
-        <S.MyPageContainer style={{ flex: 1 }}>
+        <S.MyPageContainer>
           <S.MyPageSubTitle>MY INFO</S.MyPageSubTitle>
           <S.MyInfo>
             <S.MyInfoTitle>닉네임</S.MyInfoTitle>
@@ -45,16 +46,13 @@ function Mypage({ navigation }: UserProp) {
             </S.MyInfoContent>
           </S.MyInfo>
 
-          <S.MyPageSubTitle>김유정 님의 성향은</S.MyPageSubTitle>
-          <S.MyPageSubTitle>김유정 님의 감정은</S.MyPageSubTitle>
+          <S.MyPageSubTitle>{memberInfo?.nickName} 님의 성향은</S.MyPageSubTitle>
           <Pyramid />
-          <View style={{ height: 200 }}>
-            <Graph
-              labels={['행복', '슬픔', '분노', '짜증', '불안', '놀람']}
-              data={[8, 7, 9, 5, 6, 10]}
-              chartTitle="나의 감정통계"
-            />
+          <S.MyPageSubTitle>{memberInfo?.nickName} 님의 감정은</S.MyPageSubTitle>
+          <View style={{ height: 250 }}>
+            <Graph labels={['행복', '슬픔', '분노', '짜증', '불안', '놀람']} data={[8, 7, 9, 5, 6, 10]} />
           </View>
+          <Button title="카카오 로그인 버튼" onPress={() => navigation.navigate('KakaoLogin')} />
         </S.MyPageContainer>
       </S.MyPage>
     </ScrollView>

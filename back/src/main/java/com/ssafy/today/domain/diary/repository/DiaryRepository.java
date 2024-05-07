@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
@@ -19,7 +20,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     List<Diary> findByMemberIdAndImportantIsTrueAndCreatedAtBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
     Diary findFirstByMemberIdAndCreatedAtBetweenAndImportant(Long memberId, LocalDateTime createdAt, LocalDateTime createdAt2, Boolean important);
     boolean existsByImportantIsTrueAndMemberIdAndCreatedAtBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
-
-
+    boolean existsByIdAndMemberId(Long diaryId, Long memberId);
 
 }
