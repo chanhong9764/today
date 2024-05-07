@@ -8,6 +8,6 @@ spring:
     password: ${MYSQL_USER_PROD_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   elasticsearch:
     uris: 'http://elasticsearch:9200'
