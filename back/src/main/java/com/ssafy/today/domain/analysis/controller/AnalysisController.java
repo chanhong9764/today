@@ -29,7 +29,7 @@ public class AnalysisController {
     public ResponseEntity<?> getAnalysisMonth(HttpServletRequest request, @PathVariable("date") LocalDate date){
         Long memberId = (Long) request.getAttribute("memberId");
         // 해당 memberId의 한달간의 통계 가져오기
-        List<AnalysisResponse> AnalysisList = analysisService.getAnalysisMemberIdAndMonth(memberId, date);
+        List<AnalysisResponse> AnalysisList = analysisService.getAnalysisByMemberIdAndMonth(memberId, date);
         return getResponseEntity(SuccessCode.OK, AnalysisList);
     }
 
@@ -37,7 +37,7 @@ public class AnalysisController {
     public ResponseEntity<?> getAnalysisDay(HttpServletRequest request, @PathVariable("date") LocalDate date){
         Long memberId = (Long) request.getAttribute("memberId");
         // 해당 memberId의 하루 동안의 통계 가져오기
-        List<AnalysisResponse> AnalysisList = analysisService.getDiaryMemberIdAndDay(memberId, date);
+        List<AnalysisResponse> AnalysisList = analysisService.getAnalysisByMemberIdAndDay(memberId, date);
 
         return getResponseEntity(SuccessCode.OK, AnalysisList);
     }

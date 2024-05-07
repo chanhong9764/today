@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
+@ToString(exclude = {"member"})
 public class Analysis extends BaseTimeEntity {
 
     @Id
@@ -23,7 +23,7 @@ public class Analysis extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ColumnDefault("0")
+    @ColumnDefault("1")
     private Integer count;
 
     @ColumnDefault("0")
@@ -87,4 +87,49 @@ public class Analysis extends BaseTimeEntity {
         this.sadness = sadness;
         this.surprise = surprise;
     }
+    public void increaseCount(){
+        this.count++;
+    }
+
+    public void increaseType(char type){
+        switch (type) {
+            case 'E':
+                this.e++;
+                break;
+            case 'I':
+                this.i++;
+                break;
+            case 'S':
+                this.s++;
+                break;
+            case 'N':
+                this.n++;
+                break;
+            case 'F':
+                this.f++;
+                break;
+            case 'T':
+                this.t++;
+                break;
+            case 'P':
+                this.p++;
+                break;
+            case 'J':
+                this.j++;
+                break;
+            default:
+                System.out.println("잘못된 MBTI 타입입니다: " + type);
+                break;
+        }
+    }
+
+    public void sumEmotions(Double angry, Double disgust, Double fear, Double happiness, Double sadness, Double surprise){
+        this.angry+=angry;
+        this.disgust+=disgust;
+        this.fear+=fear;
+        this.happiness+=happiness;
+        this.sadness+=sadness;
+        this.surprise+=surprise;
+    }
+
 }
