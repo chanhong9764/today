@@ -6,11 +6,16 @@ type RadarChartProps = {
   data: number[];
   chartTitle: string;
 };
+4;
 
 const Graph = ({ labels, data, chartTitle }: RadarChartProps) => {
   const chartHtml = `
     <html>
       <head>
+      <style>
+        body { margin: 0; overflow: hidden; }
+        #chart { width: 100%; height: 100%; }
+      </style>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
       </head>
       <body>
@@ -29,6 +34,12 @@ const Graph = ({ labels, data, chartTitle }: RadarChartProps) => {
           
           var layout = {
             height: 800,
+            margin: {
+              t: 150,
+              l: 50,
+              r: 50,
+              b: 50,
+            },
             polar: {
               // 방사축
               radialaxis: {
@@ -52,14 +63,19 @@ const Graph = ({ labels, data, chartTitle }: RadarChartProps) => {
             title: {
               text: "${chartTitle}",
               font: {
-                size: 50,
-                color: 'rgba(23, 21, 21, 0.8)'
+                size: 100,
+                color: 'rgba(23, 21, 21, 0.8)',
               }
             },
             showlegend: false,
+            paper_bgcolor: 'rgba(0, 0, 0, 0)',
           };      
 
-          var config = { displayModeBar: false };
+          var config = { 
+            displayModeBar: false,
+            staticPlot: true,
+            doubleClick: 'reset'
+           };
 
           Plotly.newPlot('chart', data, layout, config);
         </script>
@@ -67,7 +83,9 @@ const Graph = ({ labels, data, chartTitle }: RadarChartProps) => {
     </html>
   `;
 
-  return <WebView originWhitelist={['*']} source={{ html: chartHtml }} style={{ flex: 1 }} />;
+  return (
+    <WebView originWhitelist={['*']} source={{ html: chartHtml }} style={{ flex: 1, backgroundColor: 'transparent' }} />
+  );
 };
 
 export default Graph;
