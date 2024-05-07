@@ -24,4 +24,10 @@ public class SocketController {
         // 통계 및 DB 저장
         // 클라이언트 알람 전송
     }
+    @MessageMapping("/diary/test")
+    public void testDiary(){
+        System.out.println("Diary 생성 완료");
+        // 통계 및 DB 저장
+        // 클라이언트 알람 전송
+    }
 }
