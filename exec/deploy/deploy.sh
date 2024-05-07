@@ -23,7 +23,7 @@ do
     # spring_blue or spring_green 컨테이너 이름을 적어주고 싶다 !
     # (curl) http 요청을 보내본다.
     response=$(curl -s http://spring_${AFTER_COLOR}:8080/api/health)
-    up_count=$(echo $response | grep 'UP' | wc -l)
+    up_count=$(echo $response | grep 'isWorking' | wc -l)
 
     if [ $up_count -ge 1 ]
     then
