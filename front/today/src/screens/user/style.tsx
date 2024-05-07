@@ -12,12 +12,11 @@ export const shadow = css`
 // 마이페이지
 export const MyPage = styled.SafeAreaView`
   flex: 1;
-  // padding: 30px;
+  ${center}
 `;
 
 export const MyPageContainer = styled.View`
   flex: 1;
-  padding: 10px 30px;
 `;
 
 export const MyPageTitle = styled.Text`
