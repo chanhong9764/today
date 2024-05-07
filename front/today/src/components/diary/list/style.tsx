@@ -1,13 +1,17 @@
 import styled, { css } from 'styled-components/native';
 
+type ImageContainerProps = {
+  backgroundColor: string;
+};
+
 export const center = css`
   justify-content: center;
   align-items: center;
   width: 100%;
 `;
 
-export const SingleDiaryContainer = styled.TouchableOpacity`
-  background-color: white;
+export const SingleDiaryContainer = styled.TouchableOpacity<ImageContainerProps>`
+  background-color: ${props => props.backgroundColor || 'transparent'};
   box-shadow: 2px 2px 2px lightgray;
   padding: 20px;
   margin: 20px;

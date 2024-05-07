@@ -16,10 +16,6 @@ export interface DiaryData {
   createdAt?: string | Date;
 }
 
-export interface AllDiaryData {
-  content: DiaryData[];
-}
-
 export interface CalendarData {
   id: number;
   memberId: number;
@@ -27,6 +23,21 @@ export interface CalendarData {
   imgUrl: string;
   content: string;
   createdAt?: string | date;
+}
+
+export interface SearchData {
+  diaryId: number;
+  imgUrl: string;
+  createdAt: string;
+  content: string;
+}
+
+export interface EditDiaryData {
+  content: string;
+}
+
+export interface AllDiaryData {
+  content: DiaryData[];
 }
 
 export interface ImageData {

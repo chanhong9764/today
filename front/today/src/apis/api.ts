@@ -6,7 +6,7 @@ const apis: Apis = {
   // 유저 정보
   members: '/members',
   // 일기 검색
-  search: '/search',
+  search: '/es/search',
 
   // 이미지 생성
   diary: '/diary',
