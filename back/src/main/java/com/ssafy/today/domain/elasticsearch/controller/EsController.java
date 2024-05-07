@@ -23,6 +23,8 @@ public class EsController {
     @Autowired
     private EsService esService;
 
+    private static final String PASSWORD = "today!";
+
     @PostMapping("/save")
     public ResponseEntity<?> saveEs(@RequestBody DiaryEsRequest diaryEsRequest) {
         esService.saveEs(diaryEsRequest);
@@ -68,4 +70,11 @@ public class EsController {
         return getResponseEntity(SuccessCode.OK);
     }
 
+    @PostMapping("/init/es")
+    public ResponseEntity<?> initEs(HttpServletRequest request, @RequestBody String pwd) {
+        if(pwd.equals(PASSWORD)) {
+            esService.initEs();
+        }
+        return getResponseEntity(SuccessCode.OK);
+    }
 }

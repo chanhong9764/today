@@ -1,47 +1,58 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { PopulationPyramid } from 'react-native-gifted-charts';
 import { PyramidItem } from '../../types/Pyramid';
 
 const pyramidData: PyramidItem[] = [
   {
-    left: 20, // I의 데이터
-    right: 25, // E의 데이터
-    leftBarColor: 'blue',
-    rightBarColor: 'red',
+    left: 8, // I의 데이터
+    right: 10, // E의 데이터
+    leftBarColor: 'rgba(254, 139, 139, 0.5)',
+    rightBarColor: 'rgba(254, 139, 139, 0.3)',
     leftBarLabel: 'I', // I의 라벨
     rightBarLabel: 'E', // E의 라벨
+    leftBarLabelShift: -13,
   },
   {
-    left: 15, // S의 데이터
-    right: 30, // N의 데이터
-    leftBarColor: 'green',
-    rightBarColor: 'orange',
+    left: 12, // S의 데이터
+    right: 14, // N의 데이터
+    leftBarColor: 'rgba(254, 139, 139, 0.3)',
+    rightBarColor: 'rgba(254, 139, 139, 0.5)',
     leftBarLabel: 'S', // S의 라벨
     rightBarLabel: 'N', // N의 라벨
+    leftBarLabelShift: -13,
   },
   {
     left: 10, // T의 데이터
-    right: 35, // F의 데이터
-    leftBarColor: 'purple',
-    rightBarColor: 'yellow',
+    right: 15, // F의 데이터
+    leftBarColor: 'rgba(254, 139, 139, 0.5)',
+    rightBarColor: 'rgba(254, 139, 139, 0.3)',
     leftBarLabel: 'T', // T의 라벨
     rightBarLabel: 'F', // F의 라벨
+    leftBarLabelShift: -13,
   },
   {
     left: 5, // J의 데이터
-    right: 40, // P의 데이터
-    leftBarColor: 'grey',
-    rightBarColor: 'pink',
+    right: 10, // P의 데이터
+    leftBarColor: 'rgba(254, 139, 139, 0.3)',
+    rightBarColor: 'rgba(254, 139, 139, 0.5)',
     leftBarLabel: 'J', // J의 라벨
     rightBarLabel: 'P', // P의 라벨
+    leftBarLabelShift: -13,
   },
 ];
+
+const screenWidth = Dimensions.get('window').width;
 
 const Pyramid = () => {
   return (
     <View style={styles.container}>
-      <PopulationPyramid data={pyramidData} showMidAxis={true} />
+      <PopulationPyramid
+        data={pyramidData}
+        showVerticalLines={false}
+        width={Dimensions.get('window').width - 40}
+        yAxisLabelWidth={10}
+      />
     </View>
   );
 };
@@ -51,6 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 10,
   },
 });
 

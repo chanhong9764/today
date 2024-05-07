@@ -85,7 +85,7 @@ public class DiaryService {
         diary2.updateImportant(false);
     }
 
-    public void updateDiartImg(DiaryImageRequest diaryRequest) {
+    public void updateDiaryImg(DiaryImageRequest diaryRequest) {
         Diary diary = diaryRepository.findById(diaryRequest.getId()).orElseThrow(
                 () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
         diary.updateImg(diaryRequest.getImgUrl());

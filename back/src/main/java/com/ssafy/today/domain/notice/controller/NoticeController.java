@@ -30,9 +30,7 @@ public class NoticeController {
 
   // 알림 수정
   @PutMapping
-  public ResponseEntity<?> updateNoticeStatus(HttpServletRequest request,
-      @Valid @RequestBody NoticeUpdateRequest noticeUpdateRequest, BindingResult bindingResult){
-    Long memberId = (Long)request.getAttribute("memberId");
+  public ResponseEntity<?> updateNoticeStatus(@Valid @RequestBody NoticeUpdateRequest noticeUpdateRequest, BindingResult bindingResult){
     if (bindingResult.hasErrors()) {
       throw new GlobalException(ErrorCode.INVALID_INPUT_VALUE);
     }
