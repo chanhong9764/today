@@ -64,6 +64,7 @@ public class AnalysisService {
                     diaryContentCreated.getSadness(),
                     diaryContentCreated.getSurprise()
             );
+            analysis.increaseCount();
         }else{
             // 새로운 통계 생성
             Integer e = 0, i = 0, s = 0, n = 0, f = 0, t = 0, p = 0, j = 0;
