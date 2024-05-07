@@ -21,6 +21,7 @@ export type DiaryStackParam = {
 
 export type UserStackParam = {
   Mypage?: undefined;
+  KakaoLogin?: undefined;
 };
 
 export type CalendarStackParam = {
