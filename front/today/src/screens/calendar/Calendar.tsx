@@ -7,7 +7,7 @@ import CalendarHeader from '../../components/calendar/CalendarHeader';
 import { CalendarProp } from '../../types/navigatortype/stack';
 
 function Calendar({ navigation }: CalendarProp) {
-  // 일기 생성 페이지로 이동
+  // 감정 선택 페이지로 이동
   function navigateToWrite() {
     navigation.push('SelectEmotion');
   }

@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Calendar from '../screens/calendar/Calendar';
 import DiaryDetail from '../screens/diary/DiaryDetail';
-import DiaryEdit from '../screens/diary/DiaryEdit';
+import EditDiary from '../screens/diary/EditDiary';
 import WriteDiary from '../screens/diary/WriteDiary';
 import SelectImage from '../screens/diary/select/SelectImage';
 import WaitImage from '../screens/diary/wait/WaitImage';
@@ -22,7 +22,7 @@ export const CalendarNav = () => {
       <CalendarStack.Screen name="Calendar" component={Calendar} />
       <CalendarStack.Screen name="SelectEmotion" component={SelectEmotion} />
       <CalendarStack.Screen name="SelectImage" component={SelectImage} />
-      <CalendarStack.Screen name="DiaryEdit" component={DiaryEdit} />
+      <CalendarStack.Screen name="EditDiary" component={EditDiary} />
       <CalendarStack.Screen name="WriteDiary" component={WriteDiary} />
       <CalendarStack.Screen name="DiaryDetail" component={DiaryDetail} />
       <CalendarStack.Screen name="WaitImage" component={WaitImage} options={{ headerShown: false }} />
