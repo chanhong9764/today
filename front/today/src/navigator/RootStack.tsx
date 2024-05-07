@@ -43,7 +43,7 @@ function RootStack() {
         headerShown: false,
       }}>
       {isLogin ? (
-        <Stack.Screen name="Main" component={MainTab} />
+        <Stack.Screen name="MainTab" component={MainTab} />
       ) : (
         <>
           <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
