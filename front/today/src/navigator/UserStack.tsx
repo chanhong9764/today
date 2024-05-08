@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Text } from 'react-native';
+import Logo from '../common/Logo';
 import NotificationBadge from '../common/noti/Notification';
 import KakaoLogin from '../screens/user/KakaoLogin';
 import Mypage from '../screens/user/Mypage';
@@ -13,7 +13,7 @@ export const UserNav = () => {
     <UserStack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTitle: ({ children }) => <Text style={{ fontFamily: 'title', fontSize: 38 }}>마이페이지</Text>,
+        headerTitle: ({ children }) => <Logo />,
         headerRight: () => <NotificationBadge />,
       }}>
       <UserStack.Screen name="Mypage" component={Mypage} />

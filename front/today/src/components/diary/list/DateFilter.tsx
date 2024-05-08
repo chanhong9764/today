@@ -4,8 +4,12 @@ import React, { useState } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import * as S from './style';
 
-function DateFilter() {
-  const [date, setDate] = useState(new Date());
+type DateProp = {
+  date: Date;
+  setDate: (date: Date) => void;
+};
+
+function DateFilter({ date, setDate }: DateProp) {
   const [show, setShow] = useState(false);
 
   function onConfirm(selectedDate: any) {
