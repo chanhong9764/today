@@ -5,6 +5,7 @@ import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.SearchRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
 import com.ssafy.today.domain.elasticsearch.dto.response.SearchResponse;
+import com.ssafy.today.domain.elasticsearch.dto.response.SearchResponseWrapper;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
 import com.ssafy.today.util.response.SuccessCode;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,7 +42,8 @@ public class EsController {
     @PostMapping("/search/test")
     public ResponseEntity<?> searchTest(@RequestBody SearchRequest searchRequest) {
         List<SearchResponse> searchRes = esService.search(searchRequest);
-        return getResponseEntity(SuccessCode.OK, searchRes);
+        SearchResponseWrapper responseWrapper = new SearchResponseWrapper(searchRes);
+        return getResponseEntity(SuccessCode.OK, responseWrapper);
     }
 
     @PostMapping("/search")

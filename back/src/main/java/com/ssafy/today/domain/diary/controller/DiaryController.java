@@ -12,6 +12,7 @@ import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
+import com.ssafy.today.domain.tempimg.service.TempImgService;
 import com.ssafy.today.util.response.ErrorCode;
 import com.ssafy.today.util.response.ErrorResponseEntity;
 import com.ssafy.today.util.response.SuccessCode;
@@ -39,6 +40,7 @@ public class DiaryController {
     private final EsService esService;
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final AnalysisService analysisService;
+    private final TempImgService tempImgService;
 
     @PostMapping
     public ResponseEntity<?> createDiary(HttpServletRequest request, @RequestBody DiaryContentRequest diaryContentRequest) {
@@ -46,7 +48,7 @@ public class DiaryController {
         diaryContentRequest.setMemberId(memberId);
         // 이미지를 제외한 diary 생성
         DiaryResponse diaryResponse = diaryService.createDiary(memberId, diaryContentRequest);
-        diaryContentRequest.setCreateAt(diaryResponse.getCreatedAt());
+        diaryContentRequest.setCreatedAt(diaryResponse.getCreatedAt());
         diaryContentRequest.setDiaryId(diaryResponse.getId());
         // gpu 서버에 소켓통신을 통한 이미지 생성 요청 보내기
         simpMessagingTemplate.convertAndSend("/sub/fastapi", diaryContentRequest);
@@ -61,9 +63,10 @@ public class DiaryController {
     @MessageMapping("/diary/created")
     public void createdDiary(DiaryContentCreated diaryContentCreated){
         System.out.println("Diary 생성 완료");
-        // 통계 DB 저장
+        // Analysis 에 저장, Diary 테이블에 저장, tempImg 테이블에 저장
         analysisService.createOrUpdateAnalysis(diaryContentCreated.getMemberId(), diaryContentCreated);
         diaryService.updateAfterCreateImg(diaryContentCreated);
+        tempImgService.createTempImages(diaryContentCreated);
         // TODO : 클라이언트 알람 전송
     }
 
@@ -88,7 +91,7 @@ public class DiaryController {
                 .feel(Feel.ANGRY)
                 .memberId(123L)
                 .content("test")
-                .createAt(LocalDateTime.now()).build();
+                .createdAt(LocalDateTime.now()).build();
         simpMessagingTemplate.convertAndSend("/sub/fastapi", test);
 
         return getResponseEntity(SuccessCode.OK);
@@ -161,6 +164,11 @@ public class DiaryController {
         diaryService.updateImportantDiary(memberId, diaryId);
 
         return getResponseEntity(SuccessCode.OK);
+    }
+
+    @GetMapping("/img/{diaryId}")
+    public ResponseEntity<?> getTempImg(@PathVariable("diaryId") Long diaryId){
+        return getResponseEntity(SuccessCode.OK, tempImgService.getTempImg(diaryId));
     }
 
 }
