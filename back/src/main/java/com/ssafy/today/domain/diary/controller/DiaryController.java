@@ -99,7 +99,7 @@ public class DiaryController {
     public ResponseEntity<?> updateImgUrl(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest) {
         Long memberId = (Long) request.getAttribute("memberId");
         if(!diaryService.checkDiaryBelongsToMember(diaryRequest.getId(), memberId)){
-            //error
+            throw new GlobalException(ErrorCode.DIARY_OWNERSHIP_MISMATCH);
         }
         // 다이어리에 이미지 업데이트
         diaryService.updateDiaryImg(diaryRequest);
