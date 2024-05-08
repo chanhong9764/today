@@ -1,4 +1,4 @@
-import LottieView from 'lottie-react-native';
+import { Image } from 'react-native';
 import { EmotionDataProp } from '../../../contexts/EmotionData';
 import * as S from './style';
 
@@ -9,29 +9,28 @@ type EmotionProps = {
   borderColor: string;
 };
 
-type LottieFilesProp = {
+type EmotionFilesProp = {
   [key: string]: any; // key는 string, 값은 any (여기서는 Lottie 파일을 가리킴)
 };
 
-const lottieFiles: LottieFilesProp = {
-  happiness: require('../../../../assets/lotties/happiness.json'),
-  surprise: require('../../../../assets/lotties/surprise.json'),
-  sadness: require('../../../../assets/lotties/sadness.json'),
-  disgust: require('../../../../assets/lotties/disgust.json'),
-  fear: require('../../../../assets/lotties/fear.json'),
-  angry: require('../../../../assets/lotties/angry.json'),
+const EmotionFiles: EmotionFilesProp = {
+  happiness: require('../../../../assets/emotions/happiness.png'),
+  surprise: require('../../../../assets/emotions/surprise.png'),
+  sadness: require('../../../../assets/emotions/sadness.png'),
+  disgust: require('../../../../assets/emotions/disgust.png'),
+  fear: require('../../../../assets/emotions/fear.png'),
+  angry: require('../../../../assets/emotions/angry.png'),
 };
 
 function Emotions({ emotion, onPress, backgroundColor, borderColor }: EmotionProps) {
   return (
     <S.EmotionContainer onPress={onPress} backgroundColor={backgroundColor} borderColor={borderColor}>
-      <LottieView
-        source={lottieFiles[emotion.feel]}
-        autoPlay
-        loop
+      <Image
+        source={EmotionFiles[emotion.feel]}
         style={{
           width: 50,
           height: 50,
+          marginBottom: 10,
         }}
       />
       <S.EmotionsTitle>{emotion.name}</S.EmotionsTitle>

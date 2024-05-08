@@ -37,7 +37,13 @@ export const CalendarNav = ({ navigation }: CalendarProp) => {
           headerBackTitle: '캘린더',
         }}
       />
-      <CalendarStack.Screen name="OneDayDiary" component={OneDayDiary} />
+      <CalendarStack.Screen
+        name="OneDayDiary"
+        component={OneDayDiary}
+        options={{
+          headerBackTitle: '캘린더',
+        }}
+      />
       <CalendarStack.Screen name="SelectImage" component={SelectImage} />
       <CalendarStack.Screen name="EditDiary" component={EditDiary} />
       <CalendarStack.Screen
@@ -47,7 +53,13 @@ export const CalendarNav = ({ navigation }: CalendarProp) => {
           headerBackTitle: '감정 선택',
         }}
       />
-      <CalendarStack.Screen name="DiaryDetail" component={DiaryDetail} />
+      <CalendarStack.Screen
+        name="DiaryDetail"
+        component={DiaryDetail}
+        options={{
+          headerBackTitle: '하루 일기',
+        }}
+      />
       <CalendarStack.Screen name="WaitImage" component={WaitImage} options={{ headerShown: false }} />
     </CalendarStack.Navigator>
   );

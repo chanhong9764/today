@@ -48,6 +48,7 @@ export type PyramidItem = {
   midAxisLabelFontFamily?: string;
 
   hideRules?: boolean;
+  hideYAxis?: boolean;
   showVerticalLines?: boolean;
   showSurplus?: boolean;
   showSurplusLeft?: boolean;
