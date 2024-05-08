@@ -25,7 +25,7 @@ public class DiaryContentRequest {
 
     private String content;
     
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     public static Diary toEntity(DiaryContentRequest diaryContentRequest, Member member, boolean importent){
         return Diary.builder()

@@ -13,7 +13,6 @@ interface DiaryItemProp {
   navigate: NativeStackNavigationProp<DiaryStackParam>;
 }
 
-// DiaryItem 컴포넌트를 정의합니다. 이 컴포넌트는 각 일기 카드를 렌더링합니다.
 function DiaryItem({ item, navigate }: DiaryItemProp) {
   const theme = useTheme();
   const [isImportant, setIsImportant] = useState(item.important);
@@ -49,7 +48,7 @@ function OneDayDiary({ navigation }: DiaryProp) {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <DateFilter />
       <FlatList
         data={dailyDiaryData}

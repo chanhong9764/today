@@ -1,3 +1,4 @@
+// DiaryApi.ts
 import { AllDiaryData, DiaryData, EditDiaryData, ImageData } from '../types/datatype';
 import { APIResponse } from '../types/datatype/apis';
 import { apis, instance, responseBody } from './api';

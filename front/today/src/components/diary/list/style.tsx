@@ -36,6 +36,6 @@ export const DiaryListTitleContainer = styled.Pressable`
   padding: 30px 0px;
 `;
 export const DiaryListTitle = styled.Text`
-  font-size: ${({ theme }) => theme.fontSize.big};
+  font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
 `;
