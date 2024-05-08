@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 @Slf4j
 @Configuration
-@EnableBatchProcessing
 @RequiredArgsConstructor
 public class BatchConfig {
     private final MemberRepository memberRepository;
