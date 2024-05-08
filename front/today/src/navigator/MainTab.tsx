@@ -31,7 +31,7 @@ function MainTab() {
         tabBarStyle: {
           alignItems: 'center',
           justifyContent: 'center',
-          height: 85,
+          height: 65,
         },
       }}>
       <Tab.Screen
