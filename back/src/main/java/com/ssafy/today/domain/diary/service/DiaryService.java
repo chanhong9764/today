@@ -93,6 +93,7 @@ public class DiaryService {
         Diary diary = diaryRepository.findById(diaryRequest.getId()).orElseThrow(
                 () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
         diary.updateImg(diaryRequest.getImgUrl());
+        diary.updateStatus(2);
     }
 
     /**
