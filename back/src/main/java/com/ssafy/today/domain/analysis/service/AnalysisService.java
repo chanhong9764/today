@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.YearMonth;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -27,20 +29,105 @@ public class AnalysisService {
     private final MemberRepository memberRepository;
     private final AnalysisRepository analysisRepository;
 
-
-    // 한달 동안의 통계
-    public List<AnalysisResponse> getAnalysisByMemberIdAndMonth(Long memberId, LocalDate date) {
-
-        return null;
+    /**
+     * 한달 동안의 통계 처리
+     * @param memberId
+     * @param date
+     * @return
+     */
+    public AnalysisResponse getAnalysisByMemberIdAndMonth(Long memberId, LocalDate date) {
+        YearMonth yearMonth = YearMonth.from(date);
+        LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
+        LocalDateTime endOfMonth = yearMonth.atEndOfMonth().atStartOfDay();
+        List<Analysis> analysisList = analysisRepository.findByMemberIdAndCreatedAtBetween(memberId, startOfMonth, endOfMonth);
+        return analysisConvertFromEntitys(analysisList);
     }
 
-    // 하루 동안의 통계
-    public List<AnalysisResponse> getAnalysisByMemberIdAndDay(Long memberId, LocalDate date) {
-
-        return null;
+    /**
+     * 하루 동안의 통계 처리
+     * @param memberId
+     * @param date
+     * @return
+     */
+    public AnalysisResponse getAnalysisByMemberIdAndDay(Long memberId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+        Analysis analysis = analysisRepository.findFirstByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay);
+        return analysisConvertFromEntity(analysis);
     }
 
+    /**
+     * 한달 동안의 통계 변환
+     * @param analysisList
+     * @return
+     */
+    private AnalysisResponse analysisConvertFromEntitys(List<Analysis> analysisList){
 
+        if (analysisList.isEmpty()) {
+            return null; // 또는 기본값 으로 채워진 AnalysisResponse 반환
+        }
+        int totalCount = analysisList.stream().mapToInt(Analysis::getCount).sum();
+
+        // MBTI 카운트 합계
+        int totalE = analysisList.stream().mapToInt(Analysis::getE).sum();
+        int totalI = analysisList.stream().mapToInt(Analysis::getI).sum();
+        int totalS = analysisList.stream().mapToInt(Analysis::getS).sum();
+        int totalN = analysisList.stream().mapToInt(Analysis::getN).sum();
+        int totalT = analysisList.stream().mapToInt(Analysis::getT).sum();
+        int totalF = analysisList.stream().mapToInt(Analysis::getF).sum();
+        int totalP = analysisList.stream().mapToInt(Analysis::getP).sum();
+        int totalJ = analysisList.stream().mapToInt(Analysis::getJ).sum();
+
+        // 감정 점수 합계
+        double totalAngry = analysisList.stream().mapToDouble(Analysis::getAngry).sum();
+        double totalDisgust = analysisList.stream().mapToDouble(Analysis::getDisgust).sum();
+        double totalFear = analysisList.stream().mapToDouble(Analysis::getFear).sum();
+        double totalHappiness = analysisList.stream().mapToDouble(Analysis::getHappiness).sum();
+        double totalSadness = analysisList.stream().mapToDouble(Analysis::getSadness).sum();
+        double totalSurprise = analysisList.stream().mapToDouble(Analysis::getSurprise).sum();
+
+        // 감정 점수 평균 계산
+        double avgAngry = totalAngry / totalCount;
+        double avgDisgust = totalDisgust / totalCount;
+        double avgFear = totalFear / totalCount;
+        double avgHappiness = totalHappiness / totalCount;
+        double avgSadness = totalSadness / totalCount;
+        double avgSurprise = totalSurprise / totalCount;
+
+        // AnalysisResponse 객체 생성 및 반환
+        return AnalysisResponse.builder()
+                .e(totalE)
+                .i(totalI)
+                .s(totalS)
+                .n(totalN)
+                .t(totalT)
+                .f(totalF)
+                .p(totalP)
+                .j(totalJ)
+                .angry(avgAngry)
+                .disgust(avgDisgust)
+                .fear(avgFear)
+                .happiness(avgHappiness)
+                .sadness(avgSadness)
+                .surprise(avgSurprise)
+                .build();
+    }
+
+    /**
+     * 하루 동안의 통계 변환
+     * @param analysis
+     * @return
+     */
+    private AnalysisResponse analysisConvertFromEntity(Analysis analysis){
+        List<Analysis> analysisList = Collections.singletonList(analysis);
+        return analysisConvertFromEntitys(analysisList);
+    }
+
+    /**
+     * 통계 튜플 생성 또는 업데이트
+     * @param memberId
+     * @param diaryContentCreated
+     */
     public void createOrUpdateAnalysis(Long memberId, DiaryContentCreated diaryContentCreated){
         Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new GlobalException(ErrorCode.MEMBER_NOT_FOUND));

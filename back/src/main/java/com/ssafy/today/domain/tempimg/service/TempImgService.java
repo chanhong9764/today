@@ -47,4 +47,10 @@ public class TempImgService {
 
         return TempImgResponse.fromEntity(tempImg);
     }
+
+    public void deleteTempImg(Long diaryId){
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow(
+                () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+        tempImgRepository.deleteByDiary(diary);
+    }
 }
