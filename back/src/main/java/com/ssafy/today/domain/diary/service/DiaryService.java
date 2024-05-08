@@ -114,6 +114,12 @@ public class DiaryService {
         diary.updateStatus(1);
     }
 
+    /**
+     * diary 소유권 검사
+     * @param diaryId
+     * @param memberId
+     * @return
+     */
     public boolean checkDiaryBelongsToMember(Long diaryId, Long memberId){
         return diaryRepository.existsByIdAndMemberId(diaryId, memberId);
     }
