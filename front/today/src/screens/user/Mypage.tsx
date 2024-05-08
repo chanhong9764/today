@@ -50,10 +50,10 @@ function Mypage({ navigation }: UserProp) {
           </S.MyInfo>
 
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 성향은</S.MyPageSubTitle>
-          <Pyramid />
+          <Pyramid height={200} width={300} />
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 감정은</S.MyPageSubTitle>
           <View style={{ height: 300, marginBottom: 30 }}>
-            <Graph labels={['행복', '슬픔', '분노', '짜증', '불안', '놀람']} data={[8, 7, 9, 5, 6, 10]} />
+            <Graph labels={['행복', '슬픔', '분노', '짜증', '불안', '놀람']} data={[15, 17, 5, 8, 11, 6]} />
           </View>
           <View style={{ alignItems: 'center', marginBottom: 30 }}>
             <CommonButton content="로그아웃" onPress={Logout} />

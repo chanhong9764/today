@@ -23,6 +23,11 @@ const apis: Apis = {
   month: date => `/calendars/${date}`,
   // 하루 일기 조회
   day: date => `/calendars/day/${date}`,
+
+  // 한달 통계 조회
+  analysisMonth: date => `/analysis/${date}`,
+  // 하루 통계 조회
+  analysisDay: date => `/analysis/day/${date}`,
 };
 
 const instance: Axios = axios.create({
