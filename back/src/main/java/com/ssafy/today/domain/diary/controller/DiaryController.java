@@ -1,10 +1,7 @@
 package com.ssafy.today.domain.diary.controller;
 
 import com.ssafy.today.domain.analysis.service.AnalysisService;
-import com.ssafy.today.domain.diary.dto.request.DiaryContentCreated;
-import com.ssafy.today.domain.diary.dto.request.DiaryContentRequest;
-import com.ssafy.today.domain.diary.dto.request.DiaryImageRequest;
-import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
+import com.ssafy.today.domain.diary.dto.request.*;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
 import com.ssafy.today.domain.diary.entity.Feel;
 import com.ssafy.today.domain.diary.service.DiaryService;
@@ -71,8 +68,9 @@ public class DiaryController {
     }
 
     @MessageMapping("/diary/test")
-    public void testDiary(){
+    public void testDiary(DiaryContentCreated2 diaryContentCreated){
         System.out.println("Diary 생성 완료");
+        System.out.println(diaryContentCreated.getMbti() + " " + diaryContentCreated.getDiary().getDiaryId() + " " + diaryContentCreated.getEmotion().getSadness());
         // 통계 DB 저장
         // TODO : 클라이언트 알람 전송
     }
@@ -84,7 +82,7 @@ public class DiaryController {
         // TODO : 클라이언트 알람 전송
     }
 
-    @GetMapping("/diary/test")
+    @GetMapping("/test")
     public ResponseEntity<?> ctestDiary() {
         DiaryContentRequest test = DiaryContentRequest.builder()
                 .diaryId(123L)
