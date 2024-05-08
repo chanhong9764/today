@@ -67,34 +67,6 @@ public class DiaryController {
         // TODO : 클라이언트 알람 전송
     }
 
-    @MessageMapping("/diary/test")
-    public void testDiary(DiaryContentCreated2 diaryContentCreated){
-        System.out.println("Diary 생성 완료");
-        System.out.println(diaryContentCreated.getMbti() + " " + diaryContentCreated.getDiary().getDiaryId() + " " + diaryContentCreated.getEmotion().getSadness());
-        // 통계 DB 저장
-        // TODO : 클라이언트 알람 전송
-    }
-    @MessageMapping("/diary/test2")
-    public void test2Diary(DiaryContentCreated diaryContentCreated){
-        System.out.println("Diary 생성 완료");
-        System.out.println(diaryContentCreated.getMbti() + " " + diaryContentCreated.getDiaryId() + " " + diaryContentCreated.getMemberId());
-        // 통계 DB 저장
-        // TODO : 클라이언트 알람 전송
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<?> ctestDiary() {
-        DiaryContentRequest test = DiaryContentRequest.builder()
-                .diaryId(123L)
-                .feel(Feel.ANGRY)
-                .memberId(123L)
-                .content("test")
-                .createdAt(LocalDateTime.now()).build();
-        simpMessagingTemplate.convertAndSend("/sub/fastapi", test);
-
-        return getResponseEntity(SuccessCode.OK);
-    }
-
     @PostMapping("/img")
     public ResponseEntity<?> updateImgUrl(HttpServletRequest request, @RequestBody DiaryImageRequest diaryRequest) {
         Long memberId = (Long) request.getAttribute("memberId");
