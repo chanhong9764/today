@@ -6,7 +6,7 @@ export const WaitImage = styled.SafeAreaView`
 
 export const WaitImageContainer = styled.View`
   flex: 1;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: center;
 `;
 
@@ -27,4 +27,8 @@ export const WaitImageExplane = styled.Text`
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   margin: 3px;
   color: gray;
+`;
+
+export const ButtonContainer = styled.View`
+  margin: 20px 0px;
 `;

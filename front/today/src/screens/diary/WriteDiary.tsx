@@ -34,7 +34,7 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
     } else if (contentLength > 200) {
       Alert.alert('경고', '200자를 초과할 수 없습니다.');
     } else {
-      navigation.navigate('WaitImage');
+      navigation.reset({ routes: [{ name: 'WaitImage' }] });
 
       Diarys.createImage(content)
         .then(res => {
@@ -46,7 +46,6 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
         });
     }
   }
-  3;
 
   return (
     <KeyboardAwareScrollView>
