@@ -1,17 +1,12 @@
 // Calendar.tsx
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import AddButton from '../../common/AddButton';
 import CalendarBody from '../../components/calendar/CalendarBody';
 import CalendarHeader from '../../components/calendar/CalendarHeader';
 import { CalendarProp } from '../../types/navigatortype/stack';
 
 function Calendar({ navigation }: CalendarProp) {
-  // 일기 생성 페이지로 이동
-  function navigateToWrite() {
-    navigation.push('SelectEmotion');
-  }
-
   const DATE = new Date();
   const YEAR = DATE.getFullYear();
   const MONTH = DATE.getMonth() + 1;
@@ -45,9 +40,14 @@ function Calendar({ navigation }: CalendarProp) {
     setMonth(month);
   };
 
+  function navigateToWrite() {
+    navigation.push('SelectEmotion');
+  }
+
   return (
     <View style={styles.calendarContainer}>
       <AddButton onPress={navigateToWrite} />
+      <Button title="오늘 일기 보기" onPress={() => navigation.push('OneDayDiary')} />
       <CalendarHeader
         month={month}
         year={year}

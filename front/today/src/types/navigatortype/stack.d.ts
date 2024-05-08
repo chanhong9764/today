@@ -1,32 +1,50 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+export type RootStackParam = {
+  LoginScreen: undefined;
+  KakaoLogin: undefined;
+  MainTab: undefined;
+};
+
 export type DiaryStackParam = {
   DiaryList?: undefined;
   SelectEmotion?: undefined;
   SelectImage?: undefined;
-  DiaryEdit?: undefined;
-  WriteDiary?: {
-    feel: string | undefined;
+  EditDiary?: {
+    diaryId: number;
   };
-  DiaryDetail?: undefined;
+  WriteDiary?: {
+    feel: string;
+  };
+  DiaryDetail?: {
+    diaryId: number;
+  };
 };
 
 export type UserStackParam = {
-  KakaoLogin?: undefined;
-  NaverLogin?: undefined;
-  Login?: undefined;
   Mypage?: undefined;
+  KakaoLogin?: undefined;
 };
 
 export type CalendarStackParam = {
+  LoginScreen?: undefined;
+  KakaoLogin?: undefined;
   Calendar?: undefined;
+  OneDayDiary?: undefined;
   SelectEmotion?: undefined;
   SelectImage?: undefined;
-  DiaryEdit?: undefined;
+  EditDiary?: {
+    diaryId: number;
+  };
+  WaitImage?: undefined;
   WriteDiary?: {
-    feel: string | undefined;
+    feel: string;
   };
   DiaryDetail?: undefined;
+};
+
+export type RootProp = {
+  navigation: NativeStackNavigationProp<RootStackParam>;
 };
 
 export type CalendarProp = {
@@ -40,3 +58,7 @@ export type DiaryProp = {
 export type UserProp = {
   navigation: NativeStackNavigationProp<UserStackParam>;
 };
+
+export type WriteDiaryProp = NativeStackScreenProps<CalendarStackParam, 'WriteDiary'>;
+export type DiaryDetailProp = NativeStackScreenProps<CalendarStackParam, 'DiaryDetail'>;
+export type EditDiaryProp = NativeStackScreenProps<CalendarStackParam, 'EditDiary'>;

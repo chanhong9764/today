@@ -1,10 +1,9 @@
 // CalendarBody.tsx
 import { useEffect, useState } from 'react';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import dummy from '../../db/data.json';
+import { Calendars } from '../../apis/CalendarApi';
 import { Header, PressedDate, dayType } from '../../types/calendartype/calendar';
+import { CalendarData } from '../../types/datatype';
 import * as S from './style';
-
 const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const isSameObj = (obj1: PressedDate, obj2: PressedDate) => {
@@ -22,11 +21,26 @@ const CalendarBody = ({
 }: Header) => {
   // 날짜별 이미지 URL 매핑 객체 생성
   const imageUrlByDate: { [key: string]: string } = {};
-  dummy.data.forEach(data => {
-    const date = new Date(data.createdAt);
-    const key = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
-    imageUrlByDate[key] = data.imgUrl;
-  });
+  const formattedDate = year + '-' + ('00' + month.toString()).slice(-2) + '-' + ('00' + date.toString()).slice(-2);
+  const [diaryData, setDiaryData] = useState<CalendarData[] | undefined>();
+
+  // 한 달 일기 데이터 불러오기
+  useEffect(() => {
+    Calendars.getCalendars(formattedDate)
+      .then(response => {
+        console.log('한달 일기 데이터 로드 성공', response.data);
+        setDiaryData(response.data);
+      })
+      .catch(error => {
+        console.log('한달 일기 데이터 로드 실패', error);
+      });
+  }, []);
+
+  // dummy.data.forEach(data => {
+  //   const date = new Date(data.createdAt);
+  //   const key = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+  //   imageUrlByDate[key] = data.imgUrl;
+  // });
 
   const initialState = {
     prev: {

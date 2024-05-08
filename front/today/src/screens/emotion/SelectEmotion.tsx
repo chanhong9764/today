@@ -1,38 +1,29 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { Alert, FlatList } from 'react-native';
 import { useTheme } from 'styled-components';
 import NextButton from '../../common/CommonButton';
-import { Data, EmotionData } from '../../contexts/EmotionData';
-import { DiaryStackParam } from '../../types/navigatortype/stack';
+import Emotions from '../../components/diary/write/Emotions';
+import { EmotionData, EmotionDataProp } from '../../contexts/EmotionData';
+import { CalendarProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
-type EmotionProps = {
-  emotion: Data;
-  onPress: () => void;
-  backgroundColor: string;
-  textColor?: string;
-};
-
-function Emotions({ emotion, onPress, backgroundColor }: EmotionProps) {
-  return (
-    <S.EmotionContainer onPress={onPress} backgroundColor={backgroundColor}>
-      <S.EmotionsTitle>{emotion.name}</S.EmotionsTitle>
-    </S.EmotionContainer>
-  );
-}
-
-function SelectEmotion() {
+function SelectEmotion({ navigation }: CalendarProp) {
   const theme = useTheme();
-  const navigation = useNavigation<NativeStackNavigationProp<DiaryStackParam>>();
   const [selectedFeel, setSelectedFeel] = useState<string>('');
 
   // 감정 선택시 색 변화
-  function renderEmotion({ item }: { item: Data }) {
-    const backgroundColor = item.feel === selectedFeel ? theme.colors.lightPink : '';
+  function renderEmotion({ item }: { item: EmotionDataProp }) {
+    const backgroundColor = item.feel === selectedFeel ? theme.colors.middlePink : '';
+    const borderColor = item.feel === selectedFeel ? theme.colors.mainPink : '';
 
-    return <Emotions emotion={item} onPress={() => setSelectedFeel(item.feel)} backgroundColor={backgroundColor} />;
+    return (
+      <Emotions
+        emotion={item}
+        onPress={() => setSelectedFeel(item.feel)}
+        borderColor={borderColor}
+        backgroundColor={backgroundColor}
+      />
+    );
   }
 
   // 일기 작성 페이지로 화면 이동
@@ -51,7 +42,7 @@ function SelectEmotion() {
   }
 
   return (
-    <S.Container>
+    <S.SelectEmotionContainer>
       <S.TitleContainer>
         <S.Title>오늘의 감정을</S.Title>
         <S.Title>선택해주세요.</S.Title>
@@ -60,7 +51,7 @@ function SelectEmotion() {
       <FlatList
         data={EmotionData}
         renderItem={renderEmotion}
-        numColumns={2}
+        numColumns={3}
         keyExtractor={emotion => emotion.feel}
         extraData={selectedFeel}
       />
@@ -68,7 +59,7 @@ function SelectEmotion() {
       <S.ButtonContainer>
         <NextButton content="다 음" onPress={navigateToWriteDiary} />
       </S.ButtonContainer>
-    </S.Container>
+    </S.SelectEmotionContainer>
   );
 }
 

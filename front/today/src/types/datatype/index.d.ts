@@ -1,22 +1,46 @@
 export interface MemberData {
-  memberId: number;
-  nickname: string;
+  id: number;
   email: string;
-  createdAt?: string;
+  nickName: string;
+  createAt?: string;
   updatedAt?: string;
 }
 
 export interface DiaryData {
-  memberId?: number;
-  diaryId: number;
+  id: number;
+  memberId: number;
   feel: string | undefined;
-  imgUrl?: string;
+  important: boolean;
+  imgUrl: string;
   content: string;
-  important?: boolean;
-  createdAt?: string | date;
-  updatedAt?: string | date;
+  createdAt?: string | Date;
 }
 
-export interface DiaryEntries {
-  data: DiaryData[];
+export interface CalendarData {
+  id: number;
+  memberId: number;
+  important: boolean;
+  imgUrl: string;
+  content: string;
+  createdAt?: string | date;
+}
+
+export interface SearchData {
+  diaryId: number;
+  imgUrl: string;
+  createdAt: string;
+  content: string;
+}
+
+export interface EditDiaryData {
+  content: string;
+}
+
+export interface AllDiaryData {
+  content: DiaryData[];
+}
+
+export interface ImageData {
+  feel: string | undefined;
+  content: string;
 }

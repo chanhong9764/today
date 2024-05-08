@@ -23,7 +23,7 @@ import java.util.Date;
 @Component
 public class TokenProvider {
 
-    private static final long ACCESS_TOKEN_EXPIRE_TIME_IN_MILLISECONDS = 1000 * 60 * 30; // 30min
+    private static final long ACCESS_TOKEN_EXPIRE_TIME_IN_MILLISECONDS = 1000 * 60 * 60 * 24 ; // 30min
     private static final long REFRESH_TOKEN_EXPIRE_TIME_IN_MILLISECONDS = 1000 * 60 * 60 * 24; // 1day
     @Value("${jwt.secret}")
     private String secret;

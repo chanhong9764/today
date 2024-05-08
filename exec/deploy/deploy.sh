@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Working container check
 # docker compose -p deploy-blue -f docker-compose.blue.yaml ps 컴포즈 작동 확인
 EXIST_BLUE=$(docker compose -p deploy-blue -f docker-compose.blue.yaml ps | grep Up)
@@ -15,13 +17,17 @@ else
     AFTER_COLOR="green"
 fi
 
+
+# DNS 조회를 통해 IP 주소 찾아내자아아아
+IP_ADDRESS=$(nslookup spring_${AFTER_COLOR} | grep 'Address:' | tail -n1 | awk '{print $2}')
+
 # Spring Server health checking
 for retry_count in {1..60}
 do
     # spring_blue or spring_green 컨테이너 이름을 적어주고 싶다 !
     # (curl) http 요청을 보내본다.
-    response=$(curl -s http://spring_${AFTER_COLOR}:8080/api/health)
-    up_count=$(echo $response | grep 'UP' | wc -l)
+    response=$(curl -s http://${IP_ADDRESS}:8080/api/health)
+    up_count=$(echo $response | grep 'isWorking' | wc -l)
 
     if [ $up_count -ge 1 ]
     then

@@ -11,12 +11,20 @@ export const StyledBtn = styled.TouchableOpacity`
 export const StyledAddBtn = styled.TouchableOpacity`
   align-self: center;
   padding: 10px 16px;
-  border-radius: 25%;
+  border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.mainPink};
 `;
 
 export const StyledBtnText = styled.Text`
   text-align: center;
   font-size: ${({ theme }) => theme.fontSize.medium};
+  font-family: title;
   color: white;
+`;
+
+export const TodayDate = styled.Text`
+  text-align: center;
+  padding: 20px;
+  font-size: ${({ theme }) => theme.fontSize.regular};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
 `;
