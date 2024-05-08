@@ -1,7 +1,7 @@
 // DiaryDetail.tsx
-import { Container } from 'native-base';
+import { Box } from 'native-base';
 import React, { useEffect, useRef, useState } from 'react';
-import { Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import ViewShot from 'react-native-view-shot';
 import { Diarys } from '../../apis/DiaryApi';
 import SaveButton from '../../common/SaveButton';
@@ -33,13 +33,17 @@ function DiaryDetail({ route }: DiaryDetailProp) {
   }
 
   return (
-    <Container>
-      <ViewShot ref={viewShotRef} options={{ format: 'jpg', quality: 0.9 }}>
-        <DetailHeader diary={diary} />
-        <DetailContent diary={diary} />
-      </ViewShot>
+    <>
+      <Box flex={1} padding={5}>
+        <ScrollView>
+          <ViewShot ref={viewShotRef} options={{ format: 'jpg', quality: 0.9 }}>
+            <DetailHeader diary={diary} />
+            <DetailContent diary={diary} />
+          </ViewShot>
+        </ScrollView>
+      </Box>
       <SaveButton viewShotRef={viewShotRef} />
-    </Container>
+    </>
   );
 }
 
