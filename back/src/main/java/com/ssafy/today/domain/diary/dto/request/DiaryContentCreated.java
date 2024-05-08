@@ -7,12 +7,13 @@ import com.ssafy.today.domain.tempimg.entity.TempImg;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @Builder
-public class DiaryContentCreated {
+public class DiaryContentCreated implements Serializable {
     @JsonProperty("data.diary.memberId")
     private Long memberId;
 
