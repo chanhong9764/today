@@ -5,7 +5,6 @@ type RadarChartProps = {
   labels: string[];
   data: number[];
 };
-4;
 
 const Graph = ({ labels, data }: RadarChartProps) => {
   const chartHtml = `
@@ -75,9 +74,7 @@ const Graph = ({ labels, data }: RadarChartProps) => {
     </html>
   `;
 
-  return (
-    <WebView originWhitelist={['*']} source={{ html: chartHtml }} style={{ flex: 1, backgroundColor: 'transparent' }} />
-  );
+  return <WebView originWhitelist={['*']} source={{ html: chartHtml }} style={{ backgroundColor: 'transparent' }} />;
 };
 
 export default Graph;
