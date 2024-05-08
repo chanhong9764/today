@@ -2,8 +2,14 @@ import os
 import torch
 import boto3
 import openai
+import websockets
+import stomper
+import asyncio
+import json
 from joblib import load
 import app.utils.global_vars
+from app.utils.converter import datetime_to_json_formatting
+from app.services.diary.diary_socket import make_image
 from dotenv import load_dotenv
 from diffusers import DPMSolverMultistepScheduler, StableDiffusionXLPipeline
 from diffusers.models import AutoencoderKL
@@ -46,6 +52,37 @@ def load_mbti():
     # MBTI 모델 로드
     app.utils.global_vars.mbti = load(base_dir + 'model/mbti/mbti_model')
     print("=================== mbti loaded end ===================")
+
+async def connect_socket():
+    ws_url = f"wss://dangil.store/api/ws"
+    print("=================== ws connect start ===================")
+    async with websockets.connect(ws_url) as websocket:
+        await websocket.send("CONNECT\naccept-version:1.0,1.1,2.0\n\n\x00\n")
+
+        sub_offer = stomper.subscribe("/sub/fastapi", idx="fastapi", ack="auto")
+        await websocket.send(sub_offer)
+
+        while True:
+            try:
+                # Recv Listen
+                message = await websocket.recv()
+                # Get current event_loop
+                loop = asyncio.get_event_loop()
+                # Response Split
+                msg_type = message.split("\n")
+                # Destination /sub/fatapi 체크 
+                if "/sub/fastapi" in msg_type[1]:
+                    # Dict to JSON
+                    # Execute AI Flow
+                    result = await loop.run_in_executor(None, lambda: make_image(json.loads(msg_type[7].replace("\x00", ""))))
+                    result = json.dumps(result, default=datetime_to_json_formatting)
+                    send = stomper.send("/pub/diary/created", result, None, "application/json")
+                    await websocket.send(send)
+            except websockets.ConnectionClosed as e:
+                print(f"WebSocket Disconnected", e)
+                break
+        
+    print("=================== ws connect end ===================")
 
 def connect_openai():
     print("=================== opanai connect start ===================")
