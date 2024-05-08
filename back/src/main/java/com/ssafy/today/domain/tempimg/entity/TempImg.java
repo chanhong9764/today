@@ -21,7 +21,7 @@ public class TempImg {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
-    @UniqueElements
+    @Column(unique = true)
     private Diary diary;
 
     @ManyToOne(fetch = FetchType.LAZY)

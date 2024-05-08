@@ -10,11 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,4 +33,10 @@ public class NoticeController {
     noticeService.updateNotice(noticeUpdateRequest);
     return getResponseEntity(SuccessCode.OK);
   }
+
+  @PostMapping("/token")
+  public void getToken(@RequestBody String token) {
+    System.out.println(token);
+  }
+
 }
