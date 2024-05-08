@@ -16,6 +16,7 @@ public class DiaryResponse {
     private Boolean important;
     private String imgUrl;
     private String content;
+    private Integer status;
     private LocalDateTime createdAt;
 
     public static DiaryResponse fromEntity(Diary diary){
@@ -26,6 +27,7 @@ public class DiaryResponse {
                 .important(diary.getImportant())
                 .imgUrl(diary.getImgUrl())
                 .content(diary.getContent())
+                .status(diary.getStatus())
                 .createdAt(diary.getCreatedAt())
                 .build();
 
