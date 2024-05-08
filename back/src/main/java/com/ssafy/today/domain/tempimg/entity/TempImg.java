@@ -19,7 +19,7 @@ public class TempImg {
     @Column(name = "temp_img_id")
     private Long Id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
     @Column(unique = true)
     private Diary diary;
