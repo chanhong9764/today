@@ -88,7 +88,7 @@ public class DiaryController {
                 .feel(Feel.ANGRY)
                 .memberId(123L)
                 .content("test")
-                .createAt(LocalDateTime.now()).build();
+                .createdAt(LocalDateTime.now()).build();
         simpMessagingTemplate.convertAndSend("/sub/fastapi", test);
 
         return getResponseEntity(SuccessCode.OK);
