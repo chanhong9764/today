@@ -103,6 +103,8 @@ public class DiaryController {
         }
         // 다이어리에 이미지 업데이트
         diaryService.updateDiaryImg(diaryRequest);
+        tempImgService.deleteTempImg(diaryRequest.getId());
+        // TODO : 임시미이지 s3 삭제
 
         //elasticsearch에 저장
         DiaryResponse diaryResponse = diaryService.getDiaryById(diaryRequest.getId());
