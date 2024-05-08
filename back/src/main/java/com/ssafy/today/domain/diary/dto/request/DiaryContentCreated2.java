@@ -19,16 +19,14 @@ public class DiaryContentCreated2 {
     private Emotion emotion;
     private String mbti;
     @Data
-    @Builder
-    static public class Diary {
+    public static class Diary {
         private Long memberId;
         private Long diaryId;
         private LocalDateTime createdAt;
     }
 
     @Data
-    @Builder
-    static public class Emotion {
+    public static class Emotion {
         private Double angry;
         private Double disgust;
         private Double fear;

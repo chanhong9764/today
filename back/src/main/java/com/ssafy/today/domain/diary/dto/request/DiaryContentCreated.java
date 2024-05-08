@@ -14,37 +14,37 @@ import java.util.List;
 @Data
 @Builder
 public class DiaryContentCreated implements Serializable {
-    @JsonProperty("data.diary.memberId")
+    @JsonProperty("memberId")
     private Long memberId;
 
-    @JsonProperty("data.diary.diaryId")
+    @JsonProperty("diaryId")
     private Long diaryId;
 
-    @JsonProperty("data.diary.createdAt")
+    @JsonProperty("createdAt")
     private LocalDateTime createdAt;
 
-    @JsonProperty("data.imageUrl")
+    @JsonProperty("imageUrl")
     private List<String> imageUrl;
 
-    @JsonProperty("data.emotion.angry")
+    @JsonProperty("angry")
     private double angry;
 
-    @JsonProperty("data.emotion.disgust")
+    @JsonProperty("disgust")
     private double disgust;
 
-    @JsonProperty("data.emotion.fear")
+    @JsonProperty("fear")
     private double fear;
 
-    @JsonProperty("data.emotion.happiness")
+    @JsonProperty("happiness")
     private double happiness;
 
-    @JsonProperty("data.emotion.sadness")
+    @JsonProperty("sadness")
     private double sadness;
 
-    @JsonProperty("data.emotion.surprise")
+    @JsonProperty("surprise")
     private double surprise;
 
-    @JsonProperty("data.mbti")
+    @JsonProperty("mbti")
     private String mbti;
 
     public TempImg toTempImgEntity(Diary diary, Member member) {
