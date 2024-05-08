@@ -4,9 +4,9 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components/native';
 
-import { CalendarNav } from './CalendarNav';
-import { DiaryNav } from './DairyNav';
-import { UserNav } from './UserNav';
+import { CalendarNav } from './CalendarStack';
+import { DiaryNav } from './DairyStack';
+import { UserNav } from './UserStack';
 
 type BottomTabParamList = {
   MainScreen: undefined;
@@ -29,7 +29,9 @@ function MainTab() {
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
-          padding: 12,
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: 85,
         },
       }}>
       <Tab.Screen

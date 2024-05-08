@@ -30,11 +30,23 @@ export const CalendarNav = ({ navigation }: CalendarProp) => {
           headerLeft: () => <Icon name="plus" size={35} onPress={() => navigation.push('SelectEmotion')} />,
         }}
       />
-      <CalendarStack.Screen name="SelectEmotion" component={SelectEmotion} />
+      <CalendarStack.Screen
+        name="SelectEmotion"
+        component={SelectEmotion}
+        options={{
+          headerBackTitle: '캘린더',
+        }}
+      />
       <CalendarStack.Screen name="OneDayDiary" component={OneDayDiary} />
       <CalendarStack.Screen name="SelectImage" component={SelectImage} />
       <CalendarStack.Screen name="EditDiary" component={EditDiary} />
-      <CalendarStack.Screen name="WriteDiary" component={WriteDiary} />
+      <CalendarStack.Screen
+        name="WriteDiary"
+        component={WriteDiary}
+        options={{
+          headerBackTitle: '감정 선택',
+        }}
+      />
       <CalendarStack.Screen name="DiaryDetail" component={DiaryDetail} />
       <CalendarStack.Screen name="WaitImage" component={WaitImage} options={{ headerShown: false }} />
     </CalendarStack.Navigator>

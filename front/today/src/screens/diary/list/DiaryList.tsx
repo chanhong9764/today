@@ -45,8 +45,8 @@ function DiaryList({ navigation }: DiaryProp) {
 
   function onPressSearch() {
     Calendars.Search({ keyword: filterText })
-      .then(data => {
-        // setData(data);
+      .then(response => {
+        // setData(response);
       })
       .catch(err => {
         console.error(err);
@@ -61,7 +61,7 @@ function DiaryList({ navigation }: DiaryProp) {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <SearchBar filterText={filterText} setFilterText={setFilterText} onPress={onPressSearch} />
       <FlatList
         data={data.content}
