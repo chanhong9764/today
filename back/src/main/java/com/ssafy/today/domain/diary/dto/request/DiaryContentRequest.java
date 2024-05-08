@@ -33,6 +33,7 @@ public class DiaryContentRequest {
                 .feel(diaryContentRequest.getFeel())
                 .content(diaryContentRequest.getContent())
                 .important(importent)
+                .status(0)
                 .imgUrl(null)
                 .build();
     }
