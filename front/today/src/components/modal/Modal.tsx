@@ -6,6 +6,8 @@ function ModalComponent({ modalVisible, setModalVisible, modalContent }: ModalPr
   return (
     <Modal
       isVisible={modalVisible}
+      // animationIn="fadeIn"
+      // animationOut="fadeOut"
       hideModalContentWhileAnimating={true}
       onBackdropPress={() => setModalVisible(!modalVisible)}
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

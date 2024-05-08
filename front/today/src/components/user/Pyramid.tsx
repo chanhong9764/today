@@ -1,7 +1,12 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { PopulationPyramid } from 'react-native-gifted-charts';
 import { PyramidItem } from '../../types/Pyramid';
+
+type PyramidProp = {
+  height: number;
+  width: number;
+};
 
 const pyramidData: PyramidItem[] = [
   {
@@ -42,16 +47,19 @@ const pyramidData: PyramidItem[] = [
   },
 ];
 
-const screenWidth = Dimensions.get('window').width;
-
-const Pyramid = () => {
+const Pyramid = ({ height, width }: PyramidProp) => {
   return (
     <View style={styles.container}>
       <PopulationPyramid
         data={pyramidData}
         showVerticalLines={false}
-        width={Dimensions.get('window').width - 40}
+        showXAxisIndices={false}
+        yAxisColor="white"
+        xAxisColor="white"
+        width={width}
+        height={height}
         yAxisLabelWidth={10}
+        verticalMarginBetweenBars={5}
       />
     </View>
   );
@@ -59,7 +67,6 @@ const Pyramid = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 10,
