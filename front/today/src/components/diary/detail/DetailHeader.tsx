@@ -21,7 +21,7 @@ const DetailHeader = ({ diary }: DetailHeaderProps) => {
   const createdAt = diary.createdAt ? new Date(diary.createdAt) : undefined;
 
   const { height } = useWindowDimensions();
-  const imageHeight = height * 0.35; // 전체 화면의 35% 높이로 설정
+  const imageHeight = height * 0.3; // 전체 화면의 35% 높이로 설정
 
   return (
     <VStack

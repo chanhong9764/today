@@ -48,7 +48,7 @@ public class DiaryController {
         diaryContentRequest.setMemberId(memberId);
         // 이미지를 제외한 diary 생성
         DiaryResponse diaryResponse = diaryService.createDiary(memberId, diaryContentRequest);
-        diaryContentRequest.setCreateAt(diaryResponse.getCreatedAt());
+        diaryContentRequest.setCreatedAt(diaryResponse.getCreatedAt());
         diaryContentRequest.setDiaryId(diaryResponse.getId());
         // gpu 서버에 소켓통신을 통한 이미지 생성 요청 보내기
         simpMessagingTemplate.convertAndSend("/sub/fastapi", diaryContentRequest);
@@ -91,7 +91,7 @@ public class DiaryController {
                 .feel(Feel.ANGRY)
                 .memberId(123L)
                 .content("test")
-                .createAt(LocalDateTime.now()).build();
+                .createdAt(LocalDateTime.now()).build();
         simpMessagingTemplate.convertAndSend("/sub/fastapi", test);
 
         return getResponseEntity(SuccessCode.OK);

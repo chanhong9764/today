@@ -11,7 +11,7 @@ interface DetailContentProps {
 
 const DetailContent = ({ diary }: DetailContentProps) => {
   const { height } = useWindowDimensions();
-  const contentHeight = height * 0.3; // 전체 화면의 35% 높이로 설정
+  const contentHeight = height * 0.25; // 전체 화면의 35% 높이로 설정
 
   return (
     <VStack
