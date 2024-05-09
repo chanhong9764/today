@@ -74,7 +74,7 @@ function Mypage({ navigation }: UserProp) {
           </S.MyInfo>
 
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 성향은</S.MyPageSubTitle>
-          {analysisData && <Pyramid analysisData={analysisData} />}
+          {analysisData && <Pyramid analysisData={analysisData} width={320} height={180} />}
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 감정은</S.MyPageSubTitle>
           {analysisData && (
             <View style={{ height: 300, marginBottom: 30 }}>

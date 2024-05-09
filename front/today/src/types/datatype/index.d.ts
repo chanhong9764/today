@@ -22,13 +22,22 @@ export interface CalendarData {
   important: boolean;
   imgUrl: string;
   content: string;
-  createdAt?: string | date;
+  createdAt?: string;
 }
 
 export interface SearchData {
   diaryId: number;
   imgUrl: string;
   createdAt: string;
+  content: string;
+}
+
+export interface AllDiaryData {
+  content: DiaryData[];
+}
+
+export interface WriteDiaryData {
+  feel: string | undefined;
   content: string;
 }
 
@@ -44,11 +53,29 @@ export interface DeviceToken {
   token: string;
 }
 
-export interface AllDiaryData {
-  content: DiaryData[];
+export interface NoticeData {
+  noticeId: number;
+  diaryId: number;
+  kind: string;
+  content: string;
+  confirm: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface WriteDiaryData {
-  feel: string | undefined;
-  content: string;
+export interface AnalysisData {
+  i: number;
+  e: number;
+  s: number;
+  n: number;
+  t: number;
+  f: number;
+  p: number;
+  j: number;
+  angry: number;
+  disgust: number;
+  fear: number;
+  happiness: number;
+  sadness: number;
+  surprise: number;
 }

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, Text } from 'react-native';
 import { Notices } from '../../../apis/NoticeApi';
-import { NotiDatas } from '../../../types/datatype';
+import { NoticeData } from '../../../types/datatype';
 import { CalendarProp } from '../../../types/navigatortype/stack';
 import * as S from './style';
 
 type NotiItemProps = {
-  item: NotiDatas;
+  item: NoticeData;
   onPress: () => void;
   backgroundColor: string;
 };
@@ -21,7 +21,7 @@ function NotificationItem({ item, onPress, backgroundColor }: NotiItemProps) {
 }
 
 function NotificationScreen({ navigation }: CalendarProp) {
-  const [notiData, setNotiData] = useState<NotiDatas[]>([]);
+  const [notiData, setNotiData] = useState<NoticeData[]>([]);
   const [bgColors, setBgColors] = useState<string>('');
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function NotificationScreen({ navigation }: CalendarProp) {
     navigation.navigate('SelectImage');
   }
 
-  function renderNoti({ item }: { item: NotiDatas }) {
+  function renderNoti({ item }: { item: NoticeData }) {
     return <NotificationItem item={item} onPress={onPressNoti} backgroundColor={bgColors} />;
   }
   return (

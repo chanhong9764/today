@@ -6,9 +6,11 @@ import { AnalysisData } from '../../types/datatype';
 
 type PyramidProps = {
   analysisData: AnalysisData;
+  width: number;
+  height: number;
 };
 
-const Pyramid = ({ analysisData }: PyramidProps) => {
+const Pyramid = ({ analysisData, width, height }: PyramidProps) => {
   const pyramidData: PyramidItem[] = [
     {
       left: analysisData.i, // I의 데이터

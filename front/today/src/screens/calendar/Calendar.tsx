@@ -1,6 +1,6 @@
 // Calendar.tsx
 import React, { useState } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, View } from 'react-native';
 import CalendarBody from '../../components/calendar/CalendarBody';
 import CalendarHeader from '../../components/calendar/CalendarHeader';
 import { CalendarProp } from '../../types/navigatortype/stack';
@@ -44,7 +44,7 @@ function Calendar({ navigation }: CalendarProp) {
   }
 
   return (
-    <View style={styles.calendarContainer}>
+    <View style={{ margin: 10 }}>
       <Button title="오늘 일기 보기" onPress={() => navigation.push('OneDayDiary')} />
       <CalendarHeader
         month={month}
@@ -67,12 +67,5 @@ function Calendar({ navigation }: CalendarProp) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  calendarContainer: {
-    margin: 10,
-    // backgroundColor: 'white',
-  },
-});
 
 export default Calendar;

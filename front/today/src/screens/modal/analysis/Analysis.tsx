@@ -13,7 +13,7 @@ function AnalysisContent() {
       <Pyramid height={150} width={250} />
       <S.AnalysisSubTitle>김유정님의 오늘의 기분입니다</S.AnalysisSubTitle>
       <View style={{ height: 280, width: 280 }}>
-        <Graph labels={['행복', '슬픔', '분노', '짜증', '불안', '놀람']} data={[8, 7, 9, 5, 6, 10]} />
+        <Graph data={[8, 7, 9, 5, 6, 10]} />
       </View>
     </View>
   );
