@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
+import * as Notifications from 'expo-notifications';
 import { NativeBaseProvider } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
@@ -19,6 +20,13 @@ export default function App() {
       setIsFont(true);
     };
     loadFonts();
+    // 알림 권한
+    (async () => {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status !== 'granted') {
+        alert('알림 권한이 거부되었습니다!');
+      }
+    })();
   }, []);
 
   if (!isFont) {

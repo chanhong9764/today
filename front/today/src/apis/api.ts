@@ -7,6 +7,10 @@ const apis: Apis = {
   members: '/members',
   // 일기 검색
   search: '/es/search',
+  // 알림 조회
+  notice: '/notices',
+  // 알림 token 전달
+  noticeToken: '/notices/token',
 
   // 이미지 생성
   diary: '/diary',
@@ -38,7 +42,6 @@ const instance: Axios = axios.create({
 instance.interceptors.request.use(
   async config => {
     const accessToken = await AsyncStorage.getItem('accessToken');
-    console.log(accessToken);
     config.headers['authorization'] = `Bearer ${accessToken}`;
     return config;
   },
