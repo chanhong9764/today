@@ -27,7 +27,9 @@ public class DiaryContentRequest {
     
     private LocalDateTime createdAt;
 
-    public static Diary toEntity(DiaryContentRequest diaryContentRequest, Member member, boolean importent){
+    private Integer count;
+
+    public static Diary toEntity(DiaryContentRequest diaryContentRequest, Member member, boolean importent,Integer count){
         return Diary.builder()
                 .member(member)
                 .feel(diaryContentRequest.getFeel())
@@ -35,6 +37,7 @@ public class DiaryContentRequest {
                 .important(importent)
                 .status(0)
                 .imgUrl(null)
+                .count(count)
                 .build();
     }
 }
