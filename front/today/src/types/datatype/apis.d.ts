@@ -8,6 +8,8 @@ export interface Apis {
   important: (diaryId: number) => Array;
   month: (date: string) => Array;
   day: (date: string) => Array;
+  analysismonth: (date: string) => Array;
+  analysisday: (date: string) => Array;
 }
 
 export interface APIResponse<T> {

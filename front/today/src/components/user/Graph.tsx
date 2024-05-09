@@ -1,13 +1,16 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
+import { EmotionData } from '../../contexts/EmotionData';
+import { AnalysisData } from '../../types/datatype';
 
 type RadarChartProps = {
-  labels: string[];
-  data: number[];
+  analysisData: AnalysisData;
 };
-4;
 
-const Graph = ({ labels, data }: RadarChartProps) => {
+const Graph = ({ analysisData }: RadarChartProps) => {
+  const labels = EmotionData.map(ed => ed.name);
+  const data = EmotionData.map(ed => Math.round(analysisData[ed.feel as keyof AnalysisData] * 100));
+
   const chartHtml = `
     <html>
       <head>
@@ -43,7 +46,7 @@ const Graph = ({ labels, data }: RadarChartProps) => {
               // 방사축
               radialaxis: {
                 visible: true,
-                range: [0, 20],
+                range: [0, 90],
                 showticklabels: false,
                 showline: false,
                 ticklen: 0,
