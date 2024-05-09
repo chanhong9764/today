@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1072063580126",
+    "project_id": "today-f16f1",
+    "storage_bucket": "today-f16f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072063580126:android:5276877191390f1535ff4f",
+        "android_client_info": {
+          "package_name": "com.dangil.today"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEheD84mqzFzBlGLa3FxQh-8UT8Mij0Bc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

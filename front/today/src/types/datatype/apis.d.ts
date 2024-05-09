@@ -10,6 +10,8 @@ export interface Apis {
   day: (date: string) => Array;
   analysisMonth: (date: string) => Array;
   analysisDay: (date: string) => Array;
+  notice: string;
+  noticeToken: string;
 }
 
 export interface APIResponse<T> {

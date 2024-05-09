@@ -36,6 +36,14 @@ export interface EditDiaryData {
   content: string;
 }
 
+export interface SearchWord {
+  keyword: string;
+}
+
+export interface DeviceToken {
+  token: string;
+}
+
 export interface AllDiaryData {
   content: DiaryData[];
 }

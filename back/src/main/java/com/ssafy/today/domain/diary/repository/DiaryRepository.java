@@ -21,5 +21,5 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Diary findFirstByMemberIdAndCreatedAtBetweenAndImportant(Long memberId, LocalDateTime createdAt, LocalDateTime createdAt2, Boolean important);
     boolean existsByImportantIsTrueAndMemberIdAndCreatedAtBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
     boolean existsByIdAndMemberId(Long diaryId, Long memberId);
-
+    int countByMemberIdAndCreatedAtBetween(Long memberId, LocalDateTime startOfDay, LocalDateTime endOfDay);
 }

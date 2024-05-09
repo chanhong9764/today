@@ -18,6 +18,7 @@ public class DiaryResponse {
     private String content;
     private Integer status;
     private LocalDateTime createdAt;
+    private Integer count;
 
     public static DiaryResponse fromEntity(Diary diary){
         DiaryResponse diaryResponse = DiaryResponse.builder()
@@ -29,6 +30,7 @@ public class DiaryResponse {
                 .content(diary.getContent())
                 .status(diary.getStatus())
                 .createdAt(diary.getCreatedAt())
+                .count(diary.getCount())
                 .build();
 
         return diaryResponse;
