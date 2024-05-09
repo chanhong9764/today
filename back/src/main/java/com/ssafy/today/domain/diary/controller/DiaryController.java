@@ -2,6 +2,7 @@ package com.ssafy.today.domain.diary.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.ssafy.today.domain.analysis.service.AnalysisService;
 import com.ssafy.today.domain.diary.dto.request.*;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
@@ -56,45 +57,25 @@ public class DiaryController {
         diaryContentRequest.setDiaryId(diaryResponse.getId());
         diaryContentRequest.setCount(diaryResponse.getCount());
         // gpu 서버에 소켓통신을 통한 이미지 생성 요청 보내기
-        simpMessagingTemplate.convertAndSend("/sub/fastapi", diaryContentRequest);
+        kafkaTemplate.send("image-request", diaryContentRequest);
         System.out.println("Diary 생성 요청");
 
         return getResponseEntity(SuccessCode.OK, diaryResponse);
     }
-
-    @GetMapping("/test")
-    public ResponseEntity<?> testKafka() {
-        DiaryContentRequest diaryContentRequest = DiaryContentRequest.builder()
-                .diaryId(123L)
-                .memberId(123L)
-                .content("test")
-                .count(1)
-                .createdAt(LocalDateTime.now())
-                .feel(Feel.ANGRY)
-                .build();
-        kafkaTemplate.send("image-request", diaryContentRequest);
-        System.out.println("Kafka 실행완료");
-        return getResponseEntity(SuccessCode.OK);
-    }
-    @KafkaListener(topics = "image-created", groupId = "${kafka.group}")
-    public void consumer(String data) {
-//        ObjectMapper mapper = new ObjectMapper();
-//        DiaryContentCreated diaryContentCreated;
-//        try {
-//            diaryContentCreated = mapper.readValue(data, DiaryContentCreated.class);
-//        } catch (JsonProcessingException e) {
-//            throw new GlobalException(ErrorCode.DIARY_CONVERT_FAILED);
-//        }
-//        System.out.println(diaryContentCreated.getDiaryId());
-        System.out.println(data);
-        System.out.println("Kafka 수신");
-    }
     /**
      * fastapi 서버에서 이미지 생성이후 호출 될곳
      */
-    @MessageMapping("/diary/created")
-    public void createdDiary(DiaryContentCreated diaryContentCreated){
+    @KafkaListener(topics = "image-created", groupId = "${kafka.group}")
+    public void consumer(String data) {
         System.out.println("Diary 생성 완료");
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        DiaryContentCreated diaryContentCreated;
+        try {
+            diaryContentCreated = mapper.readValue(data, DiaryContentCreated.class);
+        } catch (JsonProcessingException e) {
+            throw new GlobalException(ErrorCode.DIARY_CONVERT_FAILED);
+        }
         // Analysis 에 저장, Diary 테이블에 저장, tempImg 테이블에 저장
         analysisService.createOrUpdateAnalysis(diaryContentCreated.getMemberId(), diaryContentCreated);
         diaryService.updateAfterCreateImg(diaryContentCreated);
