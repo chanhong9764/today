@@ -41,7 +41,7 @@ function Calendar({ navigation }: CalendarProp) {
   };
 
   function navigateToWrite() {
-    navigation.push('SelectEmotion');
+    navigation.push('SelectImage');
   }
 
   return (

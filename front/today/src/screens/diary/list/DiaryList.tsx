@@ -1,3 +1,4 @@
+import { useTheme } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView } from 'react-native';
 import { Calendars } from '../../../apis/CalendarApi';
@@ -8,6 +9,7 @@ import { AllDiaryData, DiaryData } from '../../../types/datatype';
 import { DiaryProp } from '../../../types/navigatortype/stack';
 
 function DiaryList({ navigation }: DiaryProp) {
+  const theme = useTheme();
   // 페이지네이션
   const [data, setData] = useState<AllDiaryData>({ content: [] });
   const [page, setPage] = useState(0);
@@ -19,7 +21,7 @@ function DiaryList({ navigation }: DiaryProp) {
     }
     setLoading(true);
 
-    Diarys.getDiarys(page, 2)
+    Diarys.getDiarys(page, 3)
       .then(response => {
         console.log(response.data);
         const newData = response.data?.content || [];
@@ -61,7 +63,7 @@ function DiaryList({ navigation }: DiaryProp) {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fcfcfc' }}>
       <SearchBar filterText={filterText} setFilterText={setFilterText} onPress={onPressSearch} />
       <FlatList
         data={data.content}

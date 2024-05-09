@@ -1,6 +1,7 @@
 export interface Apis {
   members: string;
   search: string;
+  getImage: (diaryId: number) => Array;
   image: string;
   diary: string;
   allDiarys: (page: number, size: number) => Array;
