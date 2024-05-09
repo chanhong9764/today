@@ -16,6 +16,8 @@
     "@react-navigation/native-stack": "^6.9.26",
     "@types/react": "~18.2.45",
     "axios": "^1.6.8",
+    "babel-plugin-styled-components": "^2.1.4",
+    "braces": "^3.0.2",
     "date-fns": "^3.6.0",
     "expo": "~50.0.14",
     "expo-linking": "~6.2.2",
@@ -44,9 +46,8 @@
     "react-native-svg": "14.1.0",
     "react-native-view-shot": "^3.8.0",
     "react-native-webview": "^13.6.4",
-    "react-navigation": "^5.0.0",
-    "styled-components": "^6.1.8",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -59,7 +60,6 @@
     "@types/styled-components-react-native": "^5.2.5",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
-    "babel-plugin-styled-components": "^2.1.4",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
