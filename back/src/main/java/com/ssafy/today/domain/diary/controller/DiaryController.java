@@ -62,6 +62,20 @@ public class DiaryController {
 
         return getResponseEntity(SuccessCode.OK, diaryResponse);
     }
+    @GetMapping("/test")
+    public ResponseEntity<?> testKafka() {
+        DiaryContentRequest diaryContentRequest = DiaryContentRequest.builder()
+                .diaryId(123L)
+                .memberId(123L)
+                .content("test")
+                .feel(Feel.ANGRY)
+                .createdAt(LocalDateTime.now())
+                .count(1)
+                .build();
+        kafkaTemplate.send("image-request", diaryContentRequest);
+
+        return getResponseEntity(SuccessCode.OK);
+    }
     /**
      * fastapi 서버에서 이미지 생성이후 호출 될곳
      */
