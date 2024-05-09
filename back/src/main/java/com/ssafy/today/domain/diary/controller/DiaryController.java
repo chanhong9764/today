@@ -69,7 +69,7 @@ public class DiaryController {
         tempImgService.createTempImages(diaryContentCreated);
         // TODO : 클라이언트 알람 전송
 
-        noticeService.completeNotice(diaryContentCreated.getDiaryId(), diaryContentCreated.getMemberId(), 1);
+        noticeService.completeNotice(diaryContentCreated.getDiaryId(), diaryContentCreated.getMemberId(), diaryContentCreated.getCount());
     }
 
     @PostMapping("/img")
