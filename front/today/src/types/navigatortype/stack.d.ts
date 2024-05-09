@@ -19,11 +19,13 @@ export type DiaryStackParam = {
   DiaryDetail?: {
     diaryId: number;
   };
+  NotificationScreen?: undefined;
 };
 
 export type UserStackParam = {
   Mypage?: undefined;
   KakaoLogin?: undefined;
+  NotificationScreen?: undefined;
 };
 
 export type CalendarStackParam = {
@@ -41,6 +43,7 @@ export type CalendarStackParam = {
     feel: string;
   };
   DiaryDetail?: undefined;
+  NotificationScreen?: undefined;
 };
 
 export type RootProp = {

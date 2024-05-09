@@ -39,6 +39,10 @@ function Calendar({ navigation }: CalendarProp) {
     setMonth(month);
   };
 
+  function navigateToWrite() {
+    navigation.push('SelectImage');
+  }
+
   return (
     <View style={styles.calendarContainer}>
       <Button title="오늘 일기 보기" onPress={() => navigation.push('OneDayDiary')} />

@@ -48,24 +48,7 @@ export interface AllDiaryData {
   content: DiaryData[];
 }
 
-export interface ImageData {
+export interface WriteDiaryData {
   feel: string | undefined;
   content: string;
-}
-
-export interface AnalysisData {
-  i: number;
-  e: number;
-  s: number;
-  n: number;
-  t: number;
-  f: number;
-  p: number;
-  j: number;
-  angry: number;
-  disgust: number;
-  fear: number;
-  happiness: number;
-  sadness: number;
-  surprise: number;
 }

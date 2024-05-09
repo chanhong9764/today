@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 export const StyledBtn = styled.TouchableOpacity`
@@ -5,7 +6,17 @@ export const StyledBtn = styled.TouchableOpacity`
   padding: 10px 15px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.mainPink};
-  box-shadow: 2px 2px 2px #acacac;
+  ${Platform.select({
+    ios: `
+      shadow-color: #ffffff;
+      shadow-offset: {width: 10, height: 10};
+      shadow-opacity: 0.5;
+      shadow-radius: 10;
+    `,
+    android: `
+      elevation: 5;
+    `,
+  })}
 `;
 
 export const StyledAddBtn = styled.TouchableOpacity`

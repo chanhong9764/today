@@ -1,9 +1,9 @@
 import { Image } from 'react-native';
-import { DiaryData } from '../../../types/datatype';
+import { ImageData } from '../../../types/datatype';
 import * as S from './style';
 
 type ImageItemProps = {
-  item: DiaryData;
+  item: ImageData;
   onPress: () => void;
   backgroundColor: string;
 };
