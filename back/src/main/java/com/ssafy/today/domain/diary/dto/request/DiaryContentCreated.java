@@ -25,6 +25,7 @@ public class DiaryContentCreated {
     private double sadness;
     private double surprise;
     private String mbti;
+    private Integer count;
 
     public TempImg toTempImgEntity(Diary diary, Member member) {
         return TempImg.builder()

@@ -47,6 +47,7 @@ public class DiaryController {
         DiaryResponse diaryResponse = diaryService.createDiary(memberId, diaryContentRequest);
         diaryContentRequest.setCreatedAt(diaryResponse.getCreatedAt());
         diaryContentRequest.setDiaryId(diaryResponse.getId());
+        diaryContentRequest.setCount(diaryResponse.getCount());
         // gpu 서버에 소켓통신을 통한 이미지 생성 요청 보내기
         simpMessagingTemplate.convertAndSend("/sub/fastapi", diaryContentRequest);
         System.out.println("Diary 생성 요청");
