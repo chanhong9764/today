@@ -42,7 +42,7 @@ public class NoticeService {
   }
 
   // 파이썬 서버 이미지 로드 완료 알림 and 알림 DB 저장
-  public void Notice(Long diaryId, Long memberId, Integer sequence) {
+  public void completeNotice(Long diaryId, Long memberId, Integer sequence) {
     Member member = memberRepository.getReferenceById(memberId);
     Diary diary = diaryRepository.getReferenceById(diaryId);
 
@@ -53,8 +53,11 @@ public class NoticeService {
         .kind(NoticeKind.COMPLETE)
         .content(sequence.toString())
         .confirm(false).build();
+    noticeRepository.save(notice);
+
     // 알림 ( 소켓 or Fcm or SSE ) 추후 구현
   }
+
 
   // 일기 안씀 로드 처리
 }

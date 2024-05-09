@@ -9,6 +9,7 @@ import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
 import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
+import com.ssafy.today.domain.notice.service.NoticeService;
 import com.ssafy.today.domain.tempimg.service.TempImgService;
 import com.ssafy.today.util.response.ErrorCode;
 import com.ssafy.today.util.response.ErrorResponseEntity;
@@ -38,6 +39,7 @@ public class DiaryController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final AnalysisService analysisService;
     private final TempImgService tempImgService;
+    private final NoticeService noticeService;
 
     @PostMapping
     public ResponseEntity<?> createDiary(HttpServletRequest request, @RequestBody DiaryContentRequest diaryContentRequest) {
@@ -65,6 +67,8 @@ public class DiaryController {
         diaryService.updateAfterCreateImg(diaryContentCreated);
         tempImgService.createTempImages(diaryContentCreated);
         // TODO : 클라이언트 알람 전송
+
+        noticeService.completeNotice(diaryContentCreated.getDiaryId(), diaryContentCreated.getMemberId(), 1);
     }
 
     @PostMapping("/img")
