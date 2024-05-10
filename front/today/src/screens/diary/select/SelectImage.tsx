@@ -6,17 +6,18 @@ import { Diarys } from '../../../apis/DiaryApi';
 import NextButton from '../../../common/CommonButton';
 import Images from '../../../components/diary/select/ResultImage';
 import { ImageData, ImageDatas } from '../../../types/datatype';
-import { DiaryProp } from '../../../types/navigatortype/stack';
+import { SelectImageProp } from '../../../types/navigatortype/stack';
 import * as S from './style';
 
-function SelectImage({ navigation }: DiaryProp) {
+function SelectImage({ navigation, route }: SelectImageProp) {
   const theme = useTheme();
+  const { diaryId } = route.params;
   const today: string = format(new Date(), 'yyyy. MM. dd');
   const [images, setImages] = useState<ImageDatas>();
   const [selectedImg, setSelectedImg] = useState<string>();
 
   useEffect(() => {
-    Diarys.getImage(27)
+    Diarys.getImage(diaryId)
       .then(response => {
         if (response.data) {
           setImages(response.data);
@@ -44,9 +45,9 @@ function SelectImage({ navigation }: DiaryProp) {
 
   function createDiary() {
     if (selectedImg) {
-      navigation.navigate('DiaryDetail');
+      navigation.reset({ routes: [{ name: 'WaitImage' }], param: [{ diaryId: diaryId }] });
       Diarys.addDiary({
-        id: 27,
+        id: diaryId,
         imgUrl: selectedImg,
       })
         .then(res => {})
@@ -71,7 +72,9 @@ function SelectImage({ navigation }: DiaryProp) {
       <S.ImagesContainer>
         <FlatList data={imageUrls} renderItem={renderImage} numColumns={2} keyExtractor={item => item.id.toString()} />
       </S.ImagesContainer>
-      <NextButton content="일기 작성 완료하기" onPress={createDiary} />
+      <S.ButtonContainer>
+        <NextButton content="일기 작성 완료하기" onPress={createDiary} />
+      </S.ButtonContainer>
     </S.SelectImageContainer>
   );
 }

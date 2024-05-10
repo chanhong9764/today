@@ -12,8 +12,10 @@ export interface DiaryData {
   feel: string | undefined;
   important: boolean;
   imgUrl: string;
+  status: number;
   content: string;
-  createdAt?: string | Date;
+  createdAt: string;
+  count: number;
 }
 
 export interface CalendarData {
@@ -22,7 +24,7 @@ export interface CalendarData {
   important: boolean;
   imgUrl: string;
   content: string;
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface SearchData {
@@ -51,6 +53,18 @@ export interface SearchWord {
 
 export interface DeviceToken {
   token: string;
+}
+
+export interface ImageDatas {
+  img1: string;
+  img2: string;
+  img3: string;
+  img4: string;
+}
+
+export interface ImageData {
+  id: number;
+  imgUrl: string;
 }
 
 export interface NoticeData {

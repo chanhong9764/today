@@ -30,16 +30,15 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
     const contentLength = content.content.trim().length;
 
     if (contentLength < 10) {
-      Alert.alert('경고', '최소 10자 이상 입력해주세요.');
+      Alert.alert('최소 글자수 제한!', '최소 10자 이상 입력해주세요.');
     } else if (contentLength > 200) {
-      Alert.alert('경고', '200자를 초과할 수 없습니다.');
+      Alert.alert('최대 글자수 제한!', '200자를 초과할 수 없습니다.');
     } else {
       navigation.reset({ routes: [{ name: 'WaitImage' }] });
 
       Diarys.createImage(content)
         .then(res => {
-          console.log(content);
-          console.log('이미지 생성 성공');
+          console.log('일기 생성 성공', content);
         })
         .catch(err => {
           console.log(err);

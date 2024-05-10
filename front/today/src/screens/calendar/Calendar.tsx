@@ -1,9 +1,9 @@
 // Calendar.tsx
 import React, { useState } from 'react';
-import { Button, View } from 'react-native';
 import CalendarBody from '../../components/calendar/CalendarBody';
 import CalendarHeader from '../../components/calendar/CalendarHeader';
 import { CalendarProp } from '../../types/navigatortype/stack';
+import * as S from './style';
 
 function Calendar({ navigation }: CalendarProp) {
   const DATE = new Date();
@@ -39,32 +39,21 @@ function Calendar({ navigation }: CalendarProp) {
     setMonth(month);
   };
 
-  function navigateToWrite() {
-    navigation.push('SelectImage');
-  }
-
   return (
-    <View style={{ margin: 10 }}>
-      <Button title="오늘 일기 보기" onPress={() => navigation.push('OneDayDiary')} />
-      <CalendarHeader
-        month={month}
-        year={year}
-        date={date}
-        today={{ month: new Date().getMonth() + 1, year: new Date().getFullYear(), date: new Date().getDate() }}
-        moveToNextMonth={moveToNextMonth}
-        moveToPreviousMonth={moveToPreviousMonth}
-        moveToSpecificYearAndMonth={moveToSpecificYearAndMonth}
-      />
-      <CalendarBody
-        month={month}
-        year={year}
-        date={date}
-        today={today}
-        moveToNextMonth={moveToNextMonth}
-        moveToPreviousMonth={moveToPreviousMonth}
-        moveToSpecificYearAndMonth={moveToSpecificYearAndMonth}
-      />
-    </View>
+    <S.CalenderContainer>
+      <S.CalenderWrapper>
+        <CalendarHeader
+          month={month}
+          year={year}
+          date={date}
+          today={{ month: new Date().getMonth() + 1, year: new Date().getFullYear(), date: new Date().getDate() }}
+          moveToNextMonth={moveToNextMonth}
+          moveToPreviousMonth={moveToPreviousMonth}
+          moveToSpecificYearAndMonth={moveToSpecificYearAndMonth}
+        />
+        <CalendarBody month={month} year={year} date={date} navigation={navigation} />
+      </S.CalenderWrapper>
+    </S.CalenderContainer>
   );
 }
 

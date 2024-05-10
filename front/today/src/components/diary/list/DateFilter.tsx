@@ -5,16 +5,21 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import * as S from './style';
 
 type DateProp = {
-  date: Date;
-  setDate: (date: Date) => void;
+  date: string;
+  setDate: (date: string) => void;
 };
 
 function DateFilter({ date, setDate }: DateProp) {
   const [show, setShow] = useState(false);
 
-  function onConfirm(selectedDate: any) {
+  function onConfirm(selectedDate: Date) {
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth() + 1;
+    const day = selectedDate.getDate();
+    const fommatedSelectedDate =
+      year + '-' + ('00' + month.toString()).slice(-2) + '-' + ('00' + day.toString()).slice(-2);
     setShow(false);
-    setDate(selectedDate);
+    setDate(fommatedSelectedDate);
   }
 
   function onCancel() {
@@ -26,7 +31,13 @@ function DateFilter({ date, setDate }: DateProp) {
       <S.DiaryListTitleContainer onPress={() => setShow(!show)}>
         <S.DiaryListTitle>{format(new Date(date), 'PPP', { locale: ko })} </S.DiaryListTitle>
       </S.DiaryListTitleContainer>
-      <DateTimePickerModal isVisible={show} date={date} mode="date" onConfirm={onConfirm} onCancel={onCancel} />
+      <DateTimePickerModal
+        isVisible={show}
+        date={new Date(date)}
+        mode="date"
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+      />
     </>
   );
 }

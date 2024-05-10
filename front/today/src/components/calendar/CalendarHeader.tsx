@@ -43,9 +43,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: 14,
+    padding: 8,
   },
   text: {
     fontSize: 20,
+    fontWeight: '500',
   },
 });
 
