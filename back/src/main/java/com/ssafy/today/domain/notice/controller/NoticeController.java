@@ -1,8 +1,10 @@
 package com.ssafy.today.domain.notice.controller;
 import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEntity;
 import com.ssafy.today.domain.notice.dto.request.NoticeUpdateRequest;
+import com.ssafy.today.domain.notice.dto.request.PushMessageRequest;
 import com.ssafy.today.domain.notice.dto.response.NoticeResponse;
 import com.ssafy.today.domain.notice.service.NoticeService;
+import com.ssafy.today.domain.notice.service.PushMessageService;
 import com.ssafy.today.util.response.ErrorCode;
 import com.ssafy.today.util.response.SuccessCode;
 import com.ssafy.today.util.response.exception.GlobalException;
@@ -12,12 +14,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/notices")
 public class NoticeController {
   private final NoticeService noticeService;
+  private final PushMessageService pushMessageService;
   // 알림 리스트 랜더링
   @GetMapping
   public ResponseEntity<?> getNotices(HttpServletRequest request){
@@ -39,6 +43,13 @@ public class NoticeController {
   @PostMapping("/token")
   public void getToken(@RequestBody String token) {
     System.out.println(token);
+  }
+
+  @PostMapping("/push/test")
+  public ResponseEntity<?> sendPushMessage(@RequestBody PushMessageRequest pushMessageRequest) {
+    System.out.println(pushMessageRequest.toString());
+    pushMessageService.sendPushMessage(pushMessageRequest);
+    return getResponseEntity(SuccessCode.OK);
   }
 
 }
