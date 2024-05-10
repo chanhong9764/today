@@ -1,6 +1,7 @@
 package com.ssafy.today.domain.diary.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
 import com.ssafy.today.domain.diary.entity.Diary;
 import com.ssafy.today.domain.diary.entity.Feel;
@@ -24,7 +25,7 @@ public class DiaryContentRequest {
     private Feel feel;
 
     private String content;
-    
+    @JsonFormat(pattern = "yyyy-MM-dd'T'kk:mm:ss.SSSSSS")
     private LocalDateTime createdAt;
 
     private Integer count;
