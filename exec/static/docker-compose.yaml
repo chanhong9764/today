@@ -58,6 +58,7 @@ services:
 #      JENKINS_OPTS: --httpPort=9999
 
   kafka:
+    container_name: kafka
     image: bitnami/kafka:latest
     ports:
       - '9092:9092'
