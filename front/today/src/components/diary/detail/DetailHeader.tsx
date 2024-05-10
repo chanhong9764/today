@@ -3,6 +3,7 @@ import { Center, Divider, HStack, Image, VStack } from 'native-base';
 import React from 'react';
 import { View, useWindowDimensions } from 'react-native';
 import { DiaryData } from '../../../types/datatype';
+import { EmotionFiles } from '../write/Emotions';
 
 type DetailHeaderProps = {
   diary: DiaryData;
@@ -33,16 +34,18 @@ const DetailHeader = ({ diary }: DetailHeaderProps) => {
       borderBottomWidth={0}>
       <HStack divider={<Divider bg="#FE8B8B" />} borderBottomWidth={1} borderBottomColor="#FE8B8B">
         <VStack flex={1}>
-          <Center height="40px" style={{ borderBottomWidth: 0.5, borderColor: '#FE8B8B' }}>
+          <Center height="45px" style={{ borderBottomWidth: 0.5, borderColor: '#FE8B8B' }}>
             날짜
           </Center>
-          <Center height="40px">{createdAt ? formatDate(createdAt) : 'Unknown'}</Center>
+          <Center height="45px">{createdAt ? formatDate(createdAt) : 'Unknown'}</Center>
         </VStack>
         <VStack flex={1}>
-          <Center height="40px" style={{ borderBottomWidth: 0.5, borderColor: '#FE8B8B' }}>
+          <Center height="45px" style={{ borderBottomWidth: 0.5, borderColor: '#FE8B8B' }}>
             오늘의 기분
           </Center>
-          <Center height="40px">{diary.feel}</Center>
+          <Center height="45px">
+            {diary.feel ? <Image source={EmotionFiles[diary.feel]} style={{ width: 40, height: 40 }} /> : 'Unknown'}
+          </Center>
         </VStack>
       </HStack>
       <View style={{ height: imageHeight, width: '100%' }}>
