@@ -43,6 +43,11 @@ export const SingleDiaryDate = styled.Text`
   font-weight: ${({ theme }) => theme.fontWeight.bold};
 `;
 
+export const SingleDiaryTextContainer = styled.View``;
+export const SingleDiaryText = styled.Text`
+  flex: 1 1 0;
+`;
+
 export const DiaryListTitleContainer = styled.Pressable`
   ${center}
   padding: 20px 0px;

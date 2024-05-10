@@ -43,6 +43,13 @@ export const SingleDiaryDate = styled.Text`
   font-weight: ${({ theme }) => theme.fontWeight.bold};
 `;
 
+export const SingleDiaryImage = styled.ImageBackground`
+  height: 250px;
+  width: '100%';
+  padding: 10px;
+  align-items: flex-end;
+`;
+
 export const DiaryListTitleContainer = styled.Pressable`
   ${center}
   padding: 20px 0px;

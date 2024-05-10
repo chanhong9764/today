@@ -14,6 +14,7 @@ function DiaryList({ navigation }: DiaryProp) {
   const [data, setData] = useState<AllDiaryData>({ content: [] });
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [initialize, setInitialize] = useState(false);
 
   function getData() {
     if (loading) {
@@ -41,6 +42,15 @@ function DiaryList({ navigation }: DiaryProp) {
   useEffect(() => {
     getData();
   }, []);
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setData({ content: [] });
+  //     setPage(0);
+  //     console.log(page);
+  //     getData();
+  //   }, []),
+  // );
 
   // 검색
   const [filterText, setFilterText] = useState<string>('');

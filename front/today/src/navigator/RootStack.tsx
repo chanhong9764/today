@@ -1,9 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useContext, useEffect } from 'react';
+import { Text, View } from 'react-native';
 import { IsLoginContext, useIsLoginState } from '../contexts/IsLoginContext';
 import LoginScreen from '../screens/LoginScreen';
 import KakaoLogin from '../screens/user/KakaoLogin';
+import NotificationScreen from '../screens/user/notification/NotificationScreen';
 import { RootStackParam } from '../types/navigatortype/stack';
 import MainTab from './MainTab';
 
@@ -39,11 +41,26 @@ function RootStack() {
 
   return (
     <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
+    // screenOptions={{
+    //   headerShown: false,
+    // }}
+    >
       {isLogin ? (
-        <Stack.Screen name="MainTab" component={MainTab} />
+        <>
+          <Stack.Screen name="MainTab" component={MainTab} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="NotificationScreen"
+            component={NotificationScreen}
+            options={{
+              headerTitleAlign: 'center',
+              headerTitle: ({ children }) => (
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ fontFamily: 'title', fontSize: 38 }}>알림</Text>
+                </View>
+              ),
+            }}
+          />
+        </>
       ) : (
         <>
           <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />

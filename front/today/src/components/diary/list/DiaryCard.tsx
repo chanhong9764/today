@@ -1,5 +1,5 @@
 import LottieView from 'lottie-react-native';
-import { Image, Text } from 'react-native';
+import { Image } from 'react-native';
 import { DiaryData } from '../../../types/datatype';
 import * as S from './style';
 
@@ -59,7 +59,7 @@ export function DiaryCard({ item, onPress, backgroundColor }: ItemProps) {
               }}
             />
           </S.DefaultImage>
-        ); // 기본적으로 아무것도 표시하지 않음
+        );
     }
   }
 
@@ -71,7 +71,9 @@ export function DiaryCard({ item, onPress, backgroundColor }: ItemProps) {
           <S.SingleDiaryDate>{month}</S.SingleDiaryDate>
           <S.SingleDiaryDate>{date}</S.SingleDiaryDate>
         </S.SingleDiaryDates>
-        <Text>{item.content}</Text>
+        <S.SingleDiaryTextContainer>
+          <S.SingleDiaryText>{item.content}</S.SingleDiaryText>
+        </S.SingleDiaryTextContainer>
       </S.SingleDiaryContent>
     </S.SingleDiaryContainer>
   );

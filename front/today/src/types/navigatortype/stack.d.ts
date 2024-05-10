@@ -4,6 +4,7 @@ export type RootStackParam = {
   LoginScreen: undefined;
   KakaoLogin: undefined;
   MainTab: undefined;
+  NotificationScreen: undefined;
 };
 
 export type DiaryStackParam = {
