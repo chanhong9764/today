@@ -12,22 +12,24 @@
       "backgroundColor": "#ffffff"
     },
     "plugin": [
-      "expo-media-library",
-      "expo-build-properties",
-      {
-        "android": {
-          "usesCleartextTraffic": true,
-          "permissions": [
-            "WRITE_EXTERNAL_STORAGE",
-            "READ_EXTERNAL_STORAGE",
-            "INTERNET",
-            "ACCESS_NETWORK_STATE"
-          ]
-        },
-        "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
-        "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
-        "isAccessMediaLocationEnabled": true
-      }
+      [
+        "expo-media-library",
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true,
+            "permissions": [
+              "WRITE_EXTERNAL_STORAGE",
+              "READ_EXTERNAL_STORAGE",
+              "INTERNET",
+              "ACCESS_NETWORK_STATE"
+            ]
+          },
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
     ],
     "assetBundlePatterns": ["**/*"],
     "ios": {
