@@ -25,7 +25,7 @@ export const TotalDays = styled.View`
   flex-wrap: wrap;
 `;
 
-export const DayBoxContainer = styled.View`
+export const DayBoxContainer = styled.TouchableOpacity`
   width: 14.2%;
   height: 90px;
   ${center}

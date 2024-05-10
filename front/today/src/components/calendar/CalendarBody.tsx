@@ -1,5 +1,6 @@
 // CalendarBody.tsx
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
 import { Calendars } from '../../apis/CalendarApi';
 import { dayType } from '../../types/calendartype/calendar';
 import { CalendarData } from '../../types/datatype';
@@ -21,24 +22,28 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
   const [diaryData, setDiaryData] = useState<CalendarData[]>();
 
   // 한 달 일기 데이터 불러오기
-  useEffect(() => {
-    Calendars.getCalendars(TodayDate)
-      .then(response => {
-        console.log('한달 일기 데이터 로드 성공', response.data);
-        setDiaryData(response.data);
-        const newImageUrlByDate: { [key: string]: string } = {};
-        response.data?.forEach(diary => {
-          if (diary.imgUrl && diary.createdAt) {
-            const formattedDate = diary.createdAt.split('T')[0];
-            newImageUrlByDate[formattedDate] = diary.imgUrl;
-          }
+  useFocusEffect(
+    useCallback(() => {
+      Calendars.getCalendars(TodayDate)
+        .then(response => {
+          console.log('한달 일기 데이터 로드 성공', response.data);
+          setDiaryData(response.data);
+
+          // { [날짜] : 이미지 } 배열 생성
+          const newImageUrlByDate: { [key: string]: string } = {};
+          response.data?.forEach(diary => {
+            if (diary.imgUrl && diary.createdAt) {
+              const formattedDate = diary.createdAt.split('T')[0];
+              newImageUrlByDate[formattedDate] = diary.imgUrl;
+            }
+          });
+          setImageUrlByDate(newImageUrlByDate);
+        })
+        .catch(error => {
+          console.log('한달 일기 데이터 로드 실패', error);
         });
-        setImageUrlByDate(newImageUrlByDate);
-      })
-      .catch(error => {
-        console.log('한달 일기 데이터 로드 실패', error);
-      });
-  }, []);
+    }, []),
+  );
 
   const initialState = {
     prev: {
@@ -127,7 +132,7 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
             const imageUrl = state === 'curr' ? imageUrlByDate[dateString] : undefined;
             const textColor = imageUrl ? '#FFFFFF' : state === 'curr' ? '#4A4A4A' : 'lightgray';
             return (
-              <S.DayBoxContainer key={index}>
+              <S.DayBoxContainer key={index} onPress={() => navigateToDay(dateString)}>
                 {imageUrl ? (
                   <S.ImageContainer onPress={() => navigateToDay(dateString)}>
                     <S.ImageBackgroundStyled source={{ uri: imageUrl }} imageStyle={{ borderRadius: 3 }}>
