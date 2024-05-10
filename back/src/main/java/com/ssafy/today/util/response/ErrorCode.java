@@ -14,8 +14,7 @@ public enum ErrorCode {
   // 일기
   DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 일기를 찾을 수 없습니다."),
   DIARY_OWNERSHIP_MISMATCH(HttpStatus.FORBIDDEN, "일기의 소유권이 일치하지 않습니다."),
-
-
+  DIARY_CONVERT_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "JSON 변환에 실패했습니다."),
   // 키워드
   KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 키워드를 찾을 수 없습니다."),
 

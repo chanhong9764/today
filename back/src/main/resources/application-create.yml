@@ -11,3 +11,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+kafka:
+  server: ${KAFKA_PROD_SERVER_ADDRESS}
