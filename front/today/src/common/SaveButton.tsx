@@ -42,7 +42,7 @@ const SaveButton = ({ viewShotRef }: SaveButtonProps) => {
 
   return (
     <TouchableOpacity onPress={handleSavePhoto} style={{ padding: 10 }}>
-      <Icon name="save" size={24} color="667085" />
+      <Icon name="save" size={25} color="#667085" />
     </TouchableOpacity>
   );
 };
