@@ -5,6 +5,7 @@ import com.ssafy.today.domain.diary.repository.DiaryRepository;
 import com.ssafy.today.domain.member.entity.Member;
 import com.ssafy.today.domain.member.repository.MemberRepository;
 import com.ssafy.today.domain.notice.dto.request.NoticeUpdateRequest;
+import com.ssafy.today.domain.notice.dto.request.SaveTokenRequest;
 import com.ssafy.today.domain.notice.entity.Notice;
 import com.ssafy.today.domain.notice.entity.Notice.NoticeBuilder;
 import com.ssafy.today.domain.notice.entity.NoticeKind;
@@ -60,4 +61,10 @@ public class NoticeService {
 
 
   // 일기 안씀 로드 처리
+
+
+  public void saveToken(SaveTokenRequest saveTokenRequest) {
+    Member member = memberRepository.getReferenceById(saveTokenRequest.getMemberId());
+    member.updateToken(saveTokenRequest.getDeviceToken());
+  }
 }
