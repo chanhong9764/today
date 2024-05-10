@@ -62,6 +62,8 @@ services:
     image: bitnami/kafka:latest
     ports:
       - '9092:9092'
+    expose:
+      - '9094'
     environment:
       # KRaft settings
       - KAFKA_CFG_NODE_ID=0
