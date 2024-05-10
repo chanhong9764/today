@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 export const StyledBtn = styled.TouchableOpacity`
-  width: 80%;
+  width: 83%;
   padding: 10px 15px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.mainPink};

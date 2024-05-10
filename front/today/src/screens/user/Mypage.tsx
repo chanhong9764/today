@@ -20,7 +20,6 @@ function Mypage({ navigation }: UserProp) {
     Members.getMembers()
       .then(response => {
         setMemberInfo(response.data);
-        // console.log(response.data);
       })
       .catch(err => {
         console.log(err);

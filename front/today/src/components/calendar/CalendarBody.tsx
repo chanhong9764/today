@@ -1,20 +1,24 @@
 // CalendarBody.tsx
 import { useEffect, useState } from 'react';
 import { Calendars } from '../../apis/CalendarApi';
-import { Header, PressedDate, dayType } from '../../types/calendartype/calendar';
+import { dayType } from '../../types/calendartype/calendar';
 import { CalendarData } from '../../types/datatype';
+import { DiaryDetailProp } from '../../types/navigatortype/stack';
 import * as S from './style';
+
+type CalendarBodyProp = {
+  year: number;
+  month: number;
+  date: number;
+  navigation: DiaryDetailProp;
+};
 const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const isSameObj = (obj1: PressedDate, obj2: PressedDate) => {
-  return JSON.stringify(obj1) === JSON.stringify(obj2);
-};
-
-const CalendarBody = ({ month, year, date, today }: Header) => {
+const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
   // 날짜별 이미지 URL 매핑 객체 생성
-  const imageUrlByDate: { [key: string]: string } = {};
+  const [imageUrlByDate, setImageUrlByDate] = useState<{ [key: string]: string }>({});
   const TodayDate = year + '-' + ('00' + month.toString()).slice(-2) + '-' + ('00' + date.toString()).slice(-2);
-  const [diaryData, setDiaryData] = useState<CalendarData[] | undefined>();
+  const [diaryData, setDiaryData] = useState<CalendarData[]>();
 
   // 한 달 일기 데이터 불러오기
   useEffect(() => {
@@ -22,12 +26,14 @@ const CalendarBody = ({ month, year, date, today }: Header) => {
       .then(response => {
         console.log('한달 일기 데이터 로드 성공', response.data);
         setDiaryData(response.data);
+        const newImageUrlByDate: { [key: string]: string } = {};
         response.data?.forEach(diary => {
           if (diary.imgUrl && diary.createdAt) {
             const formattedDate = diary.createdAt.split('T')[0];
-            imageUrlByDate[formattedDate] = diary.imgUrl;
+            newImageUrlByDate[formattedDate] = diary.imgUrl;
           }
         });
+        setImageUrlByDate(newImageUrlByDate);
       })
       .catch(error => {
         console.log('한달 일기 데이터 로드 실패', error);
@@ -99,6 +105,12 @@ const CalendarBody = ({ month, year, date, today }: Header) => {
     getTotalDays(year, month);
   }, [year, month, date]);
 
+  function navigateToDay(date: string) {
+    if (diaryData) {
+      navigation.navigate('OneDayDiary', { selectedDate: date });
+    }
+  }
+
   return (
     <>
       <S.DayOfWeek>
@@ -117,9 +129,11 @@ const CalendarBody = ({ month, year, date, today }: Header) => {
             return (
               <S.DayBoxContainer key={index}>
                 {imageUrl ? (
-                  <S.ImageBackgroundStyled source={{ uri: imageUrl }}>
-                    <S.DateText textColor={textColor}>{day}</S.DateText>
-                  </S.ImageBackgroundStyled>
+                  <S.ImageContainer onPress={() => navigateToDay(dateString)}>
+                    <S.ImageBackgroundStyled source={{ uri: imageUrl }} imageStyle={{ borderRadius: 3 }}>
+                      <S.DateTextInImg textColor={textColor}>{day}</S.DateTextInImg>
+                    </S.ImageBackgroundStyled>
+                  </S.ImageContainer>
                 ) : (
                   <S.DateText textColor={textColor}>{day}</S.DateText>
                 )}

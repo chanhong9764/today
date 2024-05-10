@@ -1,6 +1,6 @@
 import { useTheme } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView } from 'react-native';
+import { Alert, FlatList, SafeAreaView } from 'react-native';
 import { Calendars } from '../../../apis/CalendarApi';
 import { Diarys } from '../../../apis/DiaryApi';
 import { DiaryCard } from '../../../components/diary/list/DiaryCard';
@@ -56,10 +56,22 @@ function DiaryList({ navigation }: DiaryProp) {
   }
 
   function renderDiary({ item }: { item: DiaryData }) {
-    function navigateToDetail() {
-      navigation.push('DiaryDetail', { diaryId: item.id });
+    function onPressDiaryCard() {
+      switch (item.status) {
+        case 0:
+          Alert.alert('그림 생성 미완료', '아직 그림을 그리는 중이에요!');
+          break;
+        case 1:
+          navigation.push('SelectImage', { diaryId: item.id });
+          break;
+        case 2:
+          navigation.push('DiaryDetail', { diaryId: item.id });
+          break;
+        default:
+          Alert.alert('그림 생성 미완료', '아직 그림을 그리는 중이에요!');
+      }
     }
-    return <DiaryCard item={item} onPress={navigateToDetail} backgroundColor="white" />;
+    return <DiaryCard item={item} onPress={onPressDiaryCard} backgroundColor="white" />;
   }
 
   return (
