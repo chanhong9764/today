@@ -1,7 +1,7 @@
 // DetailHeader.tsx
-import { Center, Container, Divider, HStack, Image, VStack } from 'native-base';
+import { Center, Divider, HStack, Image, VStack } from 'native-base';
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { DiaryData } from '../../../types/datatype';
 
 type DetailHeaderProps = {
@@ -21,7 +21,7 @@ const DetailHeader = ({ diary }: DetailHeaderProps) => {
   const createdAt = diary.createdAt ? new Date(diary.createdAt) : undefined;
 
   const { height } = useWindowDimensions();
-  const imageHeight = height * 0.3; // 전체 화면의 35% 높이로 설정
+  const imageHeight = height * 0.33; // 전체 화면의 35% 높이로 설정
 
   return (
     <VStack
@@ -45,10 +45,9 @@ const DetailHeader = ({ diary }: DetailHeaderProps) => {
           <Center height="40px">{diary.feel}</Center>
         </VStack>
       </HStack>
-
-      <Container padding={0} height={imageHeight}>
-        <Image source={{ uri: diary.imgUrl }} alt="Diary Image" width="full" height="full" resizeMode="cover" />
-      </Container>
+      <View style={{ height: imageHeight, width: '100%' }}>
+        <Image source={{ uri: diary.imgUrl }} style={{ width: '100%', height: '100%' }} resizeMode="stretch" />
+      </View>
     </VStack>
   );
 };
