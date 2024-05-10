@@ -1,7 +1,9 @@
 // DiaryDetail.tsx
 import { Box } from 'native-base';
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Button, ScrollView, Text, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Feather';
 import ViewShot from 'react-native-view-shot';
 import { Diarys } from '../../apis/DiaryApi';
 import SaveButton from '../../common/SaveButton';
@@ -63,27 +65,47 @@ function DiaryDetail({ navigation, route }: DiaryDetailProp) {
     }
   }
 
-  // 왜 이게 없으면 diary props가 오류가 날까
-  // 왜 이게 없으면 null값으로 받아질 오류가 있다는걸까...
   if (!diary) {
     return <Text>Loading...</Text>;
   }
 
   return (
-    <View>
-      <Box padding={5}>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <SaveButton viewShotRef={viewShotRef} />
+        <View style={styles.rightIcons}>
+          <Icon name="edit" size={24} color="#667085" onPress={onPressEdit} style={{ marginRight: 16 }} />
+          <AntDesign name="closecircleo" size={24} color="#667085" onPress={onPressDelete} />
+        </View>
+      </View>
+      <Box style={{ marginTop: -25, padding: 20 }}>
         <ScrollView>
-          <ViewShot ref={viewShotRef} options={{ format: 'jpg', quality: 0.9 }} style={{ backgroundColor: 'white' }}>
+          <ViewShot
+            ref={viewShotRef}
+            options={{ format: 'jpg', quality: 0.9 }}
+            style={{ backgroundColor: 'white', borderRadius: 8 }}>
             <DetailHeader diary={diary} />
             <DetailContent diary={diary} />
           </ViewShot>
         </ScrollView>
       </Box>
-      <SaveButton viewShotRef={viewShotRef} />
-      <Button title="수 정" onPress={onPressEdit}></Button>
-      <Button title="삭 제" onPress={onPressDelete}></Button>
     </View>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    alignItems: 'center',
+  },
+  rightIcons: {
+    flexDirection: 'row',
+    marginRight: 20,
+  },
+});
 export default DiaryDetail;

@@ -23,7 +23,7 @@ const CalendarHeader = ({ month, year, moveToNextMonth, moveToPreviousMonth }: H
     <View style={styles.header}>
       {/* 이전달로 이동 */}
       <Pressable onPress={moveToPreviousMonth.bind(this, month)}>
-        <Ionicons name="chevron-back" size={24} color="dodgerblue" />
+        <Ionicons name="chevron-back" size={24} color="pink" />
       </Pressable>
       {/* 현재 출력되는 연도와 달 */}
       <Text style={styles.text}>
@@ -31,7 +31,7 @@ const CalendarHeader = ({ month, year, moveToNextMonth, moveToPreviousMonth }: H
       </Text>
       {/* 다음달로 이동 */}
       <Pressable onPress={moveToNextMonth.bind(this, month)}>
-        <Ionicons name="chevron-forward" size={24} color="dodgerblue" />
+        <Ionicons name="chevron-forward" size={24} color="pink" />
       </Pressable>
     </View>
   );
@@ -43,9 +43,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: 14,
+    padding: 8,
   },
   text: {
     fontSize: 20,
+    fontWeight: '500',
   },
 });
 

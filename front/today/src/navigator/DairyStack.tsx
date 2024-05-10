@@ -7,24 +7,26 @@ import SelectImage from '../screens/diary/select/SelectImage';
 
 import Logo from '../common/Logo';
 import NotificationBadge from '../common/noti/Notification';
-import { DiaryStackParam } from '../types/navigatortype/stack';
+import NotificationScreen from '../screens/user/notification/NotificationScreen';
+import { DiaryProp, DiaryStackParam } from '../types/navigatortype/stack';
 
 const DiaryStack = createNativeStackNavigator<DiaryStackParam>();
 
-export const DiaryNav = () => {
+export const DiaryNav = ({ navigation }: DiaryProp) => {
   return (
     <DiaryStack.Navigator
       initialRouteName="DiaryList"
       screenOptions={{
         headerTitleAlign: 'center',
         headerTitle: ({ children }) => <Logo />,
-        headerRight: () => <NotificationBadge />,
+        headerRight: () => <NotificationBadge onPress={() => navigation.push('NotificationScreen')} />,
       }}>
       <DiaryStack.Screen name="DiaryList" component={DiaryList} />
       <DiaryStack.Screen name="SelectImage" component={SelectImage} />
       <DiaryStack.Screen name="EditDiary" component={EditDiary} />
       <DiaryStack.Screen name="WriteDiary" component={WriteDiary} />
       <DiaryStack.Screen name="DiaryDetail" component={DiaryDetail} />
+      <DiaryStack.Screen name="NotificationScreen" component={NotificationScreen} />
     </DiaryStack.Navigator>
   );
 };

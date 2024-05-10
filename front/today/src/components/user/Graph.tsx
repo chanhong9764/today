@@ -1,12 +1,18 @@
+// Graph.tsx
 import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { EmotionData } from '../../contexts/EmotionData';
+import { AnalysisData } from '../../types/datatype';
 
 type RadarChartProps = {
-  labels: string[];
-  data: number[];
+  analysisData: AnalysisData;
 };
 
-const Graph = ({ labels, data }: RadarChartProps) => {
+const Graph = ({ analysisData }: RadarChartProps) => {
+  const labels = EmotionData.map(ed => ed.name);
+  const data = EmotionData.map(ed => Math.round(analysisData[ed.feel as keyof AnalysisData] * 100));
+
   const chartHtml = `
     <html>
       <head>
@@ -42,7 +48,7 @@ const Graph = ({ labels, data }: RadarChartProps) => {
               // 방사축
               radialaxis: {
                 visible: true,
-                range: [0, 20],
+                range: [0, 90],
                 showticklabels: false,
                 showline: false,
                 ticklen: 0,
@@ -74,7 +80,49 @@ const Graph = ({ labels, data }: RadarChartProps) => {
     </html>
   `;
 
-  return <WebView originWhitelist={['*']} source={{ html: chartHtml }} style={{ backgroundColor: 'transparent' }} />;
+  return (
+    <View style={styles.container}>
+      <WebView originWhitelist={['*']} source={{ html: chartHtml }} style={styles.webView} />
+      <View style={styles.row}>
+        {EmotionData.slice(0, 3).map((ed, index) => (
+          <Text key={index} style={styles.emotionText}>
+            {ed.name}: {data[index]}%
+          </Text>
+        ))}
+      </View>
+      <View style={styles.row}>
+        {EmotionData.slice(3, 6).map((ed, index) => (
+          <Text key={index} style={styles.emotionText}>
+            {ed.name}: {data[index]}%
+          </Text>
+        ))}
+      </View>
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  webView: {
+    height: 280,
+    width: 280,
+    backgroundColor: 'transparent',
+  },
+  emotionText: {
+    fontSize: 15,
+    marginTop: 10,
+    marginHorizontal: 5, // 좌우 간격을 조정하기 위한 스타일
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+});
 
 export default Graph;

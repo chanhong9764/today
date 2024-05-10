@@ -1,7 +1,8 @@
 // SaveButton.tsx
 import * as MediaLibrary from 'expo-media-library';
 import React, { useEffect } from 'react';
-import { Alert, Button } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 export type SaveButtonProps = {
   viewShotRef: React.RefObject<any>;
@@ -39,7 +40,11 @@ const SaveButton = ({ viewShotRef }: SaveButtonProps) => {
     }
   };
 
-  return <Button title="Save Diary" onPress={handleSavePhoto} />;
+  return (
+    <TouchableOpacity onPress={handleSavePhoto} style={{ padding: 10 }}>
+      <Icon name="save" size={25} color="#667085" />
+    </TouchableOpacity>
+  );
 };
 
 export default SaveButton;

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const NotiContainer = styled.View`
+export const NotiContainer = styled.TouchableOpacity`
   width: 45px;
   height: 45px;
   justify-content: center;

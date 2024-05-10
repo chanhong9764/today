@@ -1,9 +1,13 @@
 import Icon from 'react-native-vector-icons/Entypo';
 import * as S from './Notistyle';
 
-const NotificationBadge = () => {
+type NotiBadgeProp = {
+  onPress: () => void;
+};
+
+function NotificationBadge({ onPress }: NotiBadgeProp) {
   return (
-    <S.NotiContainer>
+    <S.NotiContainer onPress={onPress}>
       <Icon name="bell" size={30} />
       {/* {count > 0 && ( */}
       <S.NotiBadge>
@@ -12,6 +16,6 @@ const NotificationBadge = () => {
       {/* )} */}
     </S.NotiContainer>
   );
-};
+}
 
 export default NotificationBadge;

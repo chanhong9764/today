@@ -24,10 +24,10 @@ function EditDiary({ navigation, route }: EditDiaryProp) {
   };
 
   function onPressEdit() {
-    navigation.navigate('DiaryDetail');
     Diarys.editDiary(diaryId, content)
       .then(res => {
         console.log('일기 수정 성공', content);
+        navigation.navigate('DiaryDetail', { diaryId: diaryId });
       })
       .catch(err => {
         console.log('일기 수정 실패', err);

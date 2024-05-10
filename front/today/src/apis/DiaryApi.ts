@@ -1,5 +1,5 @@
 // DiaryApi.ts
-import { AllDiaryData, DiaryData, EditDiaryData, ImageData } from '../types/datatype';
+import { AllDiaryData, DiaryData, EditDiaryData, ImageData, ImageDatas, WriteDiaryData } from '../types/datatype';
 import { APIResponse } from '../types/datatype/apis';
 import { apis, instance, responseBody } from './api';
 
@@ -18,7 +18,7 @@ export const Diarys = {
   getSingleDiary: (diaryId: number): Promise<APIResponse<DiaryData>> =>
     diaryRequests.get<DiaryData>(apis.singleDiary(diaryId)),
   // 일기 생성
-  addDiary: (diary: DiaryData): Promise<APIResponse<DiaryData>> => diaryRequests.post<DiaryData>(apis.image, diary),
+  addDiary: (diary: ImageData): Promise<APIResponse<ImageData>> => diaryRequests.post<ImageData>(apis.image, diary),
   // 일기 삭제
   deleteDiary: (diaryId: number): Promise<APIResponse<DiaryData>> =>
     diaryRequests.delete<DiaryData>(apis.singleDiary(diaryId)),
@@ -26,8 +26,13 @@ export const Diarys = {
   editDiary: (diaryId: number, content: EditDiaryData): Promise<APIResponse<DiaryData>> =>
     diaryRequests.patch<DiaryData>(apis.singleDiary(diaryId), content),
 
-  // 이미지 생성 요청
-  createImage: (diary: ImageData): Promise<APIResponse<ImageData>> => diaryRequests.post<ImageData>(apis.diary, diary),
+  // 일기 & 이미지 생성 요청
+  createImage: (diary: WriteDiaryData): Promise<APIResponse<ImageData>> =>
+    diaryRequests.post<ImageData>(apis.diary, diary),
+
+  // 이미지 4개 요청
+  getImage: (diaryId: number): Promise<APIResponse<ImageDatas>> =>
+    diaryRequests.get<ImageDatas>(apis.getImage(diaryId)),
   // 메인 일기 지정
   mainDiary: (diaryId: number): Promise<APIResponse<DiaryData>> =>
     diaryRequests.patch<DiaryData>(apis.important(diaryId)),

@@ -6,17 +6,17 @@ import CommonButton from '../../../common/CommonButton';
 import { DiaryCard } from '../../../components/diary/day/DiaryCard';
 import DateFilter from '../../../components/diary/list/DateFilter';
 import { CalendarData } from '../../../types/datatype';
-import { DiaryProp, DiaryStackParam } from '../../../types/navigatortype/stack';
+import { DiaryStackParam, OneDayDiaryProp } from '../../../types/navigatortype/stack';
 import Analysis from '../../modal/analysis/Analysis';
 
 interface DiaryItemProp {
   item: CalendarData;
-  formattedDate: string;
+  selectedDate: string;
   setDailyDiaryData: (item: CalendarData[]) => void;
   navigate: NativeStackNavigationProp<DiaryStackParam>;
 }
 
-function DiaryItem({ item, navigate, formattedDate, setDailyDiaryData }: DiaryItemProp) {
+function DiaryItem({ item, navigate, selectedDate, setDailyDiaryData }: DiaryItemProp) {
   const [isImportant, setIsImportant] = useState(item.important);
 
   function navigateToDetail() {
@@ -30,24 +30,19 @@ function DiaryItem({ item, navigate, formattedDate, setDailyDiaryData }: DiaryIt
       isImportant={isImportant}
       setIsImportant={setIsImportant}
       setDailyDiaryData={setDailyDiaryData}
-      formattedDate={formattedDate}
+      selectedDate={selectedDate}
     />
   );
 }
 
-function OneDayDiary({ navigation }: DiaryProp) {
+function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
+  const { selectedDate } = route.params;
   const [dailyDiaryData, setDailyDiaryData] = useState<CalendarData[]>();
   const [openAnalysis, setOpenAnalysis] = useState<boolean>(false);
-  const [date, setDate] = useState(new Date());
-
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-
-  const formattedDate = year + '-' + ('00' + month.toString()).slice(-2) + '-' + ('00' + day.toString()).slice(-2);
+  const [date, setDate] = useState(selectedDate);
 
   useEffect(() => {
-    Calendars.getCalendar(formattedDate)
+    Calendars.getCalendar(date)
       .then(response => {
         console.log('하루 일기 데이터 로드 성공', response);
         setDailyDiaryData(response.data);
@@ -55,10 +50,10 @@ function OneDayDiary({ navigation }: DiaryProp) {
       .catch(error => {
         console.log(error);
       });
-  }, [formattedDate]);
+  }, [date]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fcfcfc' }}>
       <DateFilter date={date} setDate={setDate} />
       <View style={{ alignItems: 'center', paddingBottom: 20 }}>
         <CommonButton content="오늘의 분석결과" onPress={() => setOpenAnalysis(!openAnalysis)} />
@@ -70,7 +65,7 @@ function OneDayDiary({ navigation }: DiaryProp) {
             <DiaryItem
               item={item}
               navigate={navigation}
-              formattedDate={formattedDate}
+              selectedDate={selectedDate}
               setDailyDiaryData={setDailyDiaryData}
             />
           )}

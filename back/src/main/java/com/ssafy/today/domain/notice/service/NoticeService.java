@@ -28,7 +28,7 @@ public class NoticeService {
   // 모든 알림 가져 오기
   public List<Notice> getNotices(Long memberId) {
     Member member = memberRepository.getReferenceById(memberId);
-    return noticeRepository.findAllByMember(member);
+    return noticeRepository.findAllByMemberOrderByCreatedAtDesc(member);
   }
 
   // 읽음 or 안읽음 처리

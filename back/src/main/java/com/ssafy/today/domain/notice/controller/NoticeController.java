@@ -1,6 +1,7 @@
 package com.ssafy.today.domain.notice.controller;
 import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEntity;
 import com.ssafy.today.domain.notice.dto.request.NoticeUpdateRequest;
+import com.ssafy.today.domain.notice.dto.response.NoticeResponse;
 import com.ssafy.today.domain.notice.service.NoticeService;
 import com.ssafy.today.util.response.ErrorCode;
 import com.ssafy.today.util.response.SuccessCode;
@@ -21,7 +22,8 @@ public class NoticeController {
   @GetMapping
   public ResponseEntity<?> getNotices(HttpServletRequest request){
     Long memberId = (Long)request.getAttribute("memberId");
-    return getResponseEntity(SuccessCode.OK, noticeService.getNotices(memberId));
+    return getResponseEntity(SuccessCode.OK,
+        NoticeResponse.getNoticeResponses(noticeService.getNotices(memberId)));
   }
 
   // 알림 수정

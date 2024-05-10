@@ -1,27 +1,50 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { analysis } from '../../apis/AnalysisApi';
 import { Members } from '../../apis/MemberApi';
 import CommonButton from '../../common/CommonButton';
 import Graph from '../../components/user/Graph';
 import Pyramid from '../../components/user/Pyramid';
 import { IsLoginContext } from '../../contexts/IsLoginContext';
-import { MemberData } from '../../types/datatype';
+import { AnalysisData, MemberData } from '../../types/datatype';
 import { UserProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
 function Mypage({ navigation }: UserProp) {
   const [memberInfo, setMemberInfo] = useState<MemberData | undefined>();
+  const [analysisData, setAnalysisData] = useState<AnalysisData | undefined>();
   const { setIsLogin } = useContext(IsLoginContext);
 
   useEffect(() => {
     Members.getMembers()
       .then(response => {
         setMemberInfo(response.data);
-        console.log(response.data);
       })
       .catch(err => {
         console.log(err);
+      });
+
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
+    analysis
+      .getAnalysismonth(today)
+      .then(response => {
+        const data = response.data;
+        if (data) {
+          const scaledData = {
+            ...data,
+            angry: data.angry,
+            disgust: data.disgust,
+            fear: data.fear,
+            happiness: data.happiness,
+            sadness: data.sadness,
+            surprise: data.surprise,
+          };
+          setAnalysisData(scaledData);
+        }
+      })
+      .catch(error => {
+        console.error('graph 오류', error);
       });
   }, []);
 
@@ -50,11 +73,13 @@ function Mypage({ navigation }: UserProp) {
           </S.MyInfo>
 
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 성향은</S.MyPageSubTitle>
-          <Pyramid height={200} width={300} />
+          {analysisData && <Pyramid analysisData={analysisData} width={320} height={180} />}
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 감정은</S.MyPageSubTitle>
-          <View style={{ height: 300, marginBottom: 30 }}>
-            <Graph labels={['행복', '슬픔', '분노', '짜증', '불안', '놀람']} data={[15, 17, 5, 8, 11, 6]} />
-          </View>
+          {analysisData && (
+            <View style={{ height: 300, marginBottom: 30 }}>
+              <Graph analysisData={analysisData} />
+            </View>
+          )}
           <View style={{ alignItems: 'center', marginBottom: 30 }}>
             <CommonButton content="로그아웃" onPress={Logout} />
           </View>
