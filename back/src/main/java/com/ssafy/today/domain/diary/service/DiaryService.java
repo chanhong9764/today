@@ -86,6 +86,9 @@ public class DiaryService {
         if(diary2 == null){
             throw new GlobalException(ErrorCode.DIARY_NOT_FOUND);
         }
+        if(diary1.getId().equals(diary2.getId())){
+            return;
+        }
         diary1.updateImportant(true);
         diary2.updateImportant(false);
     }
