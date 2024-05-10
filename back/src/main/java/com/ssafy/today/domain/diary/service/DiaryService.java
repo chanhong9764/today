@@ -84,9 +84,12 @@ public class DiaryService {
         // diary2 : 기존의 import 지정 되어 있는 다이어리
         Diary diary2 = diaryRepository.findFirstByMemberIdAndCreatedAtBetweenAndImportant(memberId,startOfDay,endOfDay,true);
         if(diary2 == null){
-            throw new GlobalException(ErrorCode.DIARY_NOT_FOUND);
+            // 하나도 지정이 안되어 있을 때 처리
+            diary1.updateImportant(true);
+            return;
         }
         if(diary1.getId().equals(diary2.getId())){
+            // 이미 important 일기를 또 지정할때 처리
             return;
         }
         diary1.updateImportant(true);
