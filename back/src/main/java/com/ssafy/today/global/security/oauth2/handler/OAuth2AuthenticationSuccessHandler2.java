@@ -87,12 +87,12 @@ public class OAuth2AuthenticationSuccessHandler2 extends SimpleUrlAuthentication
             if(!memberService.isMemberExists(principal.getName())){
                 memberService.createMember(memberRequest);
             }
-
-            return String.format(
-                    "<html><body><script>" +
-                            "window.ReactNativeWebView.postMessage(JSON.stringify({" +
-                            "accessToken: '%s', refreshToken: '%s'}));" +
-                            "</script><div>헬로</div></body></html>", accessToken, refreshToken);
+            return null;
+//            return String.format(
+//                    "<html><body><script>" +
+//                            "window.ReactNativeWebView.postMessage(JSON.stringify({" +
+//                            "accessToken: '%s', refreshToken: '%s'}));" +
+//                            "</script><div>헬로</div></body></html>", accessToken, refreshToken);
 
         } else if ("unlink".equalsIgnoreCase(mode)) {
 
