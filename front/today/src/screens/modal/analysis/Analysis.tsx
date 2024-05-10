@@ -10,10 +10,13 @@ import { AnalysisData, MemberData } from '../../../types/datatype';
 import { ModalProps } from '../../../types/modal';
 import * as S from './style';
 
-function AnalysisContent() {
+// type AnalysisProps = {
+//   selectedDate: any;
+// };
+
+function AnalysisContent({ selectedDate }: { selectedDate: string }) {
   const [memberInfo, setMemberInfo] = useState<MemberData | undefined>();
   const [analysisData, setAnalysisData] = useState<AnalysisData | undefined>(undefined);
-
   useEffect(() => {
     Members.getMembers()
       .then(response => {
@@ -23,16 +26,17 @@ function AnalysisContent() {
         console.log(err);
       });
 
-    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
+    // const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
     analysis
-      .getAnalysisday(today) // 하루치 데이터 불러오기
+      .getAnalysisday(selectedDate) // 하루치 데이터 불러오기
       .then(response => {
         setAnalysisData(response.data); // 데이터 상태 업데이트
+        console.log(selectedDate);
       })
       .catch(error => {
         console.error('analysis data:', error);
       });
-  }, []);
+  }, [selectedDate]);
 
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -45,9 +49,14 @@ function AnalysisContent() {
   );
 }
 
-function Analysis({ modalVisible, setModalVisible }: ModalProps) {
+function Analysis({ modalVisible, setModalVisible, selectedDate }: ModalProps) {
   return (
-    <ModalComponent modalVisible={modalVisible} setModalVisible={setModalVisible} modalContent={<AnalysisContent />} />
+    <ModalComponent
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
+      modalContent={<AnalysisContent selectedDate={selectedDate} />}
+      selectedDate={selectedDate}
+    />
   );
 }
 
