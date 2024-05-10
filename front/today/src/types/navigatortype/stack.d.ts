@@ -9,7 +9,9 @@ export type RootStackParam = {
 export type DiaryStackParam = {
   DiaryList?: undefined;
   SelectEmotion?: undefined;
-  SelectImage?: undefined;
+  SelectImage?: {
+    diaryId: number;
+  };
   EditDiary?: {
     diaryId: number;
   };
@@ -19,20 +21,26 @@ export type DiaryStackParam = {
   DiaryDetail?: {
     diaryId: number;
   };
+  NotificationScreen?: undefined;
 };
 
 export type UserStackParam = {
   Mypage?: undefined;
   KakaoLogin?: undefined;
+  NotificationScreen?: undefined;
 };
 
 export type CalendarStackParam = {
   LoginScreen?: undefined;
   KakaoLogin?: undefined;
   Calendar?: undefined;
-  OneDayDiary?: undefined;
+  OneDayDiary?: {
+    selectedDate: string;
+  };
   SelectEmotion?: undefined;
-  SelectImage?: undefined;
+  SelectImage?: {
+    diaryId: number;
+  };
   EditDiary?: {
     diaryId: number;
   };
@@ -41,6 +49,7 @@ export type CalendarStackParam = {
     feel: string;
   };
   DiaryDetail?: undefined;
+  NotificationScreen?: undefined;
 };
 
 export type RootProp = {
@@ -62,3 +71,5 @@ export type UserProp = {
 export type WriteDiaryProp = NativeStackScreenProps<CalendarStackParam, 'WriteDiary'>;
 export type DiaryDetailProp = NativeStackScreenProps<CalendarStackParam, 'DiaryDetail'>;
 export type EditDiaryProp = NativeStackScreenProps<CalendarStackParam, 'EditDiary'>;
+export type SelectImageProp = NativeStackScreenProps<DiaryStackParam, 'SelectImage'>;
+export type OneDayDiaryProp = NativeStackScreenProps<CalendarStackParam, 'OnedayDiary'>;

@@ -1,3 +1,4 @@
+// EmotionData.tsx
 type EmotionDataProp = {
   feel: string;
   name: string;

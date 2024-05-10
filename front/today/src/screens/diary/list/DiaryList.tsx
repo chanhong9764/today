@@ -1,5 +1,6 @@
+import { useTheme } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView } from 'react-native';
+import { Alert, FlatList, SafeAreaView } from 'react-native';
 import { Calendars } from '../../../apis/CalendarApi';
 import { Diarys } from '../../../apis/DiaryApi';
 import { DiaryCard } from '../../../components/diary/list/DiaryCard';
@@ -8,6 +9,7 @@ import { AllDiaryData, DiaryData } from '../../../types/datatype';
 import { DiaryProp } from '../../../types/navigatortype/stack';
 
 function DiaryList({ navigation }: DiaryProp) {
+  const theme = useTheme();
   // 페이지네이션
   const [data, setData] = useState<AllDiaryData>({ content: [] });
   const [page, setPage] = useState(0);
@@ -19,7 +21,7 @@ function DiaryList({ navigation }: DiaryProp) {
     }
     setLoading(true);
 
-    Diarys.getDiarys(page, 2)
+    Diarys.getDiarys(page, 3)
       .then(response => {
         console.log(response.data);
         const newData = response.data?.content || [];
@@ -54,14 +56,26 @@ function DiaryList({ navigation }: DiaryProp) {
   }
 
   function renderDiary({ item }: { item: DiaryData }) {
-    function navigateToDetail() {
-      navigation.push('DiaryDetail', { diaryId: item.id });
+    function onPressDiaryCard() {
+      switch (item.status) {
+        case 0:
+          Alert.alert('그림 생성 미완료', '아직 그림을 그리는 중이에요!');
+          break;
+        case 1:
+          navigation.push('SelectImage', { diaryId: item.id });
+          break;
+        case 2:
+          navigation.push('DiaryDetail', { diaryId: item.id });
+          break;
+        default:
+          Alert.alert('그림 생성 미완료', '아직 그림을 그리는 중이에요!');
+      }
     }
-    return <DiaryCard item={item} onPress={navigateToDetail} backgroundColor="white" />;
+    return <DiaryCard item={item} onPress={onPressDiaryCard} backgroundColor="white" />;
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fcfcfc' }}>
       <SearchBar filterText={filterText} setFilterText={setFilterText} onPress={onPressSearch} />
       <FlatList
         data={data.content}

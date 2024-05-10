@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Image, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components/native';
@@ -11,11 +12,11 @@ type ItemProps = {
   onPress: () => void;
   isImportant: boolean;
   setIsImportant: (isImportant: boolean) => void;
-  formattedDate: string;
+  selectedDate: string;
   setDailyDiaryData: (item: CalendarData[]) => void;
 };
 
-export function DiaryCard({ item, onPress, isImportant, setIsImportant, setDailyDiaryData, formattedDate }: ItemProps) {
+export function DiaryCard({ item, onPress, isImportant, setIsImportant, setDailyDiaryData, selectedDate }: ItemProps) {
   const theme = useTheme();
   const day: Date = new Date(item.createdAt);
   const month: number = day.getMonth() + 1;
@@ -23,13 +24,8 @@ export function DiaryCard({ item, onPress, isImportant, setIsImportant, setDaily
 
   const backgroundColor = item.important ? theme.colors.lightPink : 'white';
 
-  function onPressMain() {
-    Diarys.mainDiary(item.id)
-      .then(response => {
-        setIsImportant(!isImportant);
-      })
-      .catch(error => console.log('메인 일기 패치 실패', error));
-    Calendars.getCalendar(formattedDate)
+  useEffect(() => {
+    Calendars.getCalendar(selectedDate)
       .then(response => {
         console.log('하루 일기 데이터 로드 성공', response);
         setDailyDiaryData(response.data ? response.data : []);
@@ -37,6 +33,14 @@ export function DiaryCard({ item, onPress, isImportant, setIsImportant, setDaily
       .catch(error => {
         console.log(error);
       });
+  }, [item.important]);
+
+  function onPressMain() {
+    Diarys.mainDiary(item.id)
+      .then(response => {
+        setIsImportant(!isImportant);
+      })
+      .catch(error => console.log('메인 일기 패치 실패', error));
   }
 
   return (

@@ -10,6 +10,7 @@ import OneDayDiary from '../screens/diary/day/OneDayDiary';
 import SelectImage from '../screens/diary/select/SelectImage';
 import WaitImage from '../screens/diary/wait/WaitImage';
 import SelectEmotion from '../screens/emotion/SelectEmotion';
+import NotificationScreen from '../screens/user/notification/NotificationScreen';
 import { CalendarProp, CalendarStackParam } from '../types/navigatortype/stack';
 
 const CalendarStack = createNativeStackNavigator<CalendarStackParam>();
@@ -21,7 +22,7 @@ export const CalendarNav = ({ navigation }: CalendarProp) => {
       screenOptions={{
         headerTitleAlign: 'center',
         headerTitle: ({ children }) => <Logo />,
-        headerRight: () => <NotificationBadge />,
+        headerRight: () => <NotificationBadge onPress={() => navigation.push('NotificationScreen')} />,
       }}>
       <CalendarStack.Screen
         name="Calendar"
@@ -46,6 +47,7 @@ export const CalendarNav = ({ navigation }: CalendarProp) => {
       />
       <CalendarStack.Screen name="SelectImage" component={SelectImage} />
       <CalendarStack.Screen name="EditDiary" component={EditDiary} />
+      <CalendarStack.Screen name="NotificationScreen" component={NotificationScreen} />
       <CalendarStack.Screen
         name="WriteDiary"
         component={WriteDiary}
