@@ -64,7 +64,7 @@ jwt:
   secret: ${SERVICE_JWT_SECRET_KEY}
 
 kafka:
-  server: ${KAFKA_SERVER_ADDRESS}
+  server: ${KAFKA_DEV_SERVER_ADDRESS}
   group: ${KAFKA_SPRING_GROUP}
 
 server:

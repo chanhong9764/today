@@ -20,14 +20,12 @@ import com.ssafy.today.util.response.SuccessCode;
 import com.ssafy.today.util.response.exception.GlobalException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -39,11 +37,9 @@ import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEnt
 @RequiredArgsConstructor
 @RequestMapping(value = "/diary")
 public class DiaryController {
-    private String KafkaSpringGroup;
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final DiaryService diaryService;
     private final EsService esService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
     private final AnalysisService analysisService;
     private final TempImgService tempImgService;
     private final NoticeService noticeService;
@@ -62,26 +58,15 @@ public class DiaryController {
 
         return getResponseEntity(SuccessCode.OK, diaryResponse);
     }
-    @GetMapping("/test")
-    public ResponseEntity<?> testKafka() {
-        DiaryContentRequest diaryContentRequest = DiaryContentRequest.builder()
-                .diaryId(123L)
-                .memberId(123L)
-                .content("test")
-                .feel(Feel.ANGRY)
-                .createdAt(LocalDateTime.now())
-                .count(1)
-                .build();
-        kafkaTemplate.send("image-request", diaryContentRequest);
 
-        return getResponseEntity(SuccessCode.OK);
-    }
     /**
      * fastapi 서버에서 이미지 생성이후 호출 될곳
      */
     @KafkaListener(topics = "image-created", groupId = "${kafka.group}")
     public void consumer(String data) {
         System.out.println("Diary 생성 완료");
+        data = data.substring(1, data.length() - 1);
+        data = data.replace("\\", "");
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         DiaryContentCreated diaryContentCreated;
