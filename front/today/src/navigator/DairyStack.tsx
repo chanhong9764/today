@@ -8,11 +8,11 @@ import SelectImage from '../screens/diary/select/SelectImage';
 import Logo from '../common/Logo';
 import NotificationBadge from '../common/noti/Notification';
 import NotificationScreen from '../screens/user/notification/NotificationScreen';
-import { DiaryProp, DiaryStackParam } from '../types/navigatortype/stack';
+import { DiaryStackParam, RootProp } from '../types/navigatortype/stack';
 
 const DiaryStack = createNativeStackNavigator<DiaryStackParam>();
 
-export const DiaryNav = ({ navigation }: DiaryProp) => {
+export const DiaryNav = ({ navigation }: RootProp) => {
   return (
     <DiaryStack.Navigator
       initialRouteName="DiaryList"
