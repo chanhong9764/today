@@ -96,10 +96,11 @@ function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
         />
       ) : (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>오늘은 일기가 없네요 ㅠㅠ</Text>
+          <Text>오늘은 일기가 없네요</Text>
+          <Text>일기를 작성해 보세요!</Text>
         </View>
       )}
-      <Analysis modalVisible={openAnalysis} setModalVisible={setOpenAnalysis} />
+      <Analysis modalVisible={openAnalysis} setModalVisible={setOpenAnalysis} selectedDate={date} />
     </SafeAreaView>
   );
 }
