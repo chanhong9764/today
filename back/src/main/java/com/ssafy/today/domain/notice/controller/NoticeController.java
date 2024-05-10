@@ -12,9 +12,13 @@ import com.ssafy.today.util.response.exception.GlobalException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+
 
 import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEntity;
 
@@ -24,6 +28,7 @@ import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEnt
 public class NoticeController {
     private final NoticeService noticeService;
     private final PushMessageService pushMessageService;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     // 알림 리스트 랜더링
     @GetMapping
@@ -52,6 +57,7 @@ public class NoticeController {
 
     @PostMapping("/token")
     public ResponseEntity<?> saveToken(HttpServletRequest request, @RequestBody String deviceToken) {
+        logger.info("this is device token ======= " + deviceToken);
         Long memberId = (Long) request.getAttribute("memberId");
         noticeService.saveToken(SaveTokenRequest.builder()
                 .memberId(memberId)
