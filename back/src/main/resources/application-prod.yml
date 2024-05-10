@@ -11,3 +11,6 @@ spring:
       ddl-auto: update
   elasticsearch:
     uris: 'http://elasticsearch:9200'
+
+kafka:
+  server: ${KAFKA_PROD_SERVER_ADDRESS}

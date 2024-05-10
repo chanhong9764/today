@@ -58,11 +58,11 @@ dependencies {
     //elasticsearch
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
-    // WebSocket
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-
     // batch
     implementation 'org.springframework.boot:spring-boot-starter-batch'
+
+    // kafka
+    implementation 'org.springframework.kafka:spring-kafka'
 }
 
 tasks.named('test') {
