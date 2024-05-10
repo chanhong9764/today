@@ -44,7 +44,7 @@ public class DiaryService {
         LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
 
         if(diaryRepository.existsByImportantIsTrueAndMemberIdAndCreatedAtBetween(memberId,startOfDay,endOfDay)){
-            Integer count = diaryRepository.countByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay);
+            Integer count = diaryRepository.countByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay)+1;
             save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, false, count));
         }else{
             save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, true, 1));
