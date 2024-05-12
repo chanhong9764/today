@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { FlatList, SafeAreaView, Text } from 'react-native';
 import { Notices } from '../../../apis/NoticeApi';
 import { NoticeData } from '../../../types/datatype';
@@ -24,16 +25,18 @@ function NotificationScreen({ navigation }: CalendarProp) {
   const [notiData, setNotiData] = useState<NoticeData[]>([]);
   const [bgColors, setBgColors] = useState<string>('');
 
-  useEffect(() => {
-    Notices.getNotices()
-      .then(response => {
-        if (response.data) {
-          console.log(response.data);
-          setNotiData(response.data);
-        }
-      })
-      .catch(error => console.log(error));
-  }, []);
+  useFocusEffect(() => {
+    useCallback(() => {
+      Notices.getNotices()
+        .then(response => {
+          if (response.data) {
+            console.log(response.data);
+            setNotiData(response.data);
+          }
+        })
+        .catch(error => console.log(error));
+    }, []);
+  });
 
   function onPressNoti() {
     navigation.navigate('SelectImage');

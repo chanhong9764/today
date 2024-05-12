@@ -6,6 +6,19 @@ const center = css`
   align-items: center;
 `;
 
+export const CalendarBodyContainer = styled.View``;
+
+export const CalendarHeaderContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const CalendarTitle = styled.Text`
+  font-size: 22px;
+  font-weight: 600;
+`;
+
 export const DayOfWeek = styled.View`
   flex-direction: row;
   justify-content: space-between;

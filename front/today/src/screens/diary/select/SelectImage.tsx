@@ -12,6 +12,7 @@ import * as S from './style';
 function SelectImage({ navigation, route }: SelectImageProp) {
   const theme = useTheme();
   const { diaryId } = route.params;
+  console.log(diaryId);
   const today: string = format(new Date(), 'yyyy. MM. dd');
   const [images, setImages] = useState<ImageDatas>();
   const [selectedImg, setSelectedImg] = useState<string>();
@@ -53,7 +54,8 @@ function SelectImage({ navigation, route }: SelectImageProp) {
         .catch(err => {
           console.log(err);
         });
-      navigation.reset({ routes: [{ name: 'DiaryDetail', param: { diaryId: diaryId } }] });
+      // navigation.reset({ routes: [{ name: 'DiaryDetail', params: { diaryId: diaryId } }] });
+      navigation.navigate('DiaryDetail', { diaryId: diaryId });
     } else {
       Alert.alert(
         '그림 선택', // 제목

@@ -3,42 +3,53 @@ import * as Font from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { NativeBaseProvider } from 'native-base';
 import React, { useEffect, useState } from 'react';
+import { setCustomText } from 'react-native-global-props';
 import { ThemeProvider } from 'styled-components';
+import { registerForPushNotification } from './src/components/notification/notification';
 import { IsLoginProvider } from './src/contexts/IsLoginContext';
 import RootStack from './src/navigator/RootStack';
 import theme from './src/styles/theme';
 
+// 알림 핸들러 설정
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
 export default function App() {
-  // 폰트 load
   const [isFont, setIsFont] = useState(false);
 
   useEffect(() => {
+    // 푸시 알림 등록 설정
+    registerForPushNotification();
+
+    // 폰트 load
     const loadFonts = async () => {
       await Font.loadAsync({
         title: require('./assets/fonts/온글잎 의연체.ttf'),
+        base: require('./assets/fonts/PRETENDARD-MEDIUM.otf'),
       });
       setIsFont(true);
     };
     loadFonts();
-    // 알림 권한
-    (async () => {
-      const { status } = await Notifications.requestPermissionsAsync();
-      if (status !== 'granted') {
-        alert('알림 권한이 거부되었습니다!');
-      }
-    })();
+
+    // 폰트 전역 설정
+    const customTextProps = {
+      style: {
+        fontFamily: 'base',
+      },
+    };
+    setCustomText(customTextProps);
   }, []);
 
+  // 폰트 로딩 중에는 렌더링을 방지
   if (!isFont) {
-    return null; // 폰트 로딩 중에는 렌더링을 방지
+    return null;
   }
 
-  // const customTextProps = {
-  //   style: {
-  //     fontFamily: 'title',
-  //   },
-  // };
-  // setCustomText(customTextProps);
   return (
     <NativeBaseProvider>
       <ThemeProvider theme={theme}>

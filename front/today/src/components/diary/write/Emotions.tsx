@@ -1,5 +1,4 @@
 // Emotions.tsx
-import { Image } from 'react-native';
 import { EmotionDataProp } from '../../../contexts/EmotionData';
 import * as S from './style';
 
@@ -22,14 +21,7 @@ export const EmotionFiles: { [key: string]: any } = {
 function Emotions({ emotion, onPress, backgroundColor, borderColor }: EmotionProps) {
   return (
     <S.EmotionContainer onPress={onPress} backgroundColor={backgroundColor} borderColor={borderColor}>
-      <Image
-        source={EmotionFiles[emotion.feel]}
-        style={{
-          width: 50,
-          height: 50,
-          marginBottom: 10,
-        }}
-      />
+      <S.Emotion source={EmotionFiles[emotion.feel]} />
       <S.EmotionsTitle>{emotion.name}</S.EmotionsTitle>
     </S.EmotionContainer>
   );
