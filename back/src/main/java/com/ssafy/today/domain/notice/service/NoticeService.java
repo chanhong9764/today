@@ -5,6 +5,7 @@ import com.ssafy.today.domain.diary.repository.DiaryRepository;
 import com.ssafy.today.domain.member.entity.Member;
 import com.ssafy.today.domain.member.repository.MemberRepository;
 import com.ssafy.today.domain.notice.dto.request.NoticeUpdateRequest;
+import com.ssafy.today.domain.notice.dto.request.PushMessageRequest;
 import com.ssafy.today.domain.notice.dto.request.SaveTokenRequest;
 import com.ssafy.today.domain.notice.entity.Notice;
 import com.ssafy.today.domain.notice.entity.Notice.NoticeBuilder;
@@ -25,6 +26,8 @@ public class NoticeService {
   private final MemberRepository memberRepository;
   private final DiaryRepository diaryRepository;
   private final NoticeRepository noticeRepository;
+
+  private final PushMessageService pushMessageService;
 
   // 모든 알림 가져 오기
   public List<Notice> getNotices(Long memberId) {
@@ -56,7 +59,14 @@ public class NoticeService {
         .confirm(false).build();
     noticeRepository.save(notice);
 
-    // 알림 ( 소켓 or Fcm or SSE ) 추후 구현
+    // 알림
+    pushMessageService.sendPushMessage(
+            PushMessageRequest.builder()
+                    .token(member.getDeviceToken())
+                    .title("그림 생성 완료")
+                    .body(sequence.toString() + "번째 일기에 대한 그림이 생성되었습니다.")
+                    .build()
+    );
   }
 
 

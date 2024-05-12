@@ -79,8 +79,8 @@ public class DiaryController {
         analysisService.createOrUpdateAnalysis(diaryContentCreated.getMemberId(), diaryContentCreated);
         diaryService.updateAfterCreateImg(diaryContentCreated);
         tempImgService.createTempImages(diaryContentCreated);
-        // TODO : 클라이언트 알람 전송
 
+        // 클라이언트 알람 전송
         noticeService.completeNotice(diaryContentCreated.getDiaryId(), diaryContentCreated.getMemberId(), diaryContentCreated.getCount());
     }
 
