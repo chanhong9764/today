@@ -1,4 +1,4 @@
-import { CalendarData, SearchData, SearchWord } from '../types/datatype';
+import { CalendarData, SearchData } from '../types/datatype';
 import { APIResponse } from '../types/datatype/apis';
 import { apis, instance, responseBody } from './api';
 
@@ -13,5 +13,5 @@ export const Calendars = {
   // 하루 일기 모두 가져오기 => date : 0000-00-00
   getCalendar: (date: string): Promise<APIResponse<CalendarData[]>> => calendarRequests.get(apis.day(date)),
   // 검색
-  Search: (search: SearchWord): Promise<APIResponse<SearchData>> => calendarRequests.post(apis.search, search),
+  Search: (search: string): Promise<APIResponse<SearchData>> => calendarRequests.post(apis.search, search),
 };

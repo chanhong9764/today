@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
-import { getToken } from '../../components/notification/notification';
 import { IsLoginContext } from '../../contexts/IsLoginContext';
 import { RootProp } from '../../types/navigatortype/stack';
 
@@ -20,7 +19,6 @@ function KakaoLogin({ navigation }: RootProp) {
     const accessToken = JSON.parse(data).accessToken;
     try {
       await AsyncStorage.setItem('accessToken', accessToken);
-      await getToken();
     } catch (error) {
       console.log(error);
     }

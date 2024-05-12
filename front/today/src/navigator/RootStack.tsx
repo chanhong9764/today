@@ -4,6 +4,9 @@ import { useContext, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { IsLoginContext, useIsLoginState } from '../contexts/IsLoginContext';
 import LoginScreen from '../screens/LoginScreen';
+import Intro1 from '../screens/intro/Intro1';
+import Intro2 from '../screens/intro/Intro2';
+import Intro3 from '../screens/intro/Intro3';
 import KakaoLogin from '../screens/user/KakaoLogin';
 import NotificationScreen from '../screens/user/notification/NotificationScreen';
 import { RootStackParam } from '../types/navigatortype/stack';
@@ -65,6 +68,21 @@ function RootStack() {
         <>
           <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="KakaoLogin" component={KakaoLogin} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="Intro1"
+            component={Intro1}
+            options={{ headerShown: false, animationTypeForReplace: 'push', animation: 'slide_from_right' }}
+          />
+          <Stack.Screen
+            name="Intro2"
+            component={Intro2}
+            options={{ headerShown: false, animationTypeForReplace: 'push', animation: 'slide_from_right' }}
+          />
+          <Stack.Screen
+            name="Intro3"
+            component={Intro3}
+            options={{ headerShown: false, animationTypeForReplace: 'push', animation: 'slide_from_right' }}
+          />
         </>
       )}
     </Stack.Navigator>

@@ -96,6 +96,7 @@ function DiaryDetail({ navigation, route }: DiaryDetailProp) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fcfcfc',
   },
   header: {
     flexDirection: 'row',

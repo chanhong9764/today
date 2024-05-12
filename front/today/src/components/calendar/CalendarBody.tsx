@@ -117,7 +117,7 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
   }
 
   return (
-    <>
+    <S.CalendarBodyContainer>
       <S.DayOfWeek>
         {dayOfWeek.map((day, index) => (
           <S.Box key={index}>
@@ -147,7 +147,7 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
           }),
         )}
       </S.TotalDays>
-    </>
+    </S.CalendarBodyContainer>
   );
 };
 

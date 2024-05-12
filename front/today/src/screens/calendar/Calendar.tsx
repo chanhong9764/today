@@ -42,16 +42,20 @@ function Calendar({ navigation }: CalendarProp) {
   return (
     <S.CalenderContainer>
       <S.CalenderWrapper>
-        <CalendarHeader
-          month={month}
-          year={year}
-          date={date}
-          today={{ month: new Date().getMonth() + 1, year: new Date().getFullYear(), date: new Date().getDate() }}
-          moveToNextMonth={moveToNextMonth}
-          moveToPreviousMonth={moveToPreviousMonth}
-          moveToSpecificYearAndMonth={moveToSpecificYearAndMonth}
-        />
-        <CalendarBody month={month} year={year} date={date} navigation={navigation} />
+        <S.CalendarheaderContainer>
+          <CalendarHeader
+            month={month}
+            year={year}
+            date={date}
+            today={{ month: new Date().getMonth() + 1, year: new Date().getFullYear(), date: new Date().getDate() }}
+            moveToNextMonth={moveToNextMonth}
+            moveToPreviousMonth={moveToPreviousMonth}
+            moveToSpecificYearAndMonth={moveToSpecificYearAndMonth}
+          />
+        </S.CalendarheaderContainer>
+        <S.CalendarBodyContainer>
+          <CalendarBody month={month} year={year} date={date} navigation={navigation} />
+        </S.CalendarBodyContainer>
       </S.CalenderWrapper>
     </S.CalenderContainer>
   );
