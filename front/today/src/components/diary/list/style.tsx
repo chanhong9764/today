@@ -32,20 +32,20 @@ export const SingleDiaryContainer = styled.TouchableOpacity<ImageContainerProps>
 export const SingleDiaryContent = styled.View`
   ${center}
   flex-direction: row;
+  align-items: center;
   padding: 30px 0px;
 `;
 
 export const SingleDiaryDates = styled.View`
-  margin: 0px 20px;
+  margin: 0px 10px;
+  align-items: center;
+  padding-right: 8px; // 텍스트와의 여백
 `;
 
 export const SingleDiaryDate = styled.Text`
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-`;
-
-export const SingleDiaryTextContainer = styled.View``;
-export const SingleDiaryText = styled.Text`
-  flex: 1 1 0;
+  font-size: ${({ theme }) => theme.fontSize.xsmall};
+  margin-right: 5px; // 날짜와 요일 사이 간격
 `;
 
 export const DiaryListTitleContainer = styled.Pressable`

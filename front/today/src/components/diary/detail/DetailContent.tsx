@@ -1,7 +1,8 @@
 // DetailContent.tsx
-import { Text, VStack } from 'native-base';
+import { VStack } from 'native-base';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
+import styled from 'styled-components/native';
 
 import { DiaryData } from '../../../types/datatype';
 
@@ -22,9 +23,16 @@ const DetailContent = ({ diary }: DetailContentProps) => {
       borderRadius={8}
       borderTopRadius={0}
       height={contentHeight}>
-      <Text style={{ textAlign: 'justify' }}>{diary.content}</Text>
+      <TextContent>{diary.content}</TextContent>
     </VStack>
   );
 };
+
+const TextContent = styled.Text`
+  text-align: justify;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.3px; // 글자 간격 (원래 예제에 있던대로 추가)
+`;
 
 export default DetailContent;
