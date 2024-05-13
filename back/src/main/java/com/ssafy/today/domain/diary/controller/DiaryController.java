@@ -124,8 +124,9 @@ public class DiaryController {
         Long memberId = (Long) request.getAttribute("memberId");
         Diary diary = diaryService.getDiaryEntity(diaryId);
 
-        diaryService.deleteDiary(diaryId);
+        noticeService.deleteNotice(diaryId);
         analysisService.deleteOrSubtractAnalysis(diary);
+        diaryService.deleteDiary(diaryId);
         //elasticsearch delete
         esService.delete(DeleteRequest.builder()
                 .diaryId(diaryId)
