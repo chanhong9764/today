@@ -14,7 +14,7 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Long> {
      * @param endDate
      * @return
      */
-    boolean existsByMemberIdAndCreatedAtBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
+    boolean existsByMemberIdAndDiaryDateBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
 
     /**
      * 특정 일 의 통계 하나 추출
@@ -23,7 +23,7 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Long> {
      * @param endDate
      * @return
      */
-    Analysis findFirstByMemberIdAndCreatedAtBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
+    Analysis findFirstByMemberIdAndDiaryDateBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
 
     /**
      * 일정 기간 동안의 통계List 추출
@@ -32,6 +32,6 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Long> {
      * @param endDate
      * @return
      */
-    List<Analysis> findByMemberIdAndCreatedAtBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Analysis> findByMemberIdAndDiaryDateBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
 
 }
