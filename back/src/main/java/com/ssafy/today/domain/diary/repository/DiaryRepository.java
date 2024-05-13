@@ -15,7 +15,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     Page<Diary> findAllByMemberId(Long memberId, Pageable pageable);
     // 하루동안의 다이어리 불러오기
-    List<Diary> findAllByMemberIdAndCreatedAtBetween(Long memberId, LocalDateTime startOfDay, LocalDateTime endOfDay);
+    List<Diary> findAllByMemberIdAndCreatedAtBetweenOrderByIdDesc(Long memberId, LocalDateTime startOfDay, LocalDateTime endOfDay);
 
     List<Diary> findByMemberIdAndImportantIsTrueAndCreatedAtBetween(Long memberId, LocalDateTime startDate, LocalDateTime endDate);
     Diary findFirstByMemberIdAndCreatedAtBetweenAndImportant(Long memberId, LocalDateTime createdAt, LocalDateTime createdAt2, Boolean important);

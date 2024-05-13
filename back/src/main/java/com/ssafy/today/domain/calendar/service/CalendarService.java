@@ -21,7 +21,7 @@ public class CalendarService {
         LocalDateTime startOfDay = day.atStartOfDay();
         LocalDateTime endOfDay = day.atTime(LocalTime.MAX);
 
-        List<Diary> diaries = diaryRepository.findAllByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay);
+        List<Diary> diaries = diaryRepository.findAllByMemberIdAndCreatedAtBetweenOrderByIdDesc(memberId, startOfDay, endOfDay);
         return diaries.stream()
                 .map(CalendarResponse::fromEntity)
                 .collect(Collectors.toList());

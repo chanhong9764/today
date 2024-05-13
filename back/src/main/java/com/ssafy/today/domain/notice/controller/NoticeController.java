@@ -3,6 +3,7 @@ package com.ssafy.today.domain.notice.controller;
 import com.ssafy.today.domain.notice.dto.request.NoticeUpdateRequest;
 import com.ssafy.today.domain.notice.dto.request.PushMessageRequest;
 import com.ssafy.today.domain.notice.dto.request.SaveTokenRequest;
+import com.ssafy.today.domain.notice.dto.request.TokenRequest;
 import com.ssafy.today.domain.notice.dto.response.NoticeResponse;
 import com.ssafy.today.domain.notice.service.NoticeService;
 import com.ssafy.today.domain.notice.service.PushMessageService;
@@ -56,12 +57,12 @@ public class NoticeController {
     }
 
     @PostMapping("/token")
-    public ResponseEntity<?> saveToken(HttpServletRequest request, @RequestBody String deviceToken) {
-        logger.info("this is device token ======= " + deviceToken);
+    public ResponseEntity<?> saveToken(HttpServletRequest request, @RequestBody TokenRequest tokenRequest) {
+        logger.info("this is device token ======= " + tokenRequest.getDeviceToken());
         Long memberId = (Long) request.getAttribute("memberId");
         noticeService.saveToken(SaveTokenRequest.builder()
                 .memberId(memberId)
-                .deviceToken(deviceToken)
+                .deviceToken(tokenRequest.getDeviceToken())
                 .build());
 
         return getResponseEntity(SuccessCode.OK);
