@@ -16,7 +16,10 @@ public class PushMessageService {
         String jsonBody = "{" +
                 "\"to\": \"" + pushMessageRequest.getToken() + "\", " +
                 "\"title\": \"" + pushMessageRequest.getTitle() + "\", " +
-                "\"body\": \"" + pushMessageRequest.getBody() + "\"" +
+                "\"body\": \"" + pushMessageRequest.getBody() + "\", " +
+                "\"data\": {" +
+                "\"customData\": \"" + pushMessageRequest.getDiaryId() + "\"" +
+                "}" +
                 "}";
 
         HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
