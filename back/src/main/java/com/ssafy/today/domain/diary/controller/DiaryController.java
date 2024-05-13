@@ -50,7 +50,12 @@ public class DiaryController {
         diaryContentRequest.setMemberId(memberId);
         // 이미지를 제외한 diary 생성
         DiaryResponse diaryResponse = diaryService.createDiary(memberId, diaryContentRequest);
-        diaryContentRequest.setCreatedAt(diaryResponse.getCreatedAt());
+        // 임의 날짜 지정이 있을시 임의 지정한 값으로 설정
+        if(diaryContentRequest.getCreatedAt() != null){
+            diaryService.updateCreatedAt(diaryResponse.getId(), diaryContentRequest.getCreatedAt());
+        }else{
+            diaryContentRequest.setCreatedAt(diaryResponse.getCreatedAt());
+        }
         diaryContentRequest.setDiaryId(diaryResponse.getId());
         diaryContentRequest.setCount(diaryResponse.getCount());
         // gpu 서버에 소켓통신을 통한 이미지 생성 요청 보내기
@@ -162,5 +167,6 @@ public class DiaryController {
     public ResponseEntity<?> getTempImg(@PathVariable("diaryId") Long diaryId){
         return getResponseEntity(SuccessCode.OK, tempImgService.getTempImg(diaryId));
     }
+
 
 }

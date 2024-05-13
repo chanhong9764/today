@@ -1,20 +1,16 @@
 package com.ssafy.today.domain.diary.service;
 
-import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import com.ssafy.today.domain.diary.dto.request.DiaryContentCreated;
 import com.ssafy.today.domain.diary.dto.request.DiaryContentRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryImageRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
 import com.ssafy.today.domain.diary.entity.Diary;
-import com.ssafy.today.domain.diary.entity.MBTI;
 import com.ssafy.today.domain.diary.repository.DiaryRepository;
 import com.ssafy.today.domain.member.entity.Member;
 import com.ssafy.today.domain.member.repository.MemberRepository;
-import com.ssafy.today.global.security.oauth2.user.GoogleOAuth2UserInfo;
 import com.ssafy.today.util.response.ErrorCode;
 import com.ssafy.today.util.response.exception.GlobalException;
-import jakarta.persistence.Enumerated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -136,5 +132,11 @@ public class DiaryService {
      */
     public boolean checkDiaryBelongsToMember(Long diaryId, Long memberId){
         return diaryRepository.existsByIdAndMemberId(diaryId, memberId);
+    }
+
+    public void updateCreatedAt(Long id, LocalDateTime createdAt) {
+        Diary diary = diaryRepository.findById(id).orElseThrow(
+                () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+        diary.updateCreatedAt(createdAt);
     }
 }
