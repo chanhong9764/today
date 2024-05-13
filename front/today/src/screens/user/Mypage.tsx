@@ -75,13 +75,19 @@ function Mypage({ navigation }: UserProp) {
 
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 성향은</S.MyPageSubTitle>
           <S.Line />
-          {analysisData && <Pyramid analysisData={analysisData} width={320} height={180} />}
+          {analysisData ? (
+            <Pyramid analysisData={analysisData} width={30} height={180} />
+          ) : (
+            <Text>일기를 작성해주세요!</Text>
+          )}
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 감정은</S.MyPageSubTitle>
           <S.Line />
-          {analysisData && (
+          {analysisData ? (
             <View style={{ height: 300, marginBottom: 30 }}>
               <Graph analysisData={analysisData} />
             </View>
+          ) : (
+            <Text>일기를 작성해주세요!</Text>
           )}
           <S.Line />
           <S.SettingWrapper>
