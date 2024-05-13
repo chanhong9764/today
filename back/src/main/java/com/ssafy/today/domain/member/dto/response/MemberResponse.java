@@ -21,6 +21,8 @@ public class MemberResponse {
 
     private LocalDateTime updatedAt;
 
+    private String deviceToken;
+
     public static MemberResponse fromEntity(Member memberEntity){
         MemberResponse memberResponse = MemberResponse.builder()
                 .id(memberEntity.getId())
@@ -28,6 +30,7 @@ public class MemberResponse {
                 .nickName(memberEntity.getNickname())
                 .createdAt(memberEntity.getCreatedAt())
                 .updatedAt(memberEntity.getUpdatedAt())
+                .deviceToken(memberEntity.getDeviceToken())
                 .build();
         return memberResponse;
     }

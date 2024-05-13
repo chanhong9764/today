@@ -1,6 +1,6 @@
-import { useTheme } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Alert, FlatList, SafeAreaView } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import { Calendars } from '../../../apis/CalendarApi';
 import { Diarys } from '../../../apis/DiaryApi';
 import { DiaryCard } from '../../../components/diary/list/DiaryCard';
@@ -13,8 +13,11 @@ function DiaryList({ navigation }: DiaryProp) {
   // 페이지네이션
   const [data, setData] = useState<AllDiaryData>({ content: [] });
   const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [initialize, setInitialize] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // 검색
+  const [searchData, setSearchData] = useState<AllDiaryData>({ content: [] });
+  const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
 
   function getData() {
     if (loading) {
@@ -40,8 +43,10 @@ function DiaryList({ navigation }: DiaryProp) {
   }
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (!isSearchActive) {
+      getData();
+    }
+  }, [isSearchActive]);
 
   // useFocusEffect(
   //   useCallback(() => {
@@ -56,9 +61,17 @@ function DiaryList({ navigation }: DiaryProp) {
   const [filterText, setFilterText] = useState<string>('');
 
   function onPressSearch() {
-    Calendars.Search({ keyword: filterText })
+    setIsSearchActive(true);
+    console.log(filterText);
+    Calendars.Search(filterText)
       .then(response => {
-        // setData(response);
+        console.log(response);
+        const newData = Array.isArray(response.data?.content) ? response.data?.content : [];
+        if (newData.length > 0) {
+          setSearchData({ content: newData });
+        } else {
+          setSearchData({ content: [] });
+        }
       })
       .catch(err => {
         console.error(err);
@@ -88,7 +101,7 @@ function DiaryList({ navigation }: DiaryProp) {
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fcfcfc' }}>
       <SearchBar filterText={filterText} setFilterText={setFilterText} onPress={onPressSearch} />
       <FlatList
-        data={data.content}
+        data={isSearchActive ? searchData.content : data.content}
         renderItem={renderDiary}
         keyExtractor={item => item?.id.toString()}
         onEndReached={getData} // 지정 스크롤 지점에 도달했을 때 실행할 함수

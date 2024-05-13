@@ -26,10 +26,17 @@ public class Member extends BaseTimeEntity {
     @Column(unique = true)
     private String email;
 
+    @Column(name = "device_token")
+    private String deviceToken;
+
     @Builder
-    public Member(String nickname, String email){
+    public Member(String nickname, String email, String deviceToken) {
         this.nickname = nickname;
         this.email = email;
+        this.deviceToken = deviceToken;
     }
 
+    public void updateToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
+}

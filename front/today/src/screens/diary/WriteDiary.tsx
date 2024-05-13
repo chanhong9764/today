@@ -37,7 +37,7 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
       navigation.reset({ routes: [{ name: 'WaitImage' }] });
 
       Diarys.createImage(content)
-        .then(res => {
+        .then(response => {
           console.log('일기 생성 성공', content);
         })
         .catch(err => {
@@ -47,15 +47,15 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
   }
 
   return (
-    <KeyboardAwareScrollView>
-      <S.WriteDiaryInner>
+    <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
+      <S.WriteDiaryContainer>
         <TodayDate />
         <S.WriteDiaryTitle>오늘 하루는 어땠나요?</S.WriteDiaryTitle>
         <DiaryContent value={content.content} onChangeText={onChangeContent} onSubmitEditing={onPressWrite} />
         <S.WriteDiaryButton>
           <CommonButton content="다 음" onPress={onPressWrite} />
         </S.WriteDiaryButton>
-      </S.WriteDiaryInner>
+      </S.WriteDiaryContainer>
     </KeyboardAwareScrollView>
   );
 }
