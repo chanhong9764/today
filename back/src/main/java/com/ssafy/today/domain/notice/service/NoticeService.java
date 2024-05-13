@@ -72,10 +72,16 @@ public class NoticeService {
 
 
   // 일기 안씀 로드 처리
-
-
   public void saveToken(SaveTokenRequest saveTokenRequest) {
     Member member = memberRepository.getReferenceById(saveTokenRequest.getMemberId());
     member.updateToken(saveTokenRequest.getDeviceToken());
   }
+
+  //일기 삭제시 알람 삭제
+  public void deleteNotice(Long diaryId){
+    Diary diary = diaryRepository.findById(diaryId).orElseThrow(
+            () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+    noticeRepository.deleteByDiary(diary);
+  }
+
 }
