@@ -1,5 +1,5 @@
 import LottieView from 'lottie-react-native';
-import { Image } from 'react-native';
+import { Image, Text } from 'react-native';
 import { DiaryData } from '../../../types/datatype';
 import * as S from './style';
 
@@ -11,8 +11,11 @@ type ItemProps = {
 
 export function DiaryCard({ item, onPress, backgroundColor }: ItemProps) {
   const day: Date = new Date(item.createdAt);
-  const month: number = day.getMonth() + 1;
+  // const month: number = day.getMonth() + 1;
   const date: number = day.getDate();
+  const weekday = day.toLocaleDateString('ko-KR', {
+    weekday: 'long',
+  });
 
   function renderImage(status: number) {
     switch (status) {
@@ -68,12 +71,12 @@ export function DiaryCard({ item, onPress, backgroundColor }: ItemProps) {
       {renderImage(item.status)}
       <S.SingleDiaryContent>
         <S.SingleDiaryDates>
-          <S.SingleDiaryDate>{month}</S.SingleDiaryDate>
           <S.SingleDiaryDate>{date}</S.SingleDiaryDate>
+          <S.SingleDiaryDate>{weekday}</S.SingleDiaryDate>
         </S.SingleDiaryDates>
-        <S.SingleDiaryTextContainer>
-          <S.SingleDiaryText>{item.content}</S.SingleDiaryText>
-        </S.SingleDiaryTextContainer>
+        <Text numberOfLines={2} ellipsizeMode="tail" style={{ flex: 1 }}>
+          {item.content}
+        </Text>
       </S.SingleDiaryContent>
     </S.SingleDiaryContainer>
   );
