@@ -68,6 +68,12 @@ public class DiaryService {
         return DiaryResponse.fromEntity(diary);
     }
 
+    public Diary getDiaryEntity(Long diaryId){
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow(
+                () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+        return diary;
+    }
+
     public Page<DiaryResponse> getDiaryPage(Long memberId, Pageable pageable){
         Page<Diary> all = diaryRepository.findAllByMemberId(memberId, pageable);
         return all.map(DiaryResponse::fromEntity);

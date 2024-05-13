@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.ssafy.today.domain.analysis.service.AnalysisService;
 import com.ssafy.today.domain.diary.dto.request.*;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
+import com.ssafy.today.domain.diary.entity.Diary;
 import com.ssafy.today.domain.diary.entity.Feel;
 import com.ssafy.today.domain.diary.service.DiaryService;
 import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
@@ -121,9 +122,10 @@ public class DiaryController {
     @DeleteMapping("/{diaryId}")
     public ResponseEntity<?> deleteDiary(HttpServletRequest request, @PathVariable("diaryId") Long diaryId) {
         Long memberId = (Long) request.getAttribute("memberId");
+        Diary diary = diaryService.getDiaryEntity(diaryId);
 
         diaryService.deleteDiary(diaryId);
-
+        analysisService.deleteOrSubtractAnalysis(diary);
         //elasticsearch delete
         esService.delete(DeleteRequest.builder()
                 .diaryId(diaryId)

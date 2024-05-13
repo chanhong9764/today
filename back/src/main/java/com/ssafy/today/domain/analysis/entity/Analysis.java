@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -68,8 +69,10 @@ public class Analysis extends BaseTimeEntity {
     @ColumnDefault("0")
     private Double surprise;
 
+    private LocalDateTime diaryDate;
+
     @Builder
-    public Analysis(Member member, Integer count, Integer e, Integer i, Integer s, Integer n, Integer f, Integer t, Integer p, Integer j, Double angry, Double disgust, Double fear, Double happiness, Double sadness, Double surprise) {
+    public Analysis(Member member, Integer count, Integer e, Integer i, Integer s, Integer n, Integer f, Integer t, Integer p, Integer j, Double angry, Double disgust, Double fear, Double happiness, Double sadness, Double surprise, LocalDateTime diaryDate) {
         this.member = member;
         this.count = count;
         this.e = e;
@@ -86,6 +89,7 @@ public class Analysis extends BaseTimeEntity {
         this.happiness = happiness;
         this.sadness = sadness;
         this.surprise = surprise;
+        this.diaryDate = diaryDate;
     }
     public void increaseCount(){
         this.count++;
@@ -123,6 +127,42 @@ public class Analysis extends BaseTimeEntity {
         }
     }
 
+    public void decreaseType(char type){
+        switch (type) {
+            case 'E':
+                this.e--;
+                break;
+            case 'I':
+                this.i--;
+                break;
+            case 'S':
+                this.s--;
+                break;
+            case 'N':
+                this.n--;
+                break;
+            case 'F':
+                this.f--;
+                break;
+            case 'T':
+                this.t--;
+                break;
+            case 'P':
+                this.p--;
+                break;
+            case 'J':
+                this.j--;
+                break;
+            default:
+                System.out.println("잘못된 MBTI 타입입니다: " + type);
+                break;
+        }
+    }
+
+    public void decreaseCount(){
+        this.count--;
+    }
+
     public void sumEmotions(Double angry, Double disgust, Double fear, Double happiness, Double sadness, Double surprise){
         this.angry+=angry;
         this.disgust+=disgust;
@@ -130,6 +170,15 @@ public class Analysis extends BaseTimeEntity {
         this.happiness+=happiness;
         this.sadness+=sadness;
         this.surprise+=surprise;
+    }
+
+    public void subtractEmotions(Double angry, Double disgust, Double fear, Double happiness, Double sadness, Double surprise){
+        this.angry-=angry;
+        this.disgust-=disgust;
+        this.fear-=fear;
+        this.happiness-=happiness;
+        this.sadness-=sadness;
+        this.surprise-=surprise;
     }
 
 }
