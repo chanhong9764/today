@@ -1,9 +1,6 @@
 package com.ssafy.today.domain.elasticsearch.controller;
 
-import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
-import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
-import com.ssafy.today.domain.elasticsearch.dto.request.SearchRequest;
-import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
+import com.ssafy.today.domain.elasticsearch.dto.request.*;
 import com.ssafy.today.domain.elasticsearch.dto.response.SearchResponse;
 import com.ssafy.today.domain.elasticsearch.dto.response.SearchResponseWrapper;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
@@ -47,10 +44,10 @@ public class EsController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<?> search(HttpServletRequest request, @RequestBody String keyword) {
+    public ResponseEntity<?> search(HttpServletRequest request, @RequestBody KeywordRequest keywordRequest) {
         Long memberId = (Long) request.getAttribute("memberId");
         List<SearchResponse> searchRes = esService.search(SearchRequest.builder()
-                .keyword(keyword)
+                .keyword(keywordRequest.getKeyword())
                 .memberId(memberId)
                 .build());
         return getResponseEntity(SuccessCode.OK, searchRes);
