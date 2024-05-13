@@ -25,7 +25,7 @@ public class DiaryContentRequest {
     private Feel feel;
 
     private String content;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'kk:mm:ss.SSSSSS")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime createdAt;
 
     private Integer count;
