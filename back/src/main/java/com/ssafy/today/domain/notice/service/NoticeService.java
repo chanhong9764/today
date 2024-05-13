@@ -65,6 +65,7 @@ public class NoticeService {
                     .token(member.getDeviceToken())
                     .title("그림 생성 완료")
                     .body(sequence.toString() + "번째 일기에 대한 그림이 생성되었습니다.")
+                    .diaryId(diaryId)
                     .build()
     );
   }
