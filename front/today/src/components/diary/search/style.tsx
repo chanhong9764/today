@@ -39,17 +39,22 @@ export const SingleDiaryContainer = styled.TouchableOpacity<ImageContainerProps>
 `;
 
 export const SingleDiaryContent = styled.View`
-  ${center}
   flex-direction: row;
-  padding: 30px 0px;
+  align-items: center;
+  padding: 10px;
+  overflow: hidden;
 `;
 
 export const SingleDiaryDates = styled.View`
-  margin: 0px 20px;
+  margin: 0px 10px;
+  align-items: center;
+  padding-right: 8px;
 `;
 
 export const SingleDiaryDate = styled.Text`
   font-weight: ${({ theme }) => theme.fontWeight.bold};
+  font-size: ${({ theme }) => theme.fontSize.small};
+  margin-right: 5px;
 `;
 
 export const SingleDiaryTextContainer = styled.View``;

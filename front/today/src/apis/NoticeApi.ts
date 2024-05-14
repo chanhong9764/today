@@ -1,4 +1,4 @@
-import { DeviceToken, NotiDatas } from '../types/datatype';
+import { DeviceToken, NoticeData, PatchNoticeData } from '../types/datatype';
 import { APIResponse } from '../types/datatype/apis';
 import { apis, instance, responseBody } from './api';
 
@@ -10,9 +10,10 @@ const noticeRequests = {
 
 export const Notices = {
   //   알림 조회
-  getNotices: (): Promise<APIResponse<NotiDatas[]>> => noticeRequests.get(apis.notice),
+  getNotices: (): Promise<APIResponse<NoticeData[]>> => noticeRequests.get(apis.notice),
   //   알림 확인 여부
-  //   checkNotices: (): Promise<APIResponse<CalendarData[]>> => noticeRequests.patch(apis.notice),
+  checkNotices: (check: PatchNoticeData): Promise<APIResponse<NoticeData[]>> =>
+    noticeRequests.patch(apis.notice, check),
   // 검색
   postToken: (token: DeviceToken): Promise<APIResponse<DeviceToken>> => noticeRequests.post(apis.noticeToken, token),
 };

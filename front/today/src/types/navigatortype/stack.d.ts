@@ -1,4 +1,5 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { SearchData } from '../datatype';
 
 export type RootStackParam = {
   LoginScreen: undefined;
@@ -60,7 +61,9 @@ export type CalendarStackParam = {
     feel: string;
   };
   DiaryDetail?: undefined;
-  SearchDiary?: undefined;
+  SearchDiary?: {
+    searchData: SearchData[];
+  };
   NotificationScreen?: undefined;
 };
 

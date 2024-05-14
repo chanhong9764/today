@@ -77,6 +77,11 @@ export interface NoticeData {
   updatedAt: Date;
 }
 
+export interface PatchNoticeData {
+  noticeId: number;
+  confirm: boolean;
+}
+
 export interface AnalysisData {
   i: number;
   e: number;

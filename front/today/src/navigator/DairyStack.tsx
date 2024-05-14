@@ -15,17 +15,6 @@ import { DiaryProp, DiaryStackParam } from '../types/navigatortype/stack';
 const DiaryStack = createNativeStackNavigator<DiaryStackParam>();
 
 export const DiaryNav = ({ navigation }: DiaryProp) => {
-  // useEffect(() => {
-  //   const acceptNoti = Notifications.addNotificationReceivedListener(notification => {
-  //     const diaryId = notification.request.content.data.customData;
-  //     console.log('NOTIFICATION:', notification.request.content.data.customData);
-  //     navigation.navigate('SelectImage', { diaryId: diaryId });
-  //   });
-
-  //   return () => {
-  //     acceptNoti.remove();
-  //   };
-  // });
   return (
     <DiaryStack.Navigator
       initialRouteName="DiaryList"
@@ -37,7 +26,6 @@ export const DiaryNav = ({ navigation }: DiaryProp) => {
           <NotificationBadge
             onPress={() => {
               navigation.push('NotificationScreen');
-              // testNotification();
             }}
           />
         ),

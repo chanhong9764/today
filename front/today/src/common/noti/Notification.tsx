@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
+import { NoticeData } from '../../types/datatype';
 import * as S from './Notistyle';
 
 type NotiBadgeProp = {
@@ -6,6 +8,8 @@ type NotiBadgeProp = {
 };
 
 function NotificationBadge({ onPress }: NotiBadgeProp) {
+  const [notiData, setNotiData] = useState<NoticeData[]>([]);
+
   return (
     <S.NotiContainer onPress={onPress}>
       <Icon name="bell" size={30} />
