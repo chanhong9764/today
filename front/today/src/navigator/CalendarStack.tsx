@@ -64,7 +64,7 @@ export const CalendarNav = ({ navigation }: CalendarProp) => {
           headerTitle: () =>
             isSearching ? (
               <>
-                <SearchBar filterText={filterText} setFilterText={setFilterText} />
+                <SearchBar filterText={filterText} setFilterText={setFilterText} onSubmit={onPressSearch} />
                 <IconF name="search" size={27} onPress={onPressSearch} />
               </>
             ) : (
