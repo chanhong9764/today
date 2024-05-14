@@ -5,7 +5,7 @@ import * as S from './style';
 
 function WaitImage({ navigation }: CalendarProp) {
   function onPressGoHome() {
-    navigation.replace('Calendar');
+    navigation.replace(navigation.getState().routeNames[0]);
   }
   return (
     <S.WaitImage>
