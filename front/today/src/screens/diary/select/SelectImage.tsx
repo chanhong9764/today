@@ -54,8 +54,7 @@ function SelectImage({ navigation, route }: SelectImageProp) {
         .catch(err => {
           console.log(err);
         });
-      // navigation.reset({ routes: [{ name: 'DiaryDetail', params: { diaryId: diaryId } }] });
-      navigation.navigate('DiaryDetail', { diaryId: diaryId });
+      navigation.replace('DiaryDetail', { diaryId: diaryId });
     } else {
       Alert.alert(
         '그림 선택', // 제목

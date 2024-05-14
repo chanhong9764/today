@@ -5,7 +5,6 @@ import { NativeBaseProvider } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { setCustomText } from 'react-native-global-props';
 import { ThemeProvider } from 'styled-components';
-import { registerForPushNotification } from './src/components/notification/notification';
 import { IsLoginProvider } from './src/contexts/IsLoginContext';
 import RootStack from './src/navigator/RootStack';
 import theme from './src/styles/theme';
@@ -23,9 +22,6 @@ export default function App() {
   const [isFont, setIsFont] = useState(false);
 
   useEffect(() => {
-    // 푸시 알림 등록 설정
-    registerForPushNotification();
-
     // 폰트 load
     const loadFonts = async () => {
       await Font.loadAsync({

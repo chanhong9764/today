@@ -43,11 +43,7 @@ function RootStack() {
   console.log(isLogin);
 
   return (
-    <Stack.Navigator
-    // screenOptions={{
-    //   headerShown: false,
-    // }}
-    >
+    <Stack.Navigator>
       {isLogin ? (
         <>
           <Stack.Screen name="MainTab" component={MainTab} options={{ headerShown: false }} />
