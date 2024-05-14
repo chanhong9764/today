@@ -10,10 +10,6 @@ import { AnalysisData, MemberData } from '../../../types/datatype';
 import { ModalProps } from '../../../types/modal';
 import * as S from './style';
 
-// type AnalysisProps = {
-//   selectedDate: any;
-// };
-
 function AnalysisContent({ selectedDate }: { selectedDate: string }) {
   const [memberInfo, setMemberInfo] = useState<MemberData | undefined>();
   const [analysisData, setAnalysisData] = useState<AnalysisData | undefined>(undefined);
@@ -30,7 +26,6 @@ function AnalysisContent({ selectedDate }: { selectedDate: string }) {
       .getAnalysisday(selectedDate) // 하루치 데이터 불러오기
       .then(response => {
         setAnalysisData(response.data); // 데이터 상태 업데이트
-        console.log(selectedDate);
       })
       .catch(error => {
         console.error('analysis data:', error);
