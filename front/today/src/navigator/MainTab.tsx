@@ -1,15 +1,16 @@
 // Navigaior.tsx
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components/native';
 import { CalendarNav } from './CalendarStack';
 import { DiaryNav } from './DairyStack';
 import { UserNav } from './UserStack';
+import * as Linking from 'expo-linking';
 
 type BottomTabParamList = {
   MainScreen: undefined;
-  Calendar: undefined;
+  CalendarNav: undefined;
   Diary: undefined;
   User: undefined;
 };
@@ -21,7 +22,7 @@ function MainTab() {
 
   return (
     <Tab.Navigator
-      initialRouteName="Calendar"
+      initialRouteName="CalendarNav"
       screenOptions={{
         tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: theme.colors.mainPink,
@@ -34,7 +35,7 @@ function MainTab() {
         },
       }}>
       <Tab.Screen
-        name="MainScreen"
+        name="CalendarNav"
         component={CalendarNav}
         options={{
           tabBarIcon: ({ color }) => <Icon name="calendar" size={27} color={color} />,

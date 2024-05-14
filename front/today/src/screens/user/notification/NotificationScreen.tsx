@@ -5,6 +5,7 @@ import { Notices } from '../../../apis/NoticeApi';
 import { NoticeData } from '../../../types/datatype';
 import { CalendarProp } from '../../../types/navigatortype/stack';
 import * as S from './style';
+import * as Linking from 'expo-linking';
 
 type NotiItemProps = {
   item: NoticeData;
@@ -71,7 +72,8 @@ function NotificationScreen({ navigation }: CalendarProp) {
 
   function renderNoti({ item }: { item: NoticeData }) {
     function onPressNoti() {
-      navigation.push('SelectImage', { diaryId: item.diaryId });
+      const link = Linking.createURL("/SelectImage/" + item.diaryId)
+      Linking.openURL(link)
       Notices.checkNotices({ noticeId: item.noticeId, confirm: true });
     }
     return (

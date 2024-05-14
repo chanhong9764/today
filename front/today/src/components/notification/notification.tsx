@@ -58,10 +58,10 @@ export async function registerForPushNotificationsAsync() {
       // 토큰 발급 및 서버로 전송
       deviceToken = (
         await Notifications.getExpoPushTokenAsync({
-          projectId,
+          projectId: projectId,
         })
       ).data;
-      Notices.postToken({ token: JSON.stringify(deviceToken) })
+      Notices.postToken({ deviceToken: JSON.stringify(deviceToken) })
         .then(response => console.log('토큰 전송 완료', deviceToken))
         .catch(error => console.log(error));
     } catch (error) {
