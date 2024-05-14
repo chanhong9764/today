@@ -40,7 +40,7 @@ public class NoticeController {
     }
 
     // 알림 수정
-    @PutMapping
+    @PatchMapping
     public ResponseEntity<?> updateNoticeStatus(@Valid @RequestBody NoticeUpdateRequest noticeUpdateRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new GlobalException(ErrorCode.INVALID_INPUT_VALUE);
