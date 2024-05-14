@@ -50,7 +50,7 @@ public class NoticeController {
     }
 
     // 안읽은 알림 갯수 카운트
-    @GetMapping
+    @GetMapping("/cnt")
     public ResponseEntity<?> getNoticeCount(HttpServletRequest request) {
         Long memberId = (Long) request.getAttribute("memberId");
         return getResponseEntity(SuccessCode.OK,
