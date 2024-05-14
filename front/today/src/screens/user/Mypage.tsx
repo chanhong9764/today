@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useContext, useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { analysis } from '../../apis/AnalysisApi';
@@ -15,6 +16,7 @@ function Mypage({ navigation }: UserProp) {
   const [memberInfo, setMemberInfo] = useState<MemberData | undefined>();
   const [analysisData, setAnalysisData] = useState<AnalysisData | undefined>();
   const { setIsLogin } = useContext(IsLoginContext);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     Members.getMembers()
@@ -24,8 +26,11 @@ function Mypage({ navigation }: UserProp) {
       .catch(err => {
         console.log(err);
       });
+  }, []);
 
+  const loadAnalysisData = useCallback(() => {
     const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
+
     analysis
       .getAnalysismonth(today)
       .then(response => {
@@ -41,12 +46,19 @@ function Mypage({ navigation }: UserProp) {
             surprise: data.surprise,
           };
           setAnalysisData(scaledData);
+          console.log(response.data);
         }
       })
       .catch(error => {
-        console.error('graph 오류', error);
+        console.error('Graph error', error);
       });
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      loadAnalysisData();
+    }
+  }, [isFocused, loadAnalysisData]);
 
   async function Logout() {
     await AsyncStorage.removeItem('accessToken');
