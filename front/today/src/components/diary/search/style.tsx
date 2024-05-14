@@ -4,18 +4,27 @@ import styled, { css } from 'styled-components/native';
 export const center = css`
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 export const SearchContainer = styled.View`
-  background-color: white;
-  border-radius: 3px;
-  height: 50px;
   padding: 10px;
-  margin: 30px 35px 10px;
+`;
 
-  flex-direction: row;
-  justify-content: space-between;
+export const Search = styled.TextInput`
+  flex: 1;
+  width: 100%;
+`;
 
+type ImageContainerProps = {
+  backgroundColor: string;
+};
+
+export const SingleDiaryContainer = styled.TouchableOpacity<ImageContainerProps>`
+  background-color: ${props => props.backgroundColor || 'transparent'};
+  padding: 20px;
+  margin: 20px 35px;
+  border-radius: 3px;
   ${Platform.select({
     ios: `
       shadow-color: #ffffff;
@@ -29,8 +38,21 @@ export const SearchContainer = styled.View`
   })}
 `;
 
-export const Search = styled.TextInput`
-  flex: 1;
-  width: 100%;
-  padding: 0px 5px;
+export const SingleDiaryContent = styled.View`
+  ${center}
+  flex-direction: row;
+  padding: 30px 0px;
+`;
+
+export const SingleDiaryDates = styled.View`
+  margin: 0px 20px;
+`;
+
+export const SingleDiaryDate = styled.Text`
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+`;
+
+export const SingleDiaryTextContainer = styled.View``;
+export const SingleDiaryText = styled.Text`
+  flex: 1 1 0;
 `;

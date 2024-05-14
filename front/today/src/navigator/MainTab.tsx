@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components/native';
-
 import { CalendarNav } from './CalendarStack';
 import { DiaryNav } from './DairyStack';
 import { UserNav } from './UserStack';

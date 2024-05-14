@@ -83,13 +83,13 @@ function Mypage({ navigation }: UserProp) {
               <Graph analysisData={analysisData} />
             </View>
           )}
-          <S.Line />
+          {/* <S.Line />
           <S.SettingWrapper>
             <View style={{ width: 45, alignItems: 'center', marginRight: 18 }}>
               <Icon name="lock" size={28} />
             </View>
             <Text>비밀번호 설정</Text>
-          </S.SettingWrapper>
+          </S.SettingWrapper> */}
           <S.Line />
           <S.SettingWrapper style={{ marginBottom: 20 }} onPress={Logout}>
             <View style={{ width: 37, alignItems: 'center', marginRight: 28 }}>

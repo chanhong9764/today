@@ -8,6 +8,9 @@ export type RootStackParam = {
   Intro1: undefined;
   Intro2: undefined;
   Intro3: undefined;
+  SelectImage: {
+    diaryId: number;
+  };
 };
 
 export type DiaryStackParam = {
@@ -25,6 +28,7 @@ export type DiaryStackParam = {
   DiaryDetail?: {
     diaryId: number;
   };
+  WaitImage?: undefined;
   NotificationScreen?: undefined;
 };
 
@@ -32,6 +36,9 @@ export type UserStackParam = {
   Mypage?: undefined;
   KakaoLogin?: undefined;
   NotificationScreen?: undefined;
+  SelectImage?: {
+    diaryId: number;
+  };
 };
 
 export type CalendarStackParam = {
@@ -53,6 +60,7 @@ export type CalendarStackParam = {
     feel: string;
   };
   DiaryDetail?: undefined;
+  SearchDiary?: undefined;
   NotificationScreen?: undefined;
 };
 
@@ -72,8 +80,10 @@ export type UserProp = {
   navigation: NativeStackNavigationProp<UserStackParam>;
 };
 
+// params
 export type WriteDiaryProp = NativeStackScreenProps<CalendarStackParam, 'WriteDiary'>;
 export type DiaryDetailProp = NativeStackScreenProps<CalendarStackParam, 'DiaryDetail'>;
 export type EditDiaryProp = NativeStackScreenProps<CalendarStackParam, 'EditDiary'>;
 export type SelectImageProp = NativeStackScreenProps<DiaryStackParam, 'SelectImage'>;
 export type OneDayDiaryProp = NativeStackScreenProps<CalendarStackParam, 'OnedayDiary'>;
+export type SearchDiaryProp = NativeStackScreenProps<CalendarStackParam, 'SearchDiary'>;

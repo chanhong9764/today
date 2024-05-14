@@ -28,3 +28,9 @@ export const WriteDiaryButton = styled.View`
   width: 100%;
   margin: 40px 0px;
 `;
+
+export const EmptyDiaryContainer = styled.View`
+  flex: 1;
+  ${center};
+  height: 300px;
+`;

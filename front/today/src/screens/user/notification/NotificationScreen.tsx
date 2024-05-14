@@ -25,7 +25,7 @@ function NotificationScreen({ navigation }: CalendarProp) {
   const [notiData, setNotiData] = useState<NoticeData[]>([]);
   const [bgColors, setBgColors] = useState<string>('');
 
-  useFocusEffect(() => {
+  useFocusEffect(
     useCallback(() => {
       Notices.getNotices()
         .then(response => {
@@ -35,15 +35,14 @@ function NotificationScreen({ navigation }: CalendarProp) {
           }
         })
         .catch(error => console.log(error));
-    }, []);
-  });
-
-  function onPressNoti() {
-    navigation.navigate('SelectImage');
-  }
+    }, []),
+  );
 
   function renderNoti({ item }: { item: NoticeData }) {
-    return <NotificationItem item={item} onPress={onPressNoti} backgroundColor={bgColors} />;
+    function onPressNoti() {
+      navigation.navigate('SelectImage');
+    }
+    return <NotificationItem item={item} onPress={onPressNoti} backgroundColor={'white'} />;
   }
   return (
     <SafeAreaView>

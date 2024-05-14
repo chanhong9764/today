@@ -28,7 +28,7 @@ export interface CalendarData {
 }
 
 export interface SearchData {
-  diaryId: number;
+  id: number;
   imgUrl: string;
   createdAt: string;
   content: string;

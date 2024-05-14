@@ -1,3 +1,5 @@
+import Constants from 'expo-constants';
+import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 import { Notices } from '../../apis/NoticeApi';
@@ -9,52 +11,65 @@ export async function testNotification() {
     content: {
       title: '테스트 알림',
       body: '그림 생성이 완료되었습니다.',
+      data: { customData: 43 },
     },
     trigger: null,
   });
   console.log('알림왔당');
 }
 
-// 디바이스 토큰 추출 및 전송
-export async function getToken() {
-  const deviceToken = (
-    await Notifications.getExpoPushTokenAsync({
-      projectId: '2ad8fc63-78f5-4754-beba-58a84f424e07',
-    })
-  ).data;
-  Notices.postToken({ token: JSON.stringify(deviceToken) })
-    .then(response => console.log('토큰 전송 완료', deviceToken))
-    .catch(error => console.log(error));
-}
-
-// 알림 설정
-export async function registerForPushNotification() {
-  await Notifications.requestPermissionsAsync();
-  // 유저 권한 허용 여부 확인
-  const { status } = await Notifications.getPermissionsAsync();
-
-  // 권한을 허용한 경우라면 토큰 발급 받아 전송
-  if (status) {
-    getToken();
-    // 알림을 거부한 경우 토큰 전송X
-  } else if (!status) {
-    alert('알림이 거부 되었습니다.');
-  } else {
-    alert('알림이 지원 되지않습니다.');
-  }
-
+export async function registerForPushNotificationsAsync() {
+  let deviceToken = '';
   // 안드로이드 채널 설정
   if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
+    await Notifications.setNotificationChannelAsync('default', {
       name: 'default',
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: 'pink',
+      lightColor: '#FF231F7C',
     });
   }
 
-  // 알림이 오면 알림 리스트 요청
-  Notifications.addNotificationReceivedListener(notification => {
-    console.log('NOTIFICATION:', notification);
-  });
+  // 디바이스인지 확인 => 에뮬레이터 X
+  if (Device.isDevice) {
+    // 알림 권한 확인
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    // 권한 허용하지 않았다면 권한 허용 요청 보냄
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    // 권한 거부
+    if (finalStatus !== 'granted') {
+      alert('알림 권한이 거부되었습니다.');
+      return;
+    }
+
+    // projectId 자동 설정
+    try {
+      const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+      if (!projectId) {
+        throw new Error('Project ID를 찾지 못했습니다.');
+      }
+
+      // 토큰 발급 및 서버로 전송
+      deviceToken = (
+        await Notifications.getExpoPushTokenAsync({
+          projectId,
+        })
+      ).data;
+      Notices.postToken({ token: JSON.stringify(deviceToken) })
+        .then(response => console.log('토큰 전송 완료', deviceToken))
+        .catch(error => console.log(error));
+    } catch (error) {
+      deviceToken = `${error}`;
+    }
+  } else {
+    alert('모바일 기기로 접속해주세요!');
+  }
+
+  return deviceToken;
 }

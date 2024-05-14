@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
+import { registerForPushNotification } from '../../components/notification/notification';
 import { IsLoginContext } from '../../contexts/IsLoginContext';
 import { RootProp } from '../../types/navigatortype/stack';
 
@@ -26,6 +27,9 @@ function KakaoLogin({ navigation }: RootProp) {
     if (token) {
       setIsLogin(true);
     }
+
+    // 푸시 알림 등록 설정
+    registerForPushNotification();
   };
 
   return (
