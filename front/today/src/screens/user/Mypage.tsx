@@ -76,7 +76,7 @@ function Mypage({ navigation }: UserProp) {
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 성향은</S.MyPageSubTitle>
           <S.Line />
           {analysisData ? (
-            <Pyramid analysisData={analysisData} width={30} height={180} />
+            <Pyramid analysisData={analysisData} width={280} height={250} />
           ) : (
             <Text>일기를 작성해주세요!</Text>
           )}
