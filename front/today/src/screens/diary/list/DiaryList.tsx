@@ -12,15 +12,16 @@ function DiaryList({ navigation }: DiaryProp) {
 
   // 페이지네이션
   const [data, setData] = useState<AllDiaryData>({ content: [] });
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const isFirstRender = useRef(true);
 
   // 전체 다이어리 조회 => 페이지 변환 시
   function getData() {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
+    // if (loading) {
+    //   return;
+    // }
+    // setLoading(true);
 
     Diarys.getDiarys(page, 2)
       .then(response => {
@@ -42,18 +43,25 @@ function DiaryList({ navigation }: DiaryProp) {
   // 페이지 진입시 데이터 초기화
   useFocusEffect(
     useCallback(() => {
-      setPage(0);
       setData({ content: [] });
+      setPage(0);
+      getData();
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
 
       return () => {
+        setData({ content: [] });
         setPage(-1);
       };
     }, []),
   );
 
   useEffect(() => {
-    getData();
+    if (isFirstRender.current || page == -1 || page == 0) {
+      console.log("page : "+page)
+      isFirstRender.current = false;
+    } else {
+      getData();
+    }
   }, [page]);
 
   // 다이어리 렌더 함수
