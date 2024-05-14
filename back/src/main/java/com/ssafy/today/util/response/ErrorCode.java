@@ -21,7 +21,7 @@ public enum ErrorCode {
   INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "입력 조건을 확인하세요"),
 
   //기록
-  RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 기록을 찾을 수 없습니다."),
+  ANALYSIS_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 통계 기록을 찾을 수 없습니다."),
 
   //임시 이미지
   TEMPIMAGE_ALREADY_EXISTS(HttpStatus.CONFLICT, "해당 임시 데이터가 이미 존재합니다."),
