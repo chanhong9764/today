@@ -49,6 +49,15 @@ public class NoticeController {
         return getResponseEntity(SuccessCode.OK);
     }
 
+    // 안읽은 알림 갯수 카운트
+    @GetMapping
+    public ResponseEntity<?> getNoticeCount(HttpServletRequest request) {
+        Long memberId = (Long) request.getAttribute("memberId");
+        return getResponseEntity(SuccessCode.OK,
+            noticeService.getNoticeCount(memberId));
+    }
+
+
     @PostMapping("/push/test")
     public ResponseEntity<?> sendPushMessage(@RequestBody PushMessageRequest pushMessageRequest) {
         System.out.println(pushMessageRequest.toString());

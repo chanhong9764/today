@@ -45,6 +45,11 @@ public class NoticeService {
     Notice.changeStatus(notice, noticeUpdateRequest.getConfirm());
   }
 
+  public Long getNoticeCount(Long memberId) {
+    Member member = memberRepository.getReferenceById(memberId);
+    return noticeRepository.countAllByMemberAndConfirmIsTrue(member);
+  }
+
   // 파이썬 서버 이미지 로드 완료 알림 and 알림 DB 저장
   public void completeNotice(Long diaryId, Long memberId, Integer sequence) {
     Member member = memberRepository.getReferenceById(memberId);
@@ -83,5 +88,6 @@ public class NoticeService {
             () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
     noticeRepository.deleteByDiary(diary);
   }
+
 
 }

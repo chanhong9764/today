@@ -9,5 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
   List<Notice> findAllByMemberOrderByCreatedAtDesc(Member member);
 
+  Long countAllByMemberAndConfirmIsTrue(Member member);
+
     void deleteByDiary(Diary diary);
 }
