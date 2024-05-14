@@ -8,21 +8,21 @@ import Logo from '../common/Logo';
 import NotificationBadge from '../common/noti/Notification';
 import SearchBar from '../components/diary/search/SearchBar';
 import Calendar from '../screens/calendar/Calendar';
-import DiaryDetail from '../screens/diary/DiaryDetail';
-import EditDiary from '../screens/diary/EditDiary';
 import SearchDiary from '../screens/diary/SearchDiary';
-import WriteDiary from '../screens/diary/WriteDiary';
 import OneDayDiary from '../screens/diary/day/OneDayDiary';
-import SelectImage from '../screens/diary/select/SelectImage';
-import WaitImage from '../screens/diary/wait/WaitImage';
-import SelectEmotion from '../screens/emotion/SelectEmotion';
-import NotificationScreen from '../screens/user/notification/NotificationScreen';
 import { SearchData } from '../types/datatype';
-import { CalendarProp, CalendarStackParam } from '../types/navigatortype/stack';
+import { CalendarStackParam } from '../types/navigatortype/stack';
+
+interface CalendarStackProp {
+  navigation: {
+    navigate: (arg0: string, arg1?: { searchData: SearchData[] }) => void;
+    push: (arg0: string, arg1?: { screen: string }) => void;
+  };
+}
 
 const CalendarStack = createNativeStackNavigator<CalendarStackParam>();
 
-export const CalendarNav = ({ navigation }: CalendarProp) => {
+export const CalendarNav = ({ navigation }: CalendarStackProp) => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchData, setSearchData] = useState<SearchData[]>([]);
   const [filterText, setFilterText] = useState<string>('');
@@ -43,10 +43,6 @@ export const CalendarNav = ({ navigation }: CalendarProp) => {
       .catch(error => {
         console.error(error);
       });
-  }
-
-  function StartSearch() {
-    setIsSearching(true);
   }
 
   return (
@@ -70,23 +66,18 @@ export const CalendarNav = ({ navigation }: CalendarProp) => {
             ) : (
               <Logo />
             ),
-          headerLeft: () => <IconF name="plus" size={35} onPress={() => navigation.push('SelectEmotion')} />,
+          headerLeft: () => (
+            <IconF name="plus" size={35} onPress={() => navigation.push('DiaryStack', { screen: 'SelectEmotion' })} />
+          ),
           headerRight: () =>
             isSearching ? (
               <IconA name="close" size={27} onPress={() => setIsSearching(false)} />
             ) : (
               <>
-                <IconF name="search" size={27} onPress={StartSearch} />
+                <IconF name="search" size={27} onPress={() => setIsSearching(true)} />
                 <NotificationBadge onPress={() => navigation.push('NotificationScreen')} />
               </>
             ),
-        }}
-      />
-      <CalendarStack.Screen
-        name="SelectEmotion"
-        component={SelectEmotion}
-        options={{
-          headerBackTitle: '캘린더',
         }}
       />
       <CalendarStack.Screen
@@ -109,24 +100,6 @@ export const CalendarNav = ({ navigation }: CalendarProp) => {
           ),
         }}
       />
-      <CalendarStack.Screen name="SelectImage" component={SelectImage} />
-      <CalendarStack.Screen name="EditDiary" component={EditDiary} />
-      <CalendarStack.Screen name="NotificationScreen" component={NotificationScreen} />
-      <CalendarStack.Screen
-        name="WriteDiary"
-        component={WriteDiary}
-        options={{
-          headerBackTitle: '감정 선택',
-        }}
-      />
-      <CalendarStack.Screen
-        name="DiaryDetail"
-        component={DiaryDetail}
-        options={{
-          headerBackTitle: '하루 일기',
-        }}
-      />
-      <CalendarStack.Screen name="WaitImage" component={WaitImage} options={{ headerShown: false }} />
     </CalendarStack.Navigator>
   );
 };

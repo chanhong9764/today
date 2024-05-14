@@ -6,13 +6,18 @@ import { Diarys } from '../../../apis/DiaryApi';
 import NextButton from '../../../common/CommonButton';
 import Images from '../../../components/diary/select/ResultImage';
 import { ImageData, ImageDatas } from '../../../types/datatype';
-import { SelectImageProp } from '../../../types/navigatortype/stack';
 import * as S from './style';
+
+interface SelectImageProp {
+  navigation: {
+    replace: (arg0: string, arg1?: { diaryId: number }) => void;
+  };
+  route: { params: { diaryId: number } };
+}
 
 function SelectImage({ navigation, route }: SelectImageProp) {
   const theme = useTheme();
   const { diaryId } = route.params;
-  console.log(diaryId);
   const today: string = format(new Date(), 'yyyy. MM. dd');
   const [images, setImages] = useState<ImageDatas>();
   const [selectedImg, setSelectedImg] = useState<string>();
@@ -74,7 +79,7 @@ function SelectImage({ navigation, route }: SelectImageProp) {
         <FlatList data={imageUrls} renderItem={renderImage} numColumns={2} keyExtractor={item => item.id.toString()} />
       </S.ImagesContainer>
       <S.ButtonContainer>
-        <NextButton content="일기 작성 완료하기" onPress={createDiary} />
+        <NextButton content="작성 완료" onPress={createDiary} />
       </S.ButtonContainer>
     </S.SelectImageContainer>
   );

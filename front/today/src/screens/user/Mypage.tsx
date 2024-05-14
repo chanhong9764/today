@@ -9,10 +9,9 @@ import Graph from '../../components/user/Graph';
 import Pyramid from '../../components/user/Pyramid';
 import { IsLoginContext } from '../../contexts/IsLoginContext';
 import { AnalysisData, MemberData } from '../../types/datatype';
-import { UserProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
-function Mypage({ navigation }: UserProp) {
+function Mypage() {
   const [memberInfo, setMemberInfo] = useState<MemberData | undefined>();
   const [analysisData, setAnalysisData] = useState<AnalysisData | undefined>();
   const { setIsLogin } = useContext(IsLoginContext);

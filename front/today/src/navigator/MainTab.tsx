@@ -1,18 +1,17 @@
 // Navigaior.tsx
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components/native';
 import { CalendarNav } from './CalendarStack';
 import { DiaryNav } from './DairyStack';
 import { UserNav } from './UserStack';
-import * as Linking from 'expo-linking';
 
 type BottomTabParamList = {
   MainScreen: undefined;
   CalendarNav: undefined;
-  Diary: undefined;
-  User: undefined;
+  DiaryNav: undefined;
+  UserNav: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -42,14 +41,14 @@ function MainTab() {
         }}
       />
       <Tab.Screen
-        name="Diary"
+        name="DiaryNav"
         component={DiaryNav}
         options={{
           tabBarIcon: ({ color }) => <Icon name="book" size={27} color={color} />,
         }}
       />
       <Tab.Screen
-        name="User"
+        name="UserNav"
         component={UserNav}
         options={{
           tabBarIcon: ({ color }) => <Icon name="user" size={27} color={color} />,

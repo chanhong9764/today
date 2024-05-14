@@ -4,8 +4,14 @@ import { Diarys } from '../../apis/DiaryApi';
 import CommonButton from '../../common/CommonButton';
 import TodayDate from '../../common/TodayDate';
 import DiaryContent from '../../components/diary/write/DiaryContent';
-import { EditDiaryProp } from '../../types/navigatortype/stack';
 import * as S from './style';
+
+interface EditDiaryProp {
+  navigation: {
+    replace: (arg0: string, arg1?: { diaryId: number }) => void;
+  };
+  route: { params: { diaryId: number; diaryContent: string } };
+}
 
 function EditDiary({ navigation, route }: EditDiaryProp) {
   const { diaryId, diaryContent } = route.params;
@@ -27,7 +33,7 @@ function EditDiary({ navigation, route }: EditDiaryProp) {
     Diarys.editDiary(diaryId, content)
       .then(res => {
         console.log('일기 수정 성공', content);
-        navigation.navigate('DiaryDetail', { diaryId: diaryId });
+        navigation.replace('DiaryDetail', { diaryId: diaryId });
       })
       .catch(err => {
         console.log('일기 수정 실패', err);

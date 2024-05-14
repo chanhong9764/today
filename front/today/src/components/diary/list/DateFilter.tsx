@@ -29,7 +29,7 @@ function DateFilter({ date, setDate }: DateProp) {
   return (
     <>
       <S.DiaryListTitleContainer onPress={() => setShow(!show)}>
-        <S.DiaryListTitle>{format(new Date(date), 'PPP', { locale: ko })} </S.DiaryListTitle>
+        <S.DiaryListTitle>{format(new Date(date), 'PPP', { locale: ko })}∇</S.DiaryListTitle>
       </S.DiaryListTitleContainer>
       <DateTimePickerModal
         isVisible={show}
