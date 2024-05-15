@@ -89,7 +89,7 @@ function Mypage() {
           {analysisData ? (
             <Pyramid analysisData={analysisData} width={280} height={250} />
           ) : (
-            <Text>일기를 작성해주세요!</Text>
+            <Text>일기를 작성해주시면 성향을 분석해드려요!</Text>
           )}
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 감정은</S.MyPageSubTitle>
           <S.Line />
@@ -98,7 +98,7 @@ function Mypage() {
               <Graph analysisData={analysisData} />
             </View>
           ) : (
-            <Text>일기를 작성해주세요!</Text>
+            <Text>일기를 작성해주시면 감정을 분석해드려요!</Text>
           )}
           {/* <S.Line />
           <S.SettingWrapper>
