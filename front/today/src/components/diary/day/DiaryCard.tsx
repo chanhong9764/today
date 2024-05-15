@@ -1,4 +1,5 @@
 // DiaryCard.tsx
+import LottieView from 'lottie-react-native';
 import { Text } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { CalendarData } from '../../../types/datatype';
@@ -21,6 +22,68 @@ export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navig
     weekday: 'long',
   });
 
+  function renderImage(status: number) {
+    switch (status) {
+      case 0:
+        return (
+          <S.DefaultImage>
+            <S.IconContainer>
+              <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} />
+            </S.IconContainer>
+            <LottieView
+              source={require('../../../../assets/lotties/drawing.json')}
+              autoPlay
+              loop
+              style={{
+                width: '100%',
+                height: 150,
+              }}
+            />
+          </S.DefaultImage>
+        );
+      case 1:
+        return (
+          <S.DefaultImage>
+            <S.IconContainer>
+              <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} />
+            </S.IconContainer>
+            <LottieView
+              source={require('../../../../assets/lotties/done.json')}
+              autoPlay
+              loop
+              style={{
+                width: '100%',
+                height: 150,
+              }}
+            />
+          </S.DefaultImage>
+        );
+      case 2:
+        return (
+          <S.DefaultImage source={{ uri: item.imgUrl }}>
+            <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} style={{}} />
+          </S.DefaultImage>
+        );
+      default:
+        return (
+          <S.DefaultImage>
+            <S.IconContainer>
+              <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} />
+            </S.IconContainer>
+            <LottieView
+              source={require('../../../../assets/lotties/drawing.json')}
+              autoPlay
+              loop
+              style={{
+                width: '100%',
+                height: 150,
+              }}
+            />
+          </S.DefaultImage>
+        );
+    }
+  }
+
   // 각 detail 페이지로 이동
   function navigateToDetail() {
     navigation.push('DiaryStack', { screen: 'DiaryDetail', params: { diaryId: item.id } });
@@ -28,9 +91,7 @@ export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navig
 
   return (
     <S.SingleDiaryContainer onPress={navigateToDetail} backgroundColor={backgroundColor}>
-      <S.SingleDiaryImage source={{ uri: item.imgUrl }}>
-        <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} style={{}} />
-      </S.SingleDiaryImage>
+      {renderImage(item.status)}
       <S.SingleDiaryContent>
         <S.SingleDiaryDates>
           <S.SingleDiaryDate>{date}</S.SingleDiaryDate>

@@ -20,6 +20,7 @@ export interface DiaryData {
 
 export interface CalendarData {
   id: number;
+  status: number;
   memberId: number;
   important: boolean;
   imgUrl: string;
