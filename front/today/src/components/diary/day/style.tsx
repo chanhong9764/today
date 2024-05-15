@@ -49,11 +49,14 @@ export const SingleDiaryDate = styled.Text`
   margin-right: 5px; // 날짜와 요일 사이 간격
 `;
 
-export const SingleDiaryImage = styled.ImageBackground`
-  height: 250px;
-  width: '100%';
-  padding: 10px;
+export const DefaultImage = styled.ImageBackground`
   align-items: flex-end;
+  position: relative;
+  border: 1px solid #f5f5f5;
+  height: 200px;
+  width: '100%';
+  padding: 20px;
+  border-radius: 3px;
 `;
 
 export const DiaryListTitleContainer = styled.Pressable`
@@ -63,4 +66,11 @@ export const DiaryListTitleContainer = styled.Pressable`
 export const DiaryListTitle = styled.Text`
   font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
+`;
+
+export const IconContainer = styled.View`
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  z-index: 100;
 `;

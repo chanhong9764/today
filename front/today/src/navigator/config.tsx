@@ -1,7 +1,7 @@
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 
-const prefix = Linking.createURL('/');
+export const prefix = Linking.createURL('/');
 
 export const linking = {
   prefixes: [prefix],
@@ -11,45 +11,52 @@ export const linking = {
       MainTab: {
         initialRouteName: 'DiaryNav',
         screens: {
-          Diary: {
+          DiaryNav: {
             initialRouteName: 'DiaryList',
             screens: {
-              DiaryList: '/DiaryList',
-              SelectImage: '/SelectImage/:diaryId',
+              SelectImage: 'SelectImage/:diaryId',
+              DiaryList: 'DiaryList',
             },
           },
         },
       },
-      NotificationScreen: '/NotificationScreen',
+      NotificationScreen: 'NotificationScreen',
     },
   },
+
+  // 딥링크 url 받는 부분
   async getInitialURL() {
+    // 딥링크를 이용해 앱이 오픈되었을 때
     const url = await Linking.getInitialURL();
 
     if (url != null) {
       return url;
     }
 
-    // Handle URL from expo push notifications
     const response = await Notifications.getLastNotificationResponseAsync();
-
-    return response?.notification.request.content.data.diaryId;
+    return response?.notification.request.content.data.url;
   },
+
   subscribe(listener: any) {
+    // const dispatch = useDispatchContext();
     const onReceiveURL = ({ url }: { url: string }) => listener(url);
-    // Listen to incoming links from deep linking
+
     const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
 
-    // Listen to expo push notifications
     const subscription = Notifications.addNotificationResponseReceivedListener(response => {
-      const url = response.notification.request.content.data.diaryId;
-      console.log(url);
-      listener(url); // 원하는 화면으로 이동합니다.
+      const diaryId = response.notification.request.content.data;
+
+      const url = `${prefix}SelectImage/${diaryId}`;
+      listener(url);
     });
+
     return () => {
-      // Clean up the event listeners
+      // 리스너 삭제
       eventListenerSubscription.remove();
       subscription.remove();
     };
   },
 };
+function useDispatchContext() {
+  throw new Error('Function not implemented.');
+}
