@@ -69,18 +69,8 @@ public class DiaryController {
      * fastapi 서버에서 이미지 생성이후 호출 될곳
      */
     @KafkaListener(topics = "image-created", groupId = "${kafka.group}")
-    public void consumer(String data) {
+    public void consumer(DiaryContentCreated diaryContentCreated) {
         System.out.println("Diary 생성 완료");
-        data = data.substring(1, data.length() - 1);
-        data = data.replace("\\", "");
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        DiaryContentCreated diaryContentCreated;
-        try {
-            diaryContentCreated = mapper.readValue(data, DiaryContentCreated.class);
-        } catch (JsonProcessingException e) {
-            throw new GlobalException(ErrorCode.DIARY_CONVERT_FAILED);
-        }
         // Analysis 에 저장, Diary 테이블에 저장, tempImg 테이블에 저장
         analysisService.createOrUpdateAnalysis(diaryContentCreated.getMemberId(), diaryContentCreated);
         diaryService.updateAfterCreateImg(diaryContentCreated);
