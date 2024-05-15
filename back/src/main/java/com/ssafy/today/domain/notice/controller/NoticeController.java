@@ -65,6 +65,8 @@ public class NoticeController {
         return getResponseEntity(SuccessCode.OK);
     }
 
+
+
     @PostMapping("/token")
     public ResponseEntity<?> saveToken(HttpServletRequest request, @RequestBody TokenRequest tokenRequest) {
         logger.info("this is device token ======= " + tokenRequest.getDeviceToken());
