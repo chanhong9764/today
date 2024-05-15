@@ -2,11 +2,17 @@ import React from 'react';
 import { FlatList, SafeAreaView, Text } from 'react-native';
 import { DiaryCard } from '../../components/diary/search/DiaryCard';
 import { SearchData } from '../../types/datatype';
-import { SearchDiaryProp } from '../../types/navigatortype/stack';
 import * as S from './style';
+
+interface SearchDiaryProp {
+  navigation: {
+    push: (arg0: string, arg1?: { diaryId: number }) => void;
+  };
+  route: { params: { searchData: SearchData[] } };
+}
+
 function SearchDiary({ navigation, route }: SearchDiaryProp) {
-  const searchedData = route.params;
-  console.log(searchedData.searchData);
+  const { searchData } = route.params;
 
   // 다이어리 렌더 함수
   function renderDiary({ item }: { item: SearchData }) {
@@ -31,8 +37,8 @@ function SearchDiary({ navigation, route }: SearchDiaryProp) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fcfcfc' }}>
       <FlatList
-        data={searchedData.searchData}
-        extraData={searchedData}
+        data={searchData}
+        extraData={searchData}
         renderItem={renderDiary}
         keyExtractor={item => item?.id.toString()}
         ListEmptyComponent={renderEmptyComponent}

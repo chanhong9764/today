@@ -1,9 +1,14 @@
 import { SafeAreaView, Text } from 'react-native';
 import { useTheme } from 'styled-components/native';
-import { RootProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
-function Intro3({ navigation }: RootProp) {
+interface IntroProp {
+  navigation: {
+    reset: (options: { routes: [{ name: string; params?: Record<string, unknown> }]; index?: number }) => void;
+  };
+}
+
+function Intro3({ navigation }: IntroProp) {
   const theme = useTheme();
   return (
     <SafeAreaView style={{ flex: 1 }}>

@@ -52,7 +52,7 @@ export interface SearchWord {
 }
 
 export interface DeviceToken {
-  token: string;
+  deviceToken: string;
 }
 
 export interface ImageDatas {

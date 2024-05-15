@@ -36,6 +36,7 @@ export default function App() {
     
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       // 알람 추가
+      console.log(notification)
     });
     
     // 폰트 전역 설정

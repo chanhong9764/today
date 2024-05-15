@@ -5,8 +5,14 @@ import { Diarys } from '../../apis/DiaryApi';
 import CommonButton from '../../common/CommonButton';
 import TodayDate from '../../common/TodayDate';
 import DiaryContent from '../../components/diary/write/DiaryContent';
-import { WriteDiaryProp } from '../../types/navigatortype/stack';
 import * as S from './style';
+
+interface WriteDiaryProp {
+  navigation: {
+    replace: (arg0: string, arg1?: { screen: string }) => void;
+  };
+  route: { params: { feel: string } };
+}
 
 function WriteDiary({ navigation, route }: WriteDiaryProp) {
   const { feel } = route.params;
@@ -34,7 +40,7 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
     } else if (contentLength > 200) {
       Alert.alert('최대 글자수 제한!', '200자를 초과할 수 없습니다.');
     } else {
-      navigation.reset({ routes: [{ name: 'WaitImage' }] });
+      navigation.replace('DiaryStack', { screen: 'WaitImage' });
 
       Diarys.createImage(content)
         .then(response => {

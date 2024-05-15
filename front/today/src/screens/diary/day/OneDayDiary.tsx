@@ -9,7 +9,7 @@ import CommonButton from '../../../common/CommonButton';
 import { DiaryCard } from '../../../components/diary/day/DiaryCard';
 import DateFilter from '../../../components/diary/list/DateFilter';
 import { CalendarData } from '../../../types/datatype';
-import { DiaryStackParam, OneDayDiaryProp } from '../../../types/navigatortype/stack';
+import { DiaryStackParam } from '../../../types/navigatortype/stack';
 import Analysis from '../../modal/analysis/Analysis';
 
 interface DiaryItemProp {
@@ -17,6 +17,13 @@ interface DiaryItemProp {
   selectedDate: string;
   setDailyDiaryData: (item: CalendarData[]) => void;
   navigate: NativeStackNavigationProp<DiaryStackParam>;
+}
+
+interface OneDayDiaryProp {
+  navigation: {
+    push: (arg0: string, arg1?: { screen?: string; params?: { diaryId: number } }) => void;
+  };
+  route: { params: { selectedDate: string } };
 }
 
 function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
@@ -45,14 +52,9 @@ function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
     setIsImportant(importantDiary ? importantDiary.id : undefined);
   }, [dailyDiaryData]);
 
-  function DiaryItem({ item, navigate }: DiaryItemProp) {
+  function DiaryItem({ item }: { item: CalendarData }) {
     const backgroundColor = item.id === isImportant ? theme.colors.lightPink : 'white';
     const starIcon = item.id === isImportant ? 'star' : 'staro';
-
-    // 각 detail 페이지로 이동
-    function navigateToDetail() {
-      navigate.push('DiaryDetail', { diaryId: item.id });
-    }
 
     // important 상태 변화
     function onPressMain() {
@@ -67,7 +69,7 @@ function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
     return (
       <DiaryCard
         item={item}
-        onPressDiary={navigateToDetail}
+        navigation={navigation}
         onPressPatch={onPressMain}
         backgroundColor={backgroundColor}
         starIcon={starIcon}
@@ -84,14 +86,7 @@ function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
       {dailyDiaryData && dailyDiaryData.length > 0 ? (
         <FlatList
           data={dailyDiaryData}
-          renderItem={({ item }) => (
-            <DiaryItem
-              item={item}
-              navigate={navigation}
-              selectedDate={selectedDate}
-              setDailyDiaryData={setDailyDiaryData}
-            />
-          )}
+          renderItem={({ item }) => <DiaryItem item={item} />}
           keyExtractor={item => item.id.toString()}
         />
       ) : (

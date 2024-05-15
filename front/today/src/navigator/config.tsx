@@ -1,7 +1,7 @@
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 
-const prefix = Linking.createURL("/");
+const prefix = Linking.createURL('/');
 
 export const linking = {
   prefixes: [prefix],
@@ -9,20 +9,20 @@ export const linking = {
     initialRouteName: 'MainTab',
     screens: {
       MainTab: {
-        initialRouteName: "CalendarNav",
+        initialRouteName: 'DiaryNav',
         screens: {
           Diary: {
-            initialRouteName: "DiaryList",
+            initialRouteName: 'DiaryList',
             screens: {
-              "DiaryList": "/DiaryList",
-              "SelectImage": "/SelectImage/:diaryId",
-            }
-          }
-        }
+              DiaryList: '/DiaryList',
+              SelectImage: '/SelectImage/:diaryId',
+            },
+          },
+        },
       },
-      NotificationScreen: "/NotificationScreen"
-    }
-  }, 
+      NotificationScreen: '/NotificationScreen',
+    },
+  },
   async getInitialURL() {
     const url = await Linking.getInitialURL();
 
@@ -39,11 +39,11 @@ export const linking = {
     const onReceiveURL = ({ url }: { url: string }) => listener(url);
     // Listen to incoming links from deep linking
     const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
-    
+
     // Listen to expo push notifications
     const subscription = Notifications.addNotificationResponseReceivedListener(response => {
       const url = response.notification.request.content.data.diaryId;
-      console.log(url)
+      console.log(url);
       listener(url); // 원하는 화면으로 이동합니다.
     });
     return () => {
@@ -52,4 +52,4 @@ export const linking = {
       subscription.remove();
     };
   },
-}
+};

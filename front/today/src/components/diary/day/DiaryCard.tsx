@@ -6,21 +6,28 @@ import * as S from './style';
 
 type ItemProps = {
   item: CalendarData;
-  onPressDiary: () => void;
   onPressPatch: () => void;
   backgroundColor: string;
   starIcon: string;
+  navigation: {
+    push: (arg0: string, arg1?: { screen?: string; params?: { diaryId: number } }) => void;
+  };
 };
 
-export function DiaryCard({ item, onPressDiary, onPressPatch, backgroundColor, starIcon }: ItemProps) {
+export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navigation }: ItemProps) {
   const day: Date = new Date(item.createdAt);
   const date: number = day.getDate();
   const weekday = day.toLocaleDateString('ko-KR', {
     weekday: 'long',
   });
 
+  // 각 detail 페이지로 이동
+  function navigateToDetail() {
+    navigation.push('DiaryStack', { screen: 'DiaryDetail', params: { diaryId: item.id } });
+  }
+
   return (
-    <S.SingleDiaryContainer onPress={onPressDiary} backgroundColor={backgroundColor}>
+    <S.SingleDiaryContainer onPress={navigateToDetail} backgroundColor={backgroundColor}>
       <S.SingleDiaryImage source={{ uri: item.imgUrl }}>
         <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} style={{}} />
       </S.SingleDiaryImage>
