@@ -10,6 +10,8 @@ import Intro3 from '../screens/intro/Intro3';
 import KakaoLogin from '../screens/user/KakaoLogin';
 import NotificationScreen from '../screens/user/notification/NotificationScreen';
 import { RootStackParam } from '../types/navigatortype/stack';
+import { CalendarNav } from './CalendarStack';
+import { DiaryNav } from './DairyStack';
 import MainTab from './MainTab';
 
 const Stack = createNativeStackNavigator<RootStackParam>();
@@ -47,6 +49,8 @@ function RootStack() {
       {isLogin ? (
         <>
           <Stack.Screen name="MainTab" component={MainTab} options={{ headerShown: false }} />
+          <Stack.Screen name="CalendarStack" component={CalendarNav} options={{ headerShown: false }} />
+          <Stack.Screen name="DiaryStack" component={DiaryNav} options={{ headerShown: false }} />
           <Stack.Screen
             name="NotificationScreen"
             component={NotificationScreen}

@@ -3,9 +3,7 @@ import { useCallback, useState } from 'react';
 import { SectionList, Text } from 'react-native';
 import { Notices } from '../../../apis/NoticeApi';
 import { NoticeData } from '../../../types/datatype';
-import { CalendarProp } from '../../../types/navigatortype/stack';
 import * as S from './style';
-import * as Linking from 'expo-linking';
 
 type NotiItemProps = {
   item: NoticeData;
@@ -22,6 +20,12 @@ type SectionHeaderProps = {
   };
 };
 
+interface NotiScreenProp {
+  navigation: {
+    push: (arg0: string, arg1: { diaryId: number }) => void;
+  };
+}
+
 function NotificationItem({ item, onPress }: NotiItemProps) {
   const backgroundColor = item.confirm ? 'white' : '#dbdbdb';
   return (
@@ -32,7 +36,7 @@ function NotificationItem({ item, onPress }: NotiItemProps) {
   );
 }
 
-function NotificationScreen({ navigation }: CalendarProp) {
+function NotificationScreen({ navigation }: NotiScreenProp) {
   const [notiData, setNotiData] = useState<NoticeData[]>([]);
 
   let groupedNotices: GroupedNotices = {};
@@ -72,8 +76,7 @@ function NotificationScreen({ navigation }: CalendarProp) {
 
   function renderNoti({ item }: { item: NoticeData }) {
     function onPressNoti() {
-      const link = Linking.createURL("/SelectImage/" + item.diaryId)
-      Linking.openURL(link)
+      navigation.push('SelectImage', { diaryId: item.diaryId });
       Notices.checkNotices({ noticeId: item.noticeId, confirm: true });
     }
     return (

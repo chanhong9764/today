@@ -1,14 +1,18 @@
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, FlatList, SafeAreaView } from 'react-native';
 import { Diarys } from '../../../apis/DiaryApi';
 import { DiaryCard } from '../../../components/diary/list/DiaryCard';
 import { AllDiaryData, DiaryData } from '../../../types/datatype';
-import { DiaryProp } from '../../../types/navigatortype/stack';
 
-function DiaryList({ navigation }: DiaryProp) {
+interface DiaryListProp {
+  navigation: {
+    push: (arg0: string, arg2?: { diaryId: number }) => void;
+  };
+}
+
+function DiaryList({ navigation }: DiaryListProp) {
   const flatListRef = useRef<FlatList<DiaryData>>(null);
-  const isFocused = useIsFocused();
 
   // 페이지네이션
   const [data, setData] = useState<AllDiaryData>({ content: [] });
@@ -25,13 +29,11 @@ function DiaryList({ navigation }: DiaryProp) {
 
     Diarys.getDiarys(page, 2)
       .then(response => {
-        console.log(response.data);
         const newData = response.data?.content || [];
         setData(currentData => ({
           ...currentData,
           content: [...currentData.content, ...newData],
         }));
-        console.log(page);
       })
       .then(() => setLoading(false))
       .catch(err => {
@@ -57,7 +59,7 @@ function DiaryList({ navigation }: DiaryProp) {
 
   useEffect(() => {
     if (isFirstRender.current || page == -1 || page == 0) {
-      console.log("page : "+page)
+      console.log('page : ' + page);
       isFirstRender.current = false;
     } else {
       getData();

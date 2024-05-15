@@ -1,11 +1,22 @@
 import LottieView from 'lottie-react-native';
 import WhiteButton from '../../../common/WhiteButton';
-import { CalendarProp } from '../../../types/navigatortype/stack';
 import * as S from './style';
 
-function WaitImage({ navigation }: CalendarProp) {
+interface RouteList {
+  routeNames: string[];
+}
+
+interface WaitImageProp {
+  navigation: {
+    replace: (arg0: string) => void;
+    getState: () => RouteList;
+  };
+}
+
+function WaitImage({ navigation }: WaitImageProp) {
   function onPressGoHome() {
-    navigation.replace('Calendar');
+    console.log(navigation.getState());
+    navigation.replace(navigation.getState().routeNames[0]);
   }
   return (
     <S.WaitImage>

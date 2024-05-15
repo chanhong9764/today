@@ -2,10 +2,15 @@
 import React, { useState } from 'react';
 import CalendarBody from '../../components/calendar/CalendarBody';
 import CalendarHeader from '../../components/calendar/CalendarHeader';
-import { CalendarProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
-function Calendar({ navigation }: CalendarProp) {
+interface CalendarNavProp {
+  navigation: {
+    push: (arg0: string, arg1?: { selectedDate: string }) => void;
+  };
+}
+
+function Calendar({ navigation }: CalendarNavProp) {
   const DATE = new Date();
   const YEAR = DATE.getFullYear();
   const MONTH = DATE.getMonth() + 1;

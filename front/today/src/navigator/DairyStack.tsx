@@ -9,12 +9,18 @@ import DiaryList from '../screens/diary/list/DiaryList';
 import SelectImage from '../screens/diary/select/SelectImage';
 import WaitImage from '../screens/diary/wait/WaitImage';
 import SelectEmotion from '../screens/emotion/SelectEmotion';
-import NotificationScreen from '../screens/user/notification/NotificationScreen';
-import { DiaryProp, DiaryStackParam } from '../types/navigatortype/stack';
+import { DiaryStackParam } from '../types/navigatortype/stack';
+
+interface DiaryStackProp {
+  navigation: {
+    navigate: (arg0: string) => void;
+    push: (arg0: string) => void;
+  };
+}
 
 const DiaryStack = createNativeStackNavigator<DiaryStackParam>();
 
-export const DiaryNav = ({ navigation }: DiaryProp) => {
+export const DiaryNav = ({ navigation }: DiaryStackProp) => {
   return (
     <DiaryStack.Navigator
       initialRouteName="DiaryList"
@@ -47,7 +53,6 @@ export const DiaryNav = ({ navigation }: DiaryProp) => {
       <DiaryStack.Screen name="WriteDiary" component={WriteDiary} />
       <DiaryStack.Screen name="DiaryDetail" component={DiaryDetail} />
       <DiaryStack.Screen name="WaitImage" component={WaitImage} options={{ headerShown: false }} />
-      <DiaryStack.Screen name="NotificationScreen" component={NotificationScreen} />
     </DiaryStack.Navigator>
   );
 };

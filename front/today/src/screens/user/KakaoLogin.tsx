@@ -5,12 +5,11 @@ import { SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
 import { registerForPushNotificationsAsync } from '../../components/notification/notification';
 import { IsLoginContext } from '../../contexts/IsLoginContext';
-import { RootProp } from '../../types/navigatortype/stack';
 
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('안녕')`;
 // 로그인에 성공하게 되면 어떤 주소로 이동 => injectedJavaScript에 적은 코드가 실행
 
-function KakaoLogin({ navigation }: RootProp) {
+function KakaoLogin() {
   const { setIsLogin } = useContext(IsLoginContext);
   const REDIRECT_URI = `${process.env.BASE_URL}/tmp`;
   const KAKAO_AUTH_URL = `${process.env.BASE_URL}/oauth2/authorization/kakao?redirect_uri=${REDIRECT_URI}&mode=login`;

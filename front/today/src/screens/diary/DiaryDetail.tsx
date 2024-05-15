@@ -10,7 +10,14 @@ import SaveButton from '../../common/SaveButton';
 import DetailContent from '../../components/diary/detail/DetailContent';
 import DetailHeader from '../../components/diary/detail/DetailHeader';
 import { DiaryData } from '../../types/datatype';
-import { DiaryDetailProp } from '../../types/navigatortype/stack';
+
+interface DiaryDetailProp {
+  navigation: {
+    push: (arg0: string, arg1?: { diaryId?: number; diaryContent?: string }) => void;
+    goBack: () => void;
+  };
+  route: { params: { diaryId: number } };
+}
 
 function DiaryDetail({ navigation, route }: DiaryDetailProp) {
   const [diary, setDiary] = useState<DiaryData | undefined>();
@@ -31,7 +38,7 @@ function DiaryDetail({ navigation, route }: DiaryDetailProp) {
   function onPressEdit() {
     if (diary) {
       console.log(diary.content, diaryId);
-      navigation.navigate('EditDiary', { diaryId: diaryId, diaryContent: diary.content });
+      navigation.push('EditDiary', { diaryId: diaryId, diaryContent: diary.content });
     }
   }
 

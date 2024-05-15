@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useContext, useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { analysis } from '../../apis/AnalysisApi';
@@ -8,13 +9,13 @@ import Graph from '../../components/user/Graph';
 import Pyramid from '../../components/user/Pyramid';
 import { IsLoginContext } from '../../contexts/IsLoginContext';
 import { AnalysisData, MemberData } from '../../types/datatype';
-import { UserProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
-function Mypage({ navigation }: UserProp) {
+function Mypage() {
   const [memberInfo, setMemberInfo] = useState<MemberData | undefined>();
   const [analysisData, setAnalysisData] = useState<AnalysisData | undefined>();
   const { setIsLogin } = useContext(IsLoginContext);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     Members.getMembers()
@@ -24,8 +25,11 @@ function Mypage({ navigation }: UserProp) {
       .catch(err => {
         console.log(err);
       });
+  }, []);
 
+  const loadAnalysisData = useCallback(() => {
     const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
+
     analysis
       .getAnalysismonth(today)
       .then(response => {
@@ -41,12 +45,19 @@ function Mypage({ navigation }: UserProp) {
             surprise: data.surprise,
           };
           setAnalysisData(scaledData);
+          console.log(response.data);
         }
       })
       .catch(error => {
-        console.error('graph 오류', error);
+        console.error('Graph error', error);
       });
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      loadAnalysisData();
+    }
+  }, [isFocused, loadAnalysisData]);
 
   async function Logout() {
     await AsyncStorage.removeItem('accessToken');
@@ -78,7 +89,7 @@ function Mypage({ navigation }: UserProp) {
           {analysisData ? (
             <Pyramid analysisData={analysisData} width={280} height={250} />
           ) : (
-            <Text>일기를 작성해주세요!</Text>
+            <Text>일기를 작성해주시면 성향을 분석해드려요!</Text>
           )}
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 감정은</S.MyPageSubTitle>
           <S.Line />
@@ -87,7 +98,7 @@ function Mypage({ navigation }: UserProp) {
               <Graph analysisData={analysisData} />
             </View>
           ) : (
-            <Text>일기를 작성해주세요!</Text>
+            <Text>일기를 작성해주시면 감정을 분석해드려요!</Text>
           )}
           {/* <S.Line />
           <S.SettingWrapper>

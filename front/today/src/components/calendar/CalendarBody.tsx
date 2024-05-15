@@ -4,14 +4,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { Calendars } from '../../apis/CalendarApi';
 import { dayType } from '../../types/calendartype/calendar';
 import { CalendarData } from '../../types/datatype';
-import { DiaryDetailProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
 type CalendarBodyProp = {
   year: number;
   month: number;
   date: number;
-  navigation: DiaryDetailProp;
+  navigation: {
+    push: (arg0: string, arg1?: { selectedDate: string }) => void;
+  };
 };
 const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -112,7 +113,7 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
 
   function navigateToDay(date: string) {
     if (diaryData) {
-      navigation.navigate('OneDayDiary', { selectedDate: date });
+      navigation.push('OneDayDiary', { selectedDate: date });
     }
   }
 

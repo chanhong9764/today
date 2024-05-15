@@ -1,9 +1,14 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { RootProp } from '../types/navigatortype/stack';
 import * as S from './user/style';
 
-function LoginScreen({ navigation }: RootProp) {
+interface LoginScreenProp {
+  navigation: {
+    navigate: (arg0: string) => void;
+  };
+}
+
+function LoginScreen({ navigation }: LoginScreenProp) {
   return (
     <S.LoginScreen>
       <S.LoginContainer>
