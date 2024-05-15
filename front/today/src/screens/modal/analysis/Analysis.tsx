@@ -1,6 +1,6 @@
 // Analysis.tsx
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { analysis } from '../../../apis/AnalysisApi';
 import { Members } from '../../../apis/MemberApi';
 import ModalComponent from '../../../components/modal/Modal';
@@ -32,23 +32,53 @@ function AnalysisContent({ selectedDate }: { selectedDate: string }) {
       });
   }, [selectedDate]);
 
+  // return (
+  //   <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+  //     <S.AnalysisTitle>오늘의 일기 분석 결과</S.AnalysisTitle>
+  //     <S.AnalysisSubTitle>{memberInfo?.nickName}님의 오늘의 성격유형입니다</S.AnalysisSubTitle>
+  //     {analysisData ? (
+  //       <Pyramid analysisData={analysisData} width={280} height={250} />
+  //     ) : (
+  //       <Text>오늘의 일기를 작성해주세요!</Text>
+  //     )}
+  //     <S.Line />
+  //     <S.AnalysisSubTitle>{memberInfo?.nickName}님의 오늘의 기분입니다</S.AnalysisSubTitle>
+  //     {analysisData ? (
+  //       <View style={{ height: 280, width: 280 }}>
+  //         <Graph analysisData={analysisData} />
+  //       </View>
+  //     ) : (
+  //       <Text style={{ textAlign: 'center' }}>오늘의 일기를 작성해주세요!</Text>
+  //     )}
+  //   </View>
+  // );
+
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
       <S.AnalysisTitle>오늘의 일기 분석 결과</S.AnalysisTitle>
-      <S.AnalysisSubTitle>{memberInfo?.nickName}님의 오늘의 성격유형입니다</S.AnalysisSubTitle>
       {analysisData ? (
-        <Pyramid analysisData={analysisData} width={280} height={250} />
+        <ScrollView>
+          <S.AnalysisSubTitle style={{ textAlign: 'center' }}>
+            {memberInfo?.nickName}님의 오늘의 성격유형입니다
+          </S.AnalysisSubTitle>
+          <Pyramid analysisData={analysisData} width={280} height={250} />
+          <S.Line />
+          <S.AnalysisSubTitle style={{ textAlign: 'center' }}>
+            {memberInfo?.nickName}님의 오늘의 기분입니다
+          </S.AnalysisSubTitle>
+          <View style={{ height: 280, width: 280 }}>
+            <Graph analysisData={analysisData} />
+          </View>
+        </ScrollView>
       ) : (
-        <Text>오늘의 일기를 작성해주세요!</Text>
+        <View style={{ alignItems: 'center' }}>
+          <S.AnalysisSubTitle>{memberInfo?.nickName}님의 오늘의 성격유형입니다</S.AnalysisSubTitle>
+          <Text>오늘의 일기를 작성해주세요!</Text>
+          <S.Line />
+          <S.AnalysisSubTitle>{memberInfo?.nickName}님의 오늘의 기분입니다</S.AnalysisSubTitle>
+          <Text>오늘의 일기를 작성해주세요!</Text>
+        </View>
       )}
-      <S.AnalysisSubTitle>{memberInfo?.nickName}님의 오늘의 기분입니다</S.AnalysisSubTitle>
-      <View style={{ height: 280, width: 280 }}>
-        {analysisData ? (
-          <Graph analysisData={analysisData} />
-        ) : (
-          <Text style={{ textAlign: 'center' }}>오늘의 일기를 작성해주세요!</Text>
-        )}
-      </View>
     </View>
   );
 }
