@@ -5,15 +5,37 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Service
 public class PushMessageService {
 
     public void sendPushMessage(PushMessageRequest pushMessageRequest) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        String jsonBody = "{" +
+        sendMessage(makeJson(pushMessageRequest));
+
+    }
+
+    public void sendPushMessageBulk(List<PushMessageRequest> list) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        int idx = 0;
+
+        for (PushMessageRequest request : list) {
+            String s = makeJson(request);
+            idx++;
+            sb.append(s);
+            if(idx < list.size()) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+
+        sendMessage(sb.toString());
+    }
+
+    public String makeJson(PushMessageRequest pushMessageRequest) {
+        return "{" +
                 "\"to\": \"" + pushMessageRequest.getToken() + "\", " +
                 "\"title\": \"" + pushMessageRequest.getTitle() + "\", " +
                 "\"body\": \"" + pushMessageRequest.getBody() + "\", " +
@@ -21,8 +43,14 @@ public class PushMessageService {
                 "\"customData\": \"" + pushMessageRequest.getDiaryId() + "\"" +
                 "}" +
                 "}";
+    }
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
+    public void sendMessage(String s) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(s, headers);
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 "https://exp.host/--/api/v2/push/send",
