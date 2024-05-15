@@ -29,6 +29,7 @@ export const MyPage = styled.SafeAreaView`
 
 export const MyPageContainer = styled.View`
   flex: 1;
+  width: 78%;
 `;
 
 export const MyPageTitle = styled.Text`
