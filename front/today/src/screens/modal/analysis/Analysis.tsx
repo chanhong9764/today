@@ -32,27 +32,6 @@ function AnalysisContent({ selectedDate }: { selectedDate: string }) {
       });
   }, [selectedDate]);
 
-  // return (
-  //   <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-  //     <S.AnalysisTitle>오늘의 일기 분석 결과</S.AnalysisTitle>
-  //     <S.AnalysisSubTitle>{memberInfo?.nickName}님의 오늘의 성격유형입니다</S.AnalysisSubTitle>
-  //     {analysisData ? (
-  //       <Pyramid analysisData={analysisData} width={280} height={250} />
-  //     ) : (
-  //       <Text>오늘의 일기를 작성해주세요!</Text>
-  //     )}
-  //     <S.Line />
-  //     <S.AnalysisSubTitle>{memberInfo?.nickName}님의 오늘의 기분입니다</S.AnalysisSubTitle>
-  //     {analysisData ? (
-  //       <View style={{ height: 280, width: 280 }}>
-  //         <Graph analysisData={analysisData} />
-  //       </View>
-  //     ) : (
-  //       <Text style={{ textAlign: 'center' }}>오늘의 일기를 작성해주세요!</Text>
-  //     )}
-  //   </View>
-  // );
-
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
       <S.AnalysisTitle>오늘의 일기 분석 결과</S.AnalysisTitle>
