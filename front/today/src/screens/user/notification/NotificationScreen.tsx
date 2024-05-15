@@ -66,7 +66,7 @@ function NotificationScreen({ navigation }: NotiScreenProp) {
       Notices.getNotices()
         .then(response => {
           if (response.data) {
-            console.log(response.data);
+            console.log(response);
             setNotiData(response.data);
           }
         })

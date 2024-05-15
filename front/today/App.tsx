@@ -2,14 +2,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { NativeBaseProvider } from 'native-base';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { setCustomText } from 'react-native-global-props';
 import { ThemeProvider } from 'styled-components';
+import { registerForPushNotificationsAsync } from './src/components/notification/notification';
 import { IsLoginProvider } from './src/contexts/IsLoginContext';
+import { NoticeProvider } from './src/contexts/NoticeContext';
 import RootStack from './src/navigator/RootStack';
-import theme from './src/styles/theme';
 import { linking } from './src/navigator/config';
-import { Subscription } from 'expo-modules-core';
+import theme from './src/styles/theme';
 
 // 알림 핸들러 설정
 Notifications.setNotificationHandler({
@@ -22,7 +23,7 @@ Notifications.setNotificationHandler({
 
 export default function App() {
   const [isFont, setIsFont] = useState(false);
-  const notificationListener = useRef<Subscription>();
+
   useEffect(() => {
     // 폰트 load
     const loadFonts = async () => {
@@ -33,12 +34,7 @@ export default function App() {
       setIsFont(true);
     };
     loadFonts();
-    
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      // 알람 추가
-      console.log(notification)
-    });
-    
+
     // 폰트 전역 설정
     const customTextProps = {
       style: {
@@ -47,11 +43,8 @@ export default function App() {
     };
     setCustomText(customTextProps);
 
-    return () => {
-      if(typeof notificationListener.current !== 'undefined' ){
-				Notifications.removeNotificationSubscription(notificationListener.current)
-			}
-    }
+    // 푸시 알림 등록 설정
+    registerForPushNotificationsAsync();
   }, []);
 
   // 폰트 로딩 중에는 렌더링을 방지
@@ -62,9 +55,11 @@ export default function App() {
     <NativeBaseProvider>
       <ThemeProvider theme={theme}>
         <IsLoginProvider>
-          <NavigationContainer linking={linking}>
-            <RootStack />
-          </NavigationContainer>
+          <NoticeProvider>
+            <NavigationContainer linking={linking}>
+              <RootStack />
+            </NavigationContainer>
+          </NoticeProvider>
         </IsLoginProvider>
       </ThemeProvider>
     </NativeBaseProvider>
