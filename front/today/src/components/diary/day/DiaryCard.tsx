@@ -31,7 +31,7 @@ export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navig
               <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} />
             </S.IconContainer>
             <LottieView
-              source={require('../../../../assets/lotties/drawing.json')}
+              source={require('../../../../assets/lotties/loading.json')}
               autoPlay
               loop
               style={{
@@ -53,7 +53,7 @@ export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navig
               loop
               style={{
                 width: '100%',
-                height: 150,
+                height: 100,
               }}
             />
           </S.DefaultImage>
@@ -71,7 +71,7 @@ export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navig
               <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} />
             </S.IconContainer>
             <LottieView
-              source={require('../../../../assets/lotties/drawing.json')}
+              source={require('../../../../assets/lotties/loading.json')}
               autoPlay
               loop
               style={{

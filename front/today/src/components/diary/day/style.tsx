@@ -51,6 +51,7 @@ export const SingleDiaryDate = styled.Text`
 
 export const DefaultImage = styled.ImageBackground`
   align-items: flex-end;
+  justify-content: center;
   position: relative;
   border: 1px solid #f5f5f5;
   height: 200px;

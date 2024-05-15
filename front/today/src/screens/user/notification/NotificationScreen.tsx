@@ -1,13 +1,15 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SectionList, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { Notices } from '../../../apis/NoticeApi';
+import { NoticeContext, useDispatchContext } from '../../../contexts/NoticeContext';
 import { NoticeData } from '../../../types/datatype';
 import * as S from './style';
 
 type NotiItemProps = {
   item: NoticeData;
   onPress: () => void;
+  dispatch: any;
 };
 
 type GroupedNotices = {
@@ -22,14 +24,24 @@ type SectionHeaderProps = {
 
 interface NotiScreenProp {
   navigation: {
-    push: (arg0: string, arg1: { diaryId: number }) => void;
+    push: (arg0: string, arg1?: { screen: string; params?: { diaryId: number } }) => void;
   };
 }
 
-function NotificationItem({ item, onPress }: NotiItemProps) {
-  const backgroundColor = item.confirm ? 'white' : '#dbdbdb';
+function NotificationItem({ item, onPress, dispatch }: NotiItemProps) {
+  const backgroundColor = item.confirm ? '#fcfcfc' : '#dbdbdb';
+
+  function onPressDelete() {
+    dispatch({
+      type: 'REMOVE',
+      content: item.content,
+    });
+  }
   return (
     <S.NotiContainer onPress={onPress} backgroundColor={backgroundColor}>
+      <S.IconContainer onPress={onPressDelete}>
+        <Icon name="close" size={20} />
+      </S.IconContainer>
       <Text>오늘의 {item.content} 번째 일기의 그림이 완성되었습니다!</Text>
       <Text>마음에 드는 그림을 선택해주세요</Text>
     </S.NotiContainer>
@@ -38,6 +50,13 @@ function NotificationItem({ item, onPress }: NotiItemProps) {
 
 function NotificationScreen({ navigation }: NotiScreenProp) {
   const [notiData, setNotiData] = useState<NoticeData[]>([]);
+  const dispatch = useDispatchContext();
+  const notices = useContext(NoticeContext);
+
+  useEffect(() => {
+    setNotiData(notices ?? []);
+    console.log(notiData);
+  }, [notices]);
 
   let groupedNotices: GroupedNotices = {};
 
@@ -61,27 +80,18 @@ function NotificationScreen({ navigation }: NotiScreenProp) {
     data: groupedNotices[date],
   }));
 
-  useFocusEffect(
-    useCallback(() => {
-      Notices.getNotices()
-        .then(response => {
-          if (response.data) {
-            console.log(response);
-            setNotiData(response.data);
-          }
-        })
-        .catch(error => console.log(error));
-    }, []),
-  );
-
   function renderNoti({ item }: { item: NoticeData }) {
     function onPressNoti() {
-      navigation.push('SelectImage', { diaryId: item.diaryId });
+      navigation.push('DiaryStack', { screen: 'SelectImage', params: { diaryId: item.diaryId } });
       Notices.checkNotices({ noticeId: item.noticeId, confirm: true });
+      dispatch({
+        type: 'TOGGLE',
+        content: item.content,
+      });
     }
     return (
       <>
-        <NotificationItem item={item} onPress={onPressNoti} />
+        <NotificationItem item={item} onPress={onPressNoti} dispatch={dispatch} />
       </>
     );
   }
@@ -102,6 +112,7 @@ function NotificationScreen({ navigation }: NotiScreenProp) {
         keyExtractor={item => item?.diaryId.toString()}
         renderSectionHeader={renderNotiHeader}
         renderItem={({ item }) => renderNoti({ item })}
+        ListEmptyComponent={() => <Text style={{ textAlign: 'center', marginTop: 20 }}>아직 알림이 없어요!</Text>}
       />
     </S.NoticePageContianer>
   );

@@ -10,8 +10,8 @@ export const NotiContainer = styled.TouchableOpacity`
 
 export const NotiBadge = styled.View`
   position: absolute;
-  right: -4px;
-  top: 0px;
+  right: 8px;
+  top: 3px;
   width: 16px;
   height: 16px;
   justify-content: center;
