@@ -1,6 +1,6 @@
 // DiaryCard.tsx
 import LottieView from 'lottie-react-native';
-import { Text } from 'react-native';
+import { Alert, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { CalendarData } from '../../../types/datatype';
 import * as S from './style';
@@ -86,7 +86,19 @@ export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navig
 
   // 각 detail 페이지로 이동
   function navigateToDetail() {
-    navigation.push('DiaryStack', { screen: 'DiaryDetail', params: { diaryId: item.id } });
+    switch (item.status) {
+      case 0:
+        Alert.alert('그림 생성 미완료', '아직 그림을 그리는 중이에요!');
+        break;
+      case 1:
+        navigation.push('DiaryStack', { screen: 'SelectImage', params: { diaryId: item.id } });
+        break;
+      case 2:
+        navigation.push('DiaryStack', { screen: 'DiaryDetail', params: { diaryId: item.id } });
+        break;
+      default:
+        Alert.alert('그림 생성 미완료', '아직 그림을 그리는 중이에요!');
+    }
   }
 
   return (
