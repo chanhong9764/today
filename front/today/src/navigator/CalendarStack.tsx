@@ -5,7 +5,7 @@ import IconA from 'react-native-vector-icons/AntDesign';
 import IconF from 'react-native-vector-icons/Feather';
 import { Calendars } from '../apis/CalendarApi';
 import Logo from '../common/Logo';
-import NotificationBadge from '../common/noti/Notification';
+import NotificationBadge from '../common/noti/NotificationBadge';
 import SearchBar from '../components/diary/search/SearchBar';
 import Calendar from '../screens/calendar/Calendar';
 import SearchDiary from '../screens/diary/SearchDiary';
@@ -50,7 +50,7 @@ export const CalendarNav = ({ navigation }: CalendarStackProp) => {
       initialRouteName="Calendar"
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTitle: () => <Logo />,
+        headerTitle: () => <Logo onPress={() => navigation.push('CalendarStack')} />,
         headerRight: () => <NotificationBadge onPress={() => navigation.push('NotificationScreen')} />,
       }}>
       <CalendarStack.Screen
@@ -64,7 +64,7 @@ export const CalendarNav = ({ navigation }: CalendarStackProp) => {
                 <IconF name="search" size={27} onPress={onPressSearch} />
               </>
             ) : (
-              <Logo />
+              <Logo onPress={() => navigation.push('CalendarStack')} />
             ),
           headerLeft: () => (
             <IconF name="plus" size={35} onPress={() => navigation.push('DiaryStack', { screen: 'SelectEmotion' })} />

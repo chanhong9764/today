@@ -1,14 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useContext, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import * as Notifications from 'expo-notifications';
+import { useContext, useEffect, useState } from 'react';
+import { Linking, Text, View } from 'react-native';
 import { IsLoginContext, useIsLoginState } from '../contexts/IsLoginContext';
+import { useDispatchContext } from '../contexts/NoticeContext';
 import LoginScreen from '../screens/LoginScreen';
 import Intro1 from '../screens/intro/Intro1';
 import Intro2 from '../screens/intro/Intro2';
 import Intro3 from '../screens/intro/Intro3';
 import KakaoLogin from '../screens/user/KakaoLogin';
 import NotificationScreen from '../screens/user/notification/NotificationScreen';
+import { NoticeData } from '../types/datatype';
 import { RootStackParam } from '../types/navigatortype/stack';
 import { CalendarNav } from './CalendarStack';
 import { DiaryNav } from './DairyStack';
@@ -16,11 +19,14 @@ import MainTab from './MainTab';
 
 const Stack = createNativeStackNavigator<RootStackParam>();
 
-// 로그인 여부 체크
-
 function RootStack() {
+  // 로그인 여부 체크
   const isLogin = useIsLoginState();
   const { setIsLogin } = useContext(IsLoginContext);
+
+  // 알림 데이터 추가
+  const dispatch = useDispatchContext();
+  const [notis, setNotis] = useState<NoticeData>();
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -28,6 +34,11 @@ function RootStack() {
         const token = await AsyncStorage.getItem('accessToken');
         if (token) {
           setIsLogin(true);
+          const url = await AsyncStorage.getItem('pendingURL'); // 저장된 URL 가져오기
+          if (url) {
+            await Linking.openURL(url);
+            await AsyncStorage.removeItem('pendingURL');
+          }
         } else {
           // 토큰이 없을 때의 로직
           setIsLogin(false);
@@ -40,6 +51,33 @@ function RootStack() {
       }
     };
     checkLogin();
+
+    // 알림 오면 받아서 context에 저장
+    Notifications.addNotificationReceivedListener(notification => {
+      const response = notification.request.content.data;
+      const convertedResponse: NoticeData = {
+        noticeId: response.noticeId,
+        diaryId: response.diaryId,
+        kind: response.NoticeKind,
+        content: response.content,
+        confirm: response.confirm,
+        createdAt: response.createdAt,
+        updatedAt: response.updatedAt,
+      };
+
+      setNotis(convertedResponse);
+
+      dispatch({
+        type: 'CREATE',
+        noticeId: convertedResponse.noticeId,
+        diaryId: convertedResponse.diaryId,
+        NoticeKind: convertedResponse.kind,
+        content: convertedResponse.content,
+        confirm: convertedResponse.confirm,
+        createdAt: convertedResponse.createdAt,
+        updatedAt: convertedResponse.updatedAt,
+      });
+    });
   }, []);
 
   console.log(isLogin);

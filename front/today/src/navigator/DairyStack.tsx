@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Feather';
 import Logo from '../common/Logo';
-import NotificationBadge from '../common/noti/Notification';
+import NotificationBadge from '../common/noti/NotificationBadge';
 import DiaryDetail from '../screens/diary/DiaryDetail';
 import EditDiary from '../screens/diary/EditDiary';
 import WriteDiary from '../screens/diary/WriteDiary';
@@ -14,7 +14,7 @@ import { DiaryStackParam } from '../types/navigatortype/stack';
 interface DiaryStackProp {
   navigation: {
     navigate: (arg0: string) => void;
-    push: (arg0: string) => void;
+    push: (arg0: string, arg1?: { screen: string }) => void;
   };
 }
 
@@ -26,7 +26,9 @@ export const DiaryNav = ({ navigation }: DiaryStackProp) => {
       initialRouteName="DiaryList"
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTitle: ({ children }) => <Logo />,
+        headerTitle: ({ children }) => (
+          <Logo onPress={() => navigation.push('CalendarStack', { screen: 'Calendar' })} />
+        ),
 
         headerRight: () => (
           <NotificationBadge

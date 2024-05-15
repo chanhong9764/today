@@ -1,10 +1,14 @@
-import { Text, View } from 'react-native';
+import { Pressable, Text } from 'react-native';
 
-function Logo() {
+interface LogoProp {
+  onPress: () => void;
+}
+
+function Logo({ onPress }: LogoProp) {
   return (
-    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+    <Pressable onPress={onPress} style={{ alignItems: 'center', justifyContent: 'center' }}>
       <Text style={{ fontFamily: 'title', fontSize: 38 }}>당일</Text>
-    </View>
+    </Pressable>
   );
 }
 

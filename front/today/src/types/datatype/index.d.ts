@@ -72,7 +72,7 @@ export interface NoticeData {
   noticeId: number;
   diaryId: number;
   kind: string;
-  content: string;
+  content: number;
   confirm: boolean;
   createdAt: Date;
   updatedAt: Date;

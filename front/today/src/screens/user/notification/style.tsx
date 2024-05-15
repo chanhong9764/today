@@ -7,8 +7,8 @@ type NotiContainerProps = {
 
 export const NotiContainer = styled.TouchableOpacity<NotiContainerProps>`
   background-color: ${props => props.backgroundColor || 'transparent'};
-  padding: 10px;
-  margin: 5px;
+  padding: 15px;
+  margin: 8px;
   border-radius: 3px;
   ${Platform.select({
     ios: `
@@ -33,6 +33,13 @@ export const NotiTitle = styled.Text`
   margin-top: 20px;
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   font-size: ${({ theme }) => theme.fontSize.regular};
+`;
+
+export const IconContainer = styled.Pressable`
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 100;
 `;
 
 export const Line = styled.View`
