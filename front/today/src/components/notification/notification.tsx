@@ -4,22 +4,24 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 import { Notices } from '../../apis/NoticeApi';
 
-// 알림 보내는 함수
+// 테스트 알림 보내는 함수
 // 알림의 내용을 data로 넣어서 body에 넣음
-export async function testNotification() {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: '테스트 알림',
-      body: '그림 생성이 완료되었습니다.',
-      data: { customData: 43 },
-    },
-    trigger: null,
-  });
-  console.log('알림왔당');
-}
+// export async function testNotification() {
+//   await Notifications.scheduleNotificationAsync({
+//     content: {
+//       title: '테스트 알림',
+//       body: '그림 생성이 완료되었습니다.',
+//       data: { customData: 43 },
+//     },
+//     trigger: null,
+//   });
+//   console.log('알림왔당');
+// }
 
+// 알림 등록
 export async function registerForPushNotificationsAsync() {
   let deviceToken = '';
+
   // 안드로이드 채널 설정
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('default', {
@@ -46,30 +48,31 @@ export async function registerForPushNotificationsAsync() {
     if (finalStatus !== 'granted') {
       alert('알림 권한이 거부되었습니다.');
       return;
-    }
+    } else {
+      // projectId 자동 설정
+      try {
+        const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+        if (!projectId) {
+          throw new Error('Project ID를 찾지 못했습니다.');
+        }
 
-    // projectId 자동 설정
-    try {
-      const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
-      if (!projectId) {
-        throw new Error('Project ID를 찾지 못했습니다.');
+        // 토큰 발급 및
+        const deviceToken = (
+          await Notifications.getExpoPushTokenAsync({
+            projectId: projectId,
+          })
+        ).data;
+
+        // 토큰 서버로 전송
+        Notices.postToken({ deviceToken: JSON.stringify(deviceToken) })
+          .then(response => console.log('토큰 전송 완료', deviceToken))
+          .catch(error => console.log(error));
+      } catch (error) {
+        deviceToken = `${error}`;
       }
-
-      // 토큰 발급 및 서버로 전송
-      deviceToken = (
-        await Notifications.getExpoPushTokenAsync({
-          projectId: projectId,
-        })
-      ).data;
-      Notices.postToken({ deviceToken: JSON.stringify(deviceToken) })
-        .then(response => console.log('토큰 전송 완료', deviceToken))
-        .catch(error => console.log(error));
-    } catch (error) {
-      deviceToken = `${error}`;
     }
   } else {
     alert('모바일 기기로 접속해주세요!');
   }
-
   return deviceToken;
 }
