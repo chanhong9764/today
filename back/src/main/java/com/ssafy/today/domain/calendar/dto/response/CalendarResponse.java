@@ -15,6 +15,7 @@ public class CalendarResponse {
     private Boolean important;
     private String imgUrl;
     private String content;
+    private Integer status;
     private LocalDateTime createdAt;
 
     public static CalendarResponse fromEntity(Diary diary){
@@ -24,6 +25,7 @@ public class CalendarResponse {
                 .important(diary.getImportant())
                 .imgUrl(diary.getImgUrl())
                 .content(diary.getContent())
+                .status(diary.getStatus())
                 .createdAt(diary.getCreatedAt())
                 .build();
 
