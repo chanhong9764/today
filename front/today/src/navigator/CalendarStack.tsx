@@ -67,9 +67,12 @@ export const CalendarNav = ({ navigation }: CalendarStackProp) => {
             ) : (
               <Logo onPress={() => navigation.push('CalendarStack')} />
             ),
-          headerLeft: () => (
-            <IconF name="plus" size={35} onPress={() => navigation.push('DiaryStack', { screen: 'SelectEmotion' })} />
-          ),
+          headerLeft: () =>
+            isSearching ? (
+              <></>
+            ) : (
+              <IconF name="plus" size={35} onPress={() => navigation.push('DiaryStack', { screen: 'SelectEmotion' })} />
+            ),
           headerRight: () =>
             isSearching ? (
               <IconA name="close" size={27} onPress={() => setIsSearching(false)} />
