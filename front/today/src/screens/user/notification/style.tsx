@@ -7,7 +7,7 @@ type NotiContainerProps = {
 
 export const NotiContainer = styled.TouchableOpacity<NotiContainerProps>`
   background-color: ${props => props.backgroundColor || 'transparent'};
-  padding: 15px;
+  padding: 30px 15px 15px 15px;
   margin: 8px;
   border-radius: 3px;
   ${Platform.select({

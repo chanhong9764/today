@@ -7,6 +7,7 @@ import com.ssafy.today.domain.member.repository.MemberRepository;
 import com.ssafy.today.domain.notice.dto.request.NoticeUpdateRequest;
 import com.ssafy.today.domain.notice.dto.request.PushMessageRequest;
 import com.ssafy.today.domain.notice.dto.request.SaveTokenRequest;
+import com.ssafy.today.domain.notice.dto.response.NoticeCompleteResponse;
 import com.ssafy.today.domain.notice.entity.Notice;
 import com.ssafy.today.domain.notice.entity.Notice.NoticeBuilder;
 import com.ssafy.today.domain.notice.entity.NoticeKind;
@@ -69,6 +70,8 @@ public class NoticeService {
         .confirm(false).build();
     noticeRepository.save(notice);
 
+    NoticeCompleteResponse noticeCompleteResponse = NoticeCompleteResponse.getNoticeCompleteResponse(noticeRepository.findByDiaryAndKind(diary, NoticeKind.COMPLETE));
+
     // 알림
     pushMessageService.sendPushMessage(
             PushMessageRequest.builder()
@@ -76,7 +79,8 @@ public class NoticeService {
                     .title("그림 생성 완료")
                     .body(sequence.toString() + "번째 일기에 대한 그림이 생성되었습니다.")
                     .diaryId(diaryId)
-                    .build()
+                    .build(),
+            noticeCompleteResponse
     );
   }
 
