@@ -41,15 +41,15 @@ public class PushMessageService {
 
     public String makeJson(PushMessageRequest pushMessageRequest, NoticeCompleteResponse noticeCompleteResponse) {
         return "{" +
-                    "\"to\": \"" + pushMessageRequest.getToken() + "\", " +
-                    "\"title\": \"" + pushMessageRequest.getTitle() + "\", " +
-                    "\"body\": \"" + pushMessageRequest.getBody() + "\", " +
+                    "\"to\": \"" + pushMessageRequest.getToken() + "\"," +
+                    "\"title\": \"" + pushMessageRequest.getTitle() + "\"," +
+                    "\"body\": \"" + pushMessageRequest.getBody() + "\"," +
                     "\"data\": {" +
                         "\"noticeId\":" + noticeCompleteResponse.getNoticeId() + "," +
                         "\"diaryId\":" + noticeCompleteResponse.getDiaryId() + "," +
                         "\"kind\": \"" + noticeCompleteResponse.getKind() + "\"," +
                         "\"content\": \"" + noticeCompleteResponse.getContent() + "\"," +
-                        "\"confirm\": \"" + noticeCompleteResponse.getConfirm() + "\"," +
+                        "\"confirm\": " + noticeCompleteResponse.getConfirm() + "," +
                         "\"createdAt\": \"" + noticeCompleteResponse.getCreatedAt() + "\"," +
                         "\"updatedAt\": \"" + noticeCompleteResponse.getUpdatedAt() + "\"" +
                     "}" +
