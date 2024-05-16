@@ -20,8 +20,6 @@ import { Notices } from '../../apis/NoticeApi';
 
 // 알림 등록
 export async function registerForPushNotificationsAsync() {
-  let deviceToken = '';
-
   // 안드로이드 채널 설정
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('default', {
@@ -48,31 +46,35 @@ export async function registerForPushNotificationsAsync() {
     if (finalStatus !== 'granted') {
       alert('알림 권한이 거부되었습니다.');
       return;
-    } else {
-      // projectId 자동 설정
-      try {
-        const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
-        if (!projectId) {
-          throw new Error('Project ID를 찾지 못했습니다.');
-        }
-
-        // 토큰 발급 및
-        const deviceToken = (
-          await Notifications.getExpoPushTokenAsync({
-            projectId: projectId,
-          })
-        ).data;
-
-        // 토큰 서버로 전송
-        Notices.postToken({ deviceToken: JSON.stringify(deviceToken) })
-          .then(response => console.log('토큰 전송 완료', deviceToken))
-          .catch(error => console.log(error));
-      } catch (error) {
-        deviceToken = `${error}`;
-      }
     }
   } else {
     alert('모바일 기기로 접속해주세요!');
   }
+}
+
+export async function getDeviceToken() {
+  let deviceToken = '';
+  // projectId 자동 설정
+  try {
+    const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+    if (!projectId) {
+      throw new Error('Project ID를 찾지 못했습니다.');
+    }
+
+    // 토큰 발급 및
+    const deviceToken = (
+      await Notifications.getExpoPushTokenAsync({
+        projectId: projectId,
+      })
+    ).data;
+
+    // 토큰 서버로 전송
+    Notices.postToken({ deviceToken: JSON.stringify(deviceToken) })
+      .then(response => console.log('토큰 전송 완료', deviceToken))
+      .catch(error => console.log(error));
+  } catch (error) {
+    deviceToken = `${error}`;
+  }
+
   return deviceToken;
 }

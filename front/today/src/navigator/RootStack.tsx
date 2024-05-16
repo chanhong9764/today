@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Notifications from 'expo-notifications';
 import { useContext, useEffect, useState } from 'react';
-import { Linking, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { IsLoginContext, useIsLoginState } from '../contexts/IsLoginContext';
 import { useDispatchContext } from '../contexts/NoticeContext';
 import LoginScreen from '../screens/LoginScreen';
@@ -34,11 +34,6 @@ function RootStack() {
         const token = await AsyncStorage.getItem('accessToken');
         if (token) {
           setIsLogin(true);
-          const url = await AsyncStorage.getItem('pendingURL'); // 저장된 URL 가져오기
-          if (url) {
-            await Linking.openURL(url);
-            await AsyncStorage.removeItem('pendingURL');
-          }
         } else {
           // 토큰이 없을 때의 로직
           setIsLogin(false);

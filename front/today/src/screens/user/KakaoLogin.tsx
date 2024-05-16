@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
+import { getDeviceToken } from '../../components/notification/notification';
 import { IsLoginContext } from '../../contexts/IsLoginContext';
 
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('안녕')`;
@@ -25,6 +26,7 @@ function KakaoLogin() {
     if (token) {
       setIsLogin(true);
     }
+    getDeviceToken();
   };
 
   return (
