@@ -18,7 +18,7 @@ const DetailContent = ({ diary }: DetailContentProps) => {
     <VStack
       padding={4}
       borderColor="#FE8B8B"
-      borderWidth={1}
+      borderWidth={3}
       borderBottomColor="#FE8B8B"
       borderRadius={8}
       borderTopRadius={0}
