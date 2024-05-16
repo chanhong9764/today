@@ -1,19 +1,26 @@
 package com.ssafy.today.global.security.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.today.util.response.ErrorCode;
+import com.ssafy.today.util.response.ErrorResponseEntity;
+import com.ssafy.today.util.response.exception.GlobalException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.security.Key;
 import java.util.Collections;
 import java.util.Date;
@@ -35,7 +42,7 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(key);
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(HttpServletResponse response, String token) {
 
         try {
             Jwts.parserBuilder()
@@ -44,19 +51,23 @@ public class TokenProvider {
                     .parseClaimsJws(token);
 
             return true;
-        } catch (UnsupportedJwtException | MalformedJwtException exception) {
+        } catch (UnsupportedJwtException | MalformedJwtException e) {
             log.error("JWT is not valid");
-        } catch (SignatureException exception) {
+            throw new GlobalException(ErrorCode.JWT_NOT_VALID);
+        } catch (SignatureException e) {
             log.error("JWT signature validation fails");
-        } catch (ExpiredJwtException exception) {
+            throw new GlobalException(ErrorCode.JWT_SIGNATURE_VALIDATION_FAIL);
+        } catch (ExpiredJwtException e) {
             log.error("JWT is expired");
-        } catch (IllegalArgumentException exception) {
+            throw new GlobalException(ErrorCode.JWT_IS_EXPIRED);
+        } catch (IllegalArgumentException e) {
             log.error("JWT is null or empty or only whitespace");
-        } catch (Exception exception) {
-            log.error("JWT validation fails", exception);
+            throw new GlobalException(ErrorCode.JWT_IS_NULL);
+        } catch (Exception e) {
+            log.error("JWT validation fails", e);
+            throw new GlobalException(ErrorCode.JWT_SIGNATURE_VALIDATION_FAIL);
         }
 
-        return false;
     }
 
     public String createAccessToken(Authentication authentication) {
@@ -96,4 +107,6 @@ public class TokenProvider {
 
         return new UsernamePasswordAuthenticationToken(user, "", Collections.emptyList());
     }
+
+
 }
