@@ -49,7 +49,7 @@ const Reducer = (state: NoticeData[], action: Actions): NoticeData[] => {
       });
 
     case 'TOGGLE':
-      return state.map(noti => (noti.content !== action.content ? { ...noti, confirm: true } : noti));
+      return state.map(noti => (noti.content === action.content ? { ...noti, confirm: true } : noti));
     case 'REMOVE':
       return state.filter(noti => noti.content !== action.content);
     default:
@@ -62,7 +62,9 @@ export function NoticeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     Notices.getNotices()
       .then(response => {
-        setInitialNotice(initialNotice);
+        if (response.data) {
+          setInitialNotice(response.data);
+        }
       })
       .catch(error => console.log(error));
   }, []);

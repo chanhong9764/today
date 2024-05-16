@@ -16,6 +16,14 @@ function Mypage() {
   const [analysisData, setAnalysisData] = useState<AnalysisData | undefined>();
   const { setIsLogin } = useContext(IsLoginContext);
   const isFocused = useIsFocused();
+  let MBTI = '';
+
+  if (analysisData) {
+    MBTI += analysisData['e'] > analysisData['i'] ? 'E' : 'I';
+    MBTI += analysisData['s'] > analysisData['n'] ? 'S' : 'N';
+    MBTI += analysisData['f'] > analysisData['t'] ? 'F' : 'T';
+    MBTI += analysisData['p'] > analysisData['j'] ? 'P' : 'J';
+  }
 
   useEffect(() => {
     Members.getMembers()
@@ -84,6 +92,9 @@ function Mypage() {
 
           <S.MyPageSubTitle>{memberInfo?.nickName} 님의 성향은</S.MyPageSubTitle>
           <S.Line />
+          <S.MyInfoTitle>
+            <S.MBTItext>{MBTI}</S.MBTItext> 와 유사하네요!
+          </S.MyInfoTitle>
           {analysisData ? (
             <Pyramid analysisData={analysisData} width={280} height={250} />
           ) : (

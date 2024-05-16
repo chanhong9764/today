@@ -10,6 +10,8 @@ const apis: Apis = {
   search: '/es/search',
   // 알림 조회
   notice: '/notices',
+  // 알림 삭제
+  deleteNotice: diaryId => `/notices/${diaryId}`,
   // 알림 token 전달
   noticeToken: '/notices/token',
 
