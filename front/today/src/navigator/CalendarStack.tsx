@@ -1,3 +1,4 @@
+// CalendarStack.tsx
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import { Alert, Text, View } from 'react-native';

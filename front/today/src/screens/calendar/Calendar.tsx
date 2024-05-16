@@ -1,5 +1,6 @@
 // Calendar.tsx
 import React, { useState } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 import CalendarBody from '../../components/calendar/CalendarBody';
 import CalendarHeader from '../../components/calendar/CalendarHeader';
 import * as S from './style';
@@ -45,24 +46,26 @@ function Calendar({ navigation }: CalendarNavProp) {
   };
 
   return (
-    <S.CalenderContainer>
-      <S.CalenderWrapper>
-        <S.CalendarheaderContainer>
-          <CalendarHeader
-            month={month}
-            year={year}
-            date={date}
-            today={{ month: new Date().getMonth() + 1, year: new Date().getFullYear(), date: new Date().getDate() }}
-            moveToNextMonth={moveToNextMonth}
-            moveToPreviousMonth={moveToPreviousMonth}
-            moveToSpecificYearAndMonth={moveToSpecificYearAndMonth}
-          />
-        </S.CalendarheaderContainer>
-        <S.CalendarBodyContainer>
-          <CalendarBody month={month} year={year} date={date} navigation={navigation} />
-        </S.CalendarBodyContainer>
-      </S.CalenderWrapper>
-    </S.CalenderContainer>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
+      <S.CalenderContainer>
+        <S.CalenderWrapper>
+          <S.CalendarheaderContainer>
+            <CalendarHeader
+              month={month}
+              year={year}
+              date={date}
+              today={{ month: new Date().getMonth() + 1, year: new Date().getFullYear(), date: new Date().getDate() }}
+              moveToNextMonth={moveToNextMonth}
+              moveToPreviousMonth={moveToPreviousMonth}
+              moveToSpecificYearAndMonth={moveToSpecificYearAndMonth}
+            />
+          </S.CalendarheaderContainer>
+          <S.CalendarBodyContainer>
+            <CalendarBody month={month} year={year} date={date} navigation={navigation} />
+          </S.CalendarBodyContainer>
+        </S.CalenderWrapper>
+      </S.CalenderContainer>
+    </KeyboardAvoidingView>
   );
 }
 
