@@ -73,9 +73,10 @@ public class NoticeController {
         Long memberId = (Long) request.getAttribute("memberId");
         noticeService.saveToken(SaveTokenRequest.builder()
                 .memberId(memberId)
-                .deviceToken(tokenRequest.getDeviceToken())
+                .deviceToken(tokenRequest.getDeviceToken().replace("\"", ""))
                 .build());
-
+        System.out.println("token 들어왔다");
+        System.out.println(tokenRequest.getDeviceToken());
         return getResponseEntity(SuccessCode.OK);
     }
 }
