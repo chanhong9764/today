@@ -51,6 +51,7 @@ public class PushMessageService {
 
     public void sendMessage(String s) {
         logger.info("json =============== " + s);
+        System.out.println(s);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
