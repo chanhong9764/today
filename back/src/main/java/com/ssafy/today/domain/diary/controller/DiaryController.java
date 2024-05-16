@@ -72,9 +72,10 @@ public class DiaryController {
     public void consumer(DiaryContentCreated diaryContentCreated) {
         System.out.println("Diary 생성 완료");
         // Analysis 에 저장, Diary 테이블에 저장, tempImg 테이블에 저장
+        tempImgService.createTempImages(diaryContentCreated);
         analysisService.createOrUpdateAnalysis(diaryContentCreated.getMemberId(), diaryContentCreated);
         diaryService.updateAfterCreateImg(diaryContentCreated);
-        tempImgService.createTempImages(diaryContentCreated);
+
 
         // 클라이언트 알람 전송
         noticeService.completeNotice(diaryContentCreated.getDiaryId(), diaryContentCreated.getMemberId(), diaryContentCreated.getCount());
