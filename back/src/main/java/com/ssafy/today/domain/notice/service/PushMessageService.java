@@ -65,6 +65,7 @@ public class PushMessageService {
                 String.class);
 
         HttpStatus statusCode = (HttpStatus) responseEntity.getStatusCode();
+        System.out.println(responseEntity.getBody());
         System.out.println(statusCode);
     }
 
