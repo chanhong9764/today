@@ -12,11 +12,6 @@ export const WriteDiaryContainer = styled.View`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-export const WriteDiaryInner = styled.View`
-  padding: 20px;
-  background-color: ${({ theme }) => theme.colors.background};
-`;
-
 export const WriteDiaryTitle = styled.Text`
   font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};

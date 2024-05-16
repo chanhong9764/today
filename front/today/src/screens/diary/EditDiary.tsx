@@ -41,15 +41,15 @@ function EditDiary({ navigation, route }: EditDiaryProp) {
   }
 
   return (
-    <KeyboardAwareScrollView>
-      <S.WriteDiaryInner>
+    <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
+      <S.WriteDiaryContainer>
         <TodayDate />
         <S.WriteDiaryTitle>오늘 하루는 어땠나요?</S.WriteDiaryTitle>
         <DiaryContent value={content.content} onChangeText={onChangeContent} onSubmitEditing={onPressEdit} />
         <S.WriteDiaryButton>
           <CommonButton content="일기 수정 완료" onPress={onPressEdit} />
         </S.WriteDiaryButton>
-      </S.WriteDiaryInner>
+      </S.WriteDiaryContainer>
     </KeyboardAwareScrollView>
   );
 }

@@ -63,6 +63,7 @@ function Mypage() {
     await AsyncStorage.removeItem('accessToken');
     setIsLogin(false);
     console.log('로그아웃함');
+    console.log(await AsyncStorage.getItem('accessToken'));
   }
 
   return (
