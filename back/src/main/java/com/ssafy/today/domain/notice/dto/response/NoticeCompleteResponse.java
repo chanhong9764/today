@@ -5,6 +5,7 @@ import com.ssafy.today.domain.notice.entity.Notice;
 import com.ssafy.today.domain.notice.entity.NoticeKind;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +17,10 @@ public class NoticeCompleteResponse {
     private NoticeKind kind;
     private String content;
     private Boolean confirm;
+
+    @DateTimeFormat(pattern = "yyyy-mm-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
+    @DateTimeFormat(pattern = "yyyy-mm-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
 
     public static NoticeCompleteResponse getNoticeCompleteResponse(Notice notice) {
