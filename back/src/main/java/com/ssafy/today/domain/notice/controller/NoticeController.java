@@ -57,6 +57,12 @@ public class NoticeController {
             noticeService.getNoticeCount(memberId));
     }
 
+    @DeleteMapping("/{noticeId}")
+    public ResponseEntity<?> deleteNotice(@PathVariable("noticeId") Long noticeId) {
+        noticeService.deleteNoticeById(noticeId);
+        return getResponseEntity(SuccessCode.OK);
+    }
+
 
     @PostMapping("/push/test")
     public ResponseEntity<?> sendPushMessage(@RequestBody PushMessageRequest pushMessageRequest) {
