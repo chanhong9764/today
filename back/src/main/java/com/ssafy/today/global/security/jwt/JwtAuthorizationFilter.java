@@ -21,6 +21,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -31,18 +33,33 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
 
+    private final static List<URLMethod> whiteList = new ArrayList<>();
+
+    static {
+        //  key 값이 필요 없는 곳은 uri 추가
+        whiteList.add(new URLMethod("/api/health", "GET"));
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String token = resolveToken(request);
+        boolean check;
 
-        if (StringUtils.hasText(token)) {
-            try {
-                tokenProvider.validateToken(response, token);
-            }catch (GlobalException e){
-                setErrorResponse(response, e.getErrorCode());
-                return;
-            }
+        if( checkWhiteList(request.getRequestURI(), request.getMethod())){
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        try {
+            check = tokenProvider.validateToken(response, token);
+        }catch (GlobalException e){
+            setErrorResponse(response, e.getErrorCode());
+            return;
+        }
+
+        if (StringUtils.hasText(token) && check) {
+
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetails principal = getUserDetailsPrincipal(authentication);
@@ -103,6 +120,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             e.printStackTrace();
         }
     }
-
+    private boolean checkWhiteList(String requestURI, String requestMethod) {
+        for (URLMethod urlMethod : whiteList) {
+            if (requestURI.startsWith(urlMethod.getUrl()) && requestMethod.equals(
+                    urlMethod.getMethod())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
