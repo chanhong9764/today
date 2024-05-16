@@ -50,6 +50,11 @@ public class NoticeService {
     return noticeRepository.countAllByMemberAndConfirmIsTrue(member);
   }
 
+  public void deleteNoticeById (Long noticeId) {
+    Notice notice = noticeRepository.getReferenceById(noticeId);
+    noticeRepository.delete(notice);
+  }
+
   // 파이썬 서버 이미지 로드 완료 알림 and 알림 DB 저장
   public void completeNotice(Long diaryId, Long memberId, Integer sequence) {
     Member member = memberRepository.getReferenceById(memberId);
