@@ -7,6 +7,7 @@ export const prefix = Linking.createURL('/');
 async function checkLogin() {
   // 로그인 여부 체크
   const isLoggedIn = await AsyncStorage.getItem('accessToken');
+  console.log('accessTOken' + isLoggedIn);
   return isLoggedIn !== null;
 }
 
@@ -50,9 +51,10 @@ export const linking = {
     const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
 
     const subscription = Notifications.addNotificationResponseReceivedListener(async response => {
-      const isLogin = checkLogin();
+      const isLogin = await checkLogin();
       const diaryId = response.notification.request.content.data.diaryId;
       const url = `${prefix}SelectImage/${diaryId}`;
+
       if (!isLogin) {
         await AsyncStorage.setItem('pendingURL', url);
       } else {

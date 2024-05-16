@@ -1,6 +1,8 @@
 // Navigaior.tsx
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useTheme } from 'styled-components/native';
 import { CalendarNav } from './CalendarStack';
@@ -18,6 +20,19 @@ const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 function MainTab() {
   const theme = useTheme();
+
+  useEffect(() => {
+    console.log('여기 찍혔따');
+    const test = async () => {
+      const url = await AsyncStorage.getItem('pendingURL'); // 저장된 URL 가져오기
+      console.log(url);
+      if (url) {
+        await Linking.openURL(url);
+        await AsyncStorage.removeItem('pendingURL');
+      }
+    };
+    test();
+  }, []);
 
   return (
     <Tab.Navigator
