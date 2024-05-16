@@ -67,7 +67,7 @@ public class NoticeController {
     @PostMapping("/push/test")
     public ResponseEntity<?> sendPushMessage(@RequestBody PushMessageRequest pushMessageRequest) {
         System.out.println(pushMessageRequest.toString());
-        pushMessageService.sendPushMessage(pushMessageRequest);
+//        pushMessageService.sendPushMessage(pushMessageRequest);
         return getResponseEntity(SuccessCode.OK);
     }
 
