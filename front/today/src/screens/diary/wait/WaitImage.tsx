@@ -15,7 +15,6 @@ interface WaitImageProp {
 
 function WaitImage({ navigation }: WaitImageProp) {
   function onPressGoHome() {
-    console.log(navigation.getState());
     navigation.replace(navigation.getState().routeNames[0]);
   }
   return (

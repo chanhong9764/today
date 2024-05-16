@@ -59,7 +59,6 @@ function DiaryList({ navigation }: DiaryListProp) {
 
   useEffect(() => {
     if (isFirstRender.current || page == -1 || page == 0) {
-      console.log('page : ' + page);
       isFirstRender.current = false;
     } else {
       getData();

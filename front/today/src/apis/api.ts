@@ -44,7 +44,6 @@ const instance: Axios = axios.create({
 instance.interceptors.request.use(
   async config => {
     const accessToken = await AsyncStorage.getItem('accessToken');
-    console.log(accessToken);
     config.headers['authorization'] = `Bearer ${accessToken}`;
     return config;
   },
@@ -52,6 +51,21 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+
+instance.interceptors.response.use(undefined, 
+  async error => {
+    console.log(error.response.status)
+    switch (error.response.status) {
+      case 401: {
+        await AsyncStorage.removeItem('accessToken');
+        break;
+      }
+      default:
+        break;
+    }
+    return Promise.reject(error)
+  }
+)
 
 const responseBody = <T>(response: AxiosResponse<APIResponse<T>>) => response.data;
 

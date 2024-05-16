@@ -22,10 +22,8 @@ function MainTab() {
   const theme = useTheme();
 
   useEffect(() => {
-    console.log('여기 찍혔따');
     const test = async () => {
       const url = await AsyncStorage.getItem('pendingURL'); // 저장된 URL 가져오기
-      console.log(url);
       if (url) {
         await Linking.openURL(url);
         await AsyncStorage.removeItem('pendingURL');

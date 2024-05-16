@@ -28,7 +28,6 @@ function DiaryDetail({ navigation, route }: DiaryDetailProp) {
     Diarys.getSingleDiary(diaryId)
       .then(response => {
         setDiary(response.data);
-        console.log(response.data);
       })
       .catch(error => {
         console.error('실패', error);
@@ -37,7 +36,6 @@ function DiaryDetail({ navigation, route }: DiaryDetailProp) {
 
   function onPressEdit() {
     if (diary) {
-      console.log(diary.content, diaryId);
       navigation.push('EditDiary', { diaryId: diaryId, diaryContent: diary.content });
     }
   }

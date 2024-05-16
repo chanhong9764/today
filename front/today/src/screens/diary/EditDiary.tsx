@@ -32,7 +32,6 @@ function EditDiary({ navigation, route }: EditDiaryProp) {
   function onPressEdit() {
     Diarys.editDiary(diaryId, content)
       .then(res => {
-        console.log('일기 수정 성공', content);
         navigation.replace('DiaryDetail', { diaryId: diaryId });
       })
       .catch(err => {

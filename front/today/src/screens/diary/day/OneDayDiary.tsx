@@ -38,7 +38,6 @@ function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
     useCallback(() => {
       Calendars.getCalendar(date)
         .then(response => {
-          console.log('하루 일기 데이터 로드 성공', response);
           setDailyDiaryData(response.data);
         })
         .catch(error => {
@@ -60,7 +59,6 @@ function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
     function onPressMain() {
       Diarys.mainDiary(item.id)
         .then(response => {
-          console.log('메인 일기 패치 성공');
           setIsImportant(item.id);
         })
         .catch(error => console.log('메인 일기 패치 실패', error));

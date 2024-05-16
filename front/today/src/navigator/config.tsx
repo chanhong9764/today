@@ -7,7 +7,6 @@ export const prefix = Linking.createURL('/');
 async function checkLogin() {
   // 로그인 여부 체크
   const isLoggedIn = await AsyncStorage.getItem('accessToken');
-  console.log('accessTOken' + isLoggedIn);
   return isLoggedIn !== null;
 }
 

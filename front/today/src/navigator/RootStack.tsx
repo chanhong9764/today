@@ -37,7 +37,6 @@ function RootStack() {
         } else {
           // 토큰이 없을 때의 로직
           setIsLogin(false);
-          console.log('No token found');
         }
       } catch (error) {
         // 에러 처리
@@ -74,9 +73,7 @@ function RootStack() {
       });
     });
   }, []);
-
-  console.log(isLogin);
-
+  
   return (
     <Stack.Navigator>
       {isLogin ? (
