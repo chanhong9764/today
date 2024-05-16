@@ -24,6 +24,7 @@
     "expo-device": "~5.9.4",
     "expo-linking": "~6.2.2",
     "expo-media-library": "~15.9.2",
+    "expo-network": "~5.8.0",
     "expo-notifications": "~0.27.7",
     "expo-screen-capture": "^5.8.1",
     "expo-status-bar": "~1.11.1",
@@ -50,8 +51,7 @@
     "react-native-webview": "13.6.4",
     "styled-components": "^6.1.11",
     "typescript": "^5.3.0",
-    "uuid": "^9.0.1",
-    "expo-network": "~5.8.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -17,9 +17,13 @@ export const IsLoginContext = createContext<IsLoginProp>({
   setIsLogin: () => {},
 });
 
+export let setIsLoginGlobal: (isLogin: boolean) => void;
+
 export function IsLoginProvider({ children }: IsLoginProviderProp) {
   const [isLogin, setIsLogin] = useState<boolean>(token !== null ? true : false);
   const value = useMemo(() => ({ isLogin, setIsLogin }), [isLogin, setIsLogin]);
+  setIsLoginGlobal = setIsLogin; // 전역 변수에 할당
+
   return <IsLoginContext.Provider value={value}>{children}</IsLoginContext.Provider>;
 }
 
