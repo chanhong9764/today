@@ -41,7 +41,7 @@ public class PushMessageService {
 
     public String makeJson(PushMessageRequest pushMessageRequest, NoticeCompleteResponse noticeCompleteResponse) {
         return "{" +
-                    "\"to\": " + pushMessageRequest.getToken() + ", " +
+                    "\"to\": \"" + pushMessageRequest.getToken() + "\", " +
                     "\"title\": \"" + pushMessageRequest.getTitle() + "\", " +
                     "\"body\": \"" + pushMessageRequest.getBody() + "\", " +
                     "\"data\": {" +
@@ -58,7 +58,7 @@ public class PushMessageService {
 
     public String makeBulkJson(PushMessageRequest pushMessageRequest) {
         return "{" +
-                    "\"to\": " + pushMessageRequest.getToken() + ", " +
+                    "\"to\": \"" + pushMessageRequest.getToken() + "\", " +
                     "\"title\": \"" + pushMessageRequest.getTitle() + "\", " +
                     "\"body\": \"" + pushMessageRequest.getBody() + "\"" +
                 "}";
