@@ -39,7 +39,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         //  key 값이 필요 없는 곳은 uri 추가
         whiteList.add(new URLMethod("/api/health", "GET"));
         whiteList.add(new URLMethod("/api/swagger-ui", "GET"));
-        whiteList.add(new URLMethod("/v3/api-docs", "GET"));
+        whiteList.add(new URLMethod("/api/v3/api-docs", "GET"));
 
 
     }
