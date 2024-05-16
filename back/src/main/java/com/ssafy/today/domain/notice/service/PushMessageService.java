@@ -47,18 +47,18 @@ public class PushMessageService {
                     "\"data\": {" +
                         "\"noticeId\":" + noticeCompleteResponse.getNoticeId() + "," +
                         "\"diaryId\":" + noticeCompleteResponse.getDiaryId() + "," +
-                        "\"kind\": + \"" + noticeCompleteResponse.getKind() + "\"," +
-                        "\"content\": + \"" + noticeCompleteResponse.getContent() + "\"," +
-                        "\"confirm\": + \"" + noticeCompleteResponse.getConfirm() + "\"," +
-                        "\"createdAt\": + \"" + noticeCompleteResponse.getCreatedAt() + "\"," +
-                        "\"createdAt\": + \"" + noticeCompleteResponse.getUpdatedAt() + "\"" +
+                        "\"kind\": \"" + noticeCompleteResponse.getKind() + "\"," +
+                        "\"content\": \"" + noticeCompleteResponse.getContent() + "\"," +
+                        "\"confirm\": \"" + noticeCompleteResponse.getConfirm() + "\"," +
+                        "\"createdAt\": \"" + noticeCompleteResponse.getCreatedAt() + "\"," +
+                        "\"updatedAt\": \"" + noticeCompleteResponse.getUpdatedAt() + "\"" +
                     "}" +
                 "}";
     }
 
     public String makeBulkJson(PushMessageRequest pushMessageRequest) {
         return "{" +
-                    "\"to\": \"" + pushMessageRequest.getToken() + "\", " +
+                    "\"to\": " + pushMessageRequest.getToken() + ", " +
                     "\"title\": \"" + pushMessageRequest.getTitle() + "\", " +
                     "\"body\": \"" + pushMessageRequest.getBody() + "\"" +
                 "}";
