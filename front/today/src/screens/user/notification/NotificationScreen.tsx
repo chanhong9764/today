@@ -55,7 +55,6 @@ function NotificationScreen({ navigation }: NotiScreenProp) {
 
   useEffect(() => {
     setNotiData(notices ?? []);
-    console.log(notiData);
   }, [notices]);
 
   let groupedNotices: GroupedNotices = {};

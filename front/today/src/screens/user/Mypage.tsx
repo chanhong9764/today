@@ -45,7 +45,6 @@ function Mypage() {
             surprise: data.surprise,
           };
           setAnalysisData(scaledData);
-          console.log(response.data);
         }
       })
       .catch(error => {
@@ -62,8 +61,6 @@ function Mypage() {
   async function Logout() {
     await AsyncStorage.removeItem('accessToken');
     setIsLogin(false);
-    console.log('로그아웃함');
-    console.log(await AsyncStorage.getItem('accessToken'));
   }
 
   return (

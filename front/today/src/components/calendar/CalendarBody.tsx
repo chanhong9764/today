@@ -27,7 +27,6 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
     useCallback(() => {
       Calendars.getCalendars(TodayDate)
         .then(response => {
-          console.log('한달 일기 데이터 로드 성공', response.data);
           setDiaryData(response.data);
 
           // { [날짜] : 이미지 } 배열 생성

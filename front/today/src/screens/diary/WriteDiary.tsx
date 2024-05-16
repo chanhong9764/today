@@ -44,7 +44,6 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
 
       Diarys.createImage(content)
         .then(response => {
-          console.log('일기 생성 성공', content);
         })
         .catch(err => {
           console.log(err);

@@ -1,15 +1,18 @@
 package com.ssafy.today.global.security.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.today.domain.member.entity.Member;
 import com.ssafy.today.domain.member.repository.MemberRepository;
 import com.ssafy.today.global.security.oauth2.service.OAuth2UserPrincipal;
 import com.ssafy.today.util.response.ErrorCode;
+import com.ssafy.today.util.response.ErrorResponseEntity;
 import com.ssafy.today.util.response.exception.GlobalException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,8 +35,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String token = resolveToken(request);
+        boolean tokenCheck;
+        try {
+            tokenCheck = tokenProvider.validateToken(response, token);
+        }catch (GlobalException e){
+            setErrorResponse(response, e.getErrorCode());
+            return;
+        }
 
-        if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
+        if (StringUtils.hasText(token) && tokenCheck) {
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             UserDetails principal = getUserDetailsPrincipal(authentication);
@@ -78,4 +88,22 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
         return null;
     }
+
+    private void setErrorResponse(HttpServletResponse response, ErrorCode ec) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        response.setStatus(ec.getHttpStatus().value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8");
+        ErrorResponseEntity errorResponseEntity = ErrorResponseEntity.builder()
+                .statusCode(ec.getHttpStatus().value())
+                .statusName(ec.name())
+                .message(ec.getMessage())
+                .build();
+        try {
+            response.getWriter().write(objectMapper.writeValueAsString(errorResponseEntity));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

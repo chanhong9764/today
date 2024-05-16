@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, Alert } from 'react-native';
 import * as S from './user/style';
+import * as Network from 'expo-network'
 
 interface LoginScreenProp {
   navigation: {
@@ -9,6 +10,14 @@ interface LoginScreenProp {
 }
 
 function LoginScreen({ navigation }: LoginScreenProp) {
+  const onPressLogin = async () => {
+    const status = await Network.getNetworkStateAsync()
+    if(status.isInternetReachable) {
+      navigation.navigate('KakaoLogin');
+    } else {
+      Alert.alert('네트워크 연결 실패', '셀룰러 데이터 혹은 와이파이를 연결해주세요!');
+    }
+  }
   return (
     <S.LoginScreen>
       <S.LoginContainer>
@@ -26,9 +35,7 @@ function LoginScreen({ navigation }: LoginScreenProp) {
       <S.LoginContainer>
         <Text style={{ fontSize: 15, color: 'white', marginBottom: 8 }}>카카오톡으로 로그인하고 시작하기</Text>
         <S.LinkButton
-          onPress={() => {
-            navigation.navigate('KakaoLogin');
-          }}>
+          onPress={onPressLogin}>
           <S.LoginButton source={require('../../assets/kakao-logo.png')} resizeMode="stretch" />
         </S.LinkButton>
       </S.LoginContainer>

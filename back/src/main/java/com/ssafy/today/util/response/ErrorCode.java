@@ -10,6 +10,10 @@ public enum ErrorCode {
   // 회원
   KEY_NOT_FOUND(HttpStatus.UNAUTHORIZED, "키가 존재하지 않습니다."),
   MEMBER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "해당 유저를 찾을 수 없습니다."),
+  JWT_NOT_VALID(HttpStatus.UNAUTHORIZED , "JWT is not valid"),
+  JWT_SIGNATURE_VALIDATION_FAIL(HttpStatus.UNAUTHORIZED , "JWT signature validation fails"),
+  JWT_IS_EXPIRED(HttpStatus.UNAUTHORIZED , "JWT is expired"),
+  JWT_IS_NULL(HttpStatus.UNAUTHORIZED , "JWT is null or empty or only whitespace"),
 
   // 일기
   DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 일기를 찾을 수 없습니다."),
