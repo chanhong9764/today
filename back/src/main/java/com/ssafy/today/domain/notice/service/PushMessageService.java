@@ -1,6 +1,7 @@
 package com.ssafy.today.domain.notice.service;
 
 import com.ssafy.today.domain.notice.dto.request.PushMessageRequest;
+import com.ssafy.today.domain.notice.dto.response.NoticeCompleteResponse;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,9 @@ import org.slf4j.LoggerFactory;
 public class PushMessageService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public void sendPushMessage(PushMessageRequest pushMessageRequest) {
+    public void sendPushMessage(PushMessageRequest pushMessageRequest, NoticeCompleteResponse noticeCompleteResponse) {
         logger.info("device token ============= " + pushMessageRequest.getToken());
-        sendMessage(makeJson(pushMessageRequest));
+        sendMessage(makeJson(pushMessageRequest, noticeCompleteResponse));
 
     }
 
@@ -26,7 +27,7 @@ public class PushMessageService {
         int idx = 0;
 
         for (PushMessageRequest request : list) {
-            String s = makeJson(request);
+            String s = makeBulkJson(request);
             idx++;
             sb.append(s);
             if(idx < list.size()) {
@@ -38,14 +39,28 @@ public class PushMessageService {
         sendMessage(sb.toString());
     }
 
-    public String makeJson(PushMessageRequest pushMessageRequest) {
+    public String makeJson(PushMessageRequest pushMessageRequest, NoticeCompleteResponse noticeCompleteResponse) {
         return "{" +
-                "\"to\": \"" + pushMessageRequest.getToken() + "\", " +
-                "\"title\": \"" + pushMessageRequest.getTitle() + "\", " +
-                "\"body\": \"" + pushMessageRequest.getBody() + "\", " +
-                "\"data\": {" +
-                "\"customData\": \"" + pushMessageRequest.getDiaryId() + "\"" +
-                "}" +
+                    "\"to\": \"" + pushMessageRequest.getToken() + "\", " +
+                    "\"title\": \"" + pushMessageRequest.getTitle() + "\", " +
+                    "\"body\": \"" + pushMessageRequest.getBody() + "\", " +
+                    "\"data\": {" +
+                        "\"noticeId\":" + noticeCompleteResponse.getNoticeId() + "," +
+                        "\"diaryId\":" + noticeCompleteResponse.getDiaryId() + "," +
+                        "\"kind\": + \"" + noticeCompleteResponse.getKind() + "\"," +
+                        "\"content\": + \"" + noticeCompleteResponse.getContent() + "\"," +
+                        "\"confirm\": + \"" + noticeCompleteResponse.getConfirm() + "\"," +
+                        "\"createdAt\": + \"" + noticeCompleteResponse.getCreatedAt() + "\"," +
+                        "\"createdAt\": + \"" + noticeCompleteResponse.getUpdatedAt() + "\"" +
+                    "}" +
+                "}";
+    }
+
+    public String makeBulkJson(PushMessageRequest pushMessageRequest) {
+        return "{" +
+                    "\"to\": \"" + pushMessageRequest.getToken() + "\", " +
+                    "\"title\": \"" + pushMessageRequest.getTitle() + "\", " +
+                    "\"body\": \"" + pushMessageRequest.getBody() + "\"" +
                 "}";
     }
 
