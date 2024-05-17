@@ -71,10 +71,8 @@ public class EsController {
     }
 
     @PostMapping("/init/es")
-    public ResponseEntity<?> initEs(HttpServletRequest request, @RequestBody String pwd) {
-        if(pwd.equals(PASSWORD)) {
-            esService.initEs();
-        }
+    public ResponseEntity<?> initEs(HttpServletRequest request) {
+        esService.initEs();
         return getResponseEntity(SuccessCode.OK);
     }
 
