@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -16,6 +17,7 @@ interface WriteDiaryProp {
 
 function WriteDiary({ navigation, route }: WriteDiaryProp) {
   const { feel } = route.params;
+  const [diarys, setDiarys] = useState();
 
   // 일기 내용 상태 관리
   const [content, setContent] = useState({
@@ -32,7 +34,7 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
   };
 
   // 이미지 생성 요청
-  function onPressWrite() {
+  async function onPressWrite() {
     const contentLength = content.content.trim().length;
 
     if (contentLength < 10) {
@@ -42,12 +44,24 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
     } else {
       navigation.replace('DiaryStack', { screen: 'WaitImage' });
 
-      Diarys.createImage(content)
-        .then(response => {
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      try {
+        await Diarys.createImage(content)
+          .then(response => {})
+          .catch(err => {
+            console.log(err);
+          });
+
+        await Diarys.getDiarys(0, 3)
+          .then(response => {
+            const newData = response.data?.content || [];
+            AsyncStorage.setItem('initDiarys', JSON.stringify(newData));
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
