@@ -85,7 +85,7 @@ function RootStack() {
   return (
     <Stack.Navigator>
       {isLogin ? (
-        <>
+        <Stack.Group>
           <Stack.Screen name="MainTab" component={MainTab} options={{ headerShown: false }} />
           <Stack.Screen
             name="NotificationScreen"
@@ -99,9 +99,9 @@ function RootStack() {
               ),
             }}
           />
-        </>
+        </Stack.Group>
       ) : (
-        <>
+        <Stack.Group>
           <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="KakaoLogin" component={KakaoLogin} options={{ headerShown: false }} />
           <Stack.Screen
@@ -119,7 +119,7 @@ function RootStack() {
             component={Intro3}
             options={{ headerShown: false, animationTypeForReplace: 'push', animation: 'slide_from_right' }}
           />
-        </>
+        </Stack.Group>
       )}
     </Stack.Navigator>
   );

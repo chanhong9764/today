@@ -42,7 +42,7 @@ function WriteDiary({ navigation, route }: WriteDiaryProp) {
     } else if (contentLength > 200) {
       Alert.alert('최대 글자수 제한!', '200자를 초과할 수 없습니다.');
     } else {
-      navigation.replace('DiaryStack', { screen: 'WaitImage' });
+      navigation.replace('WaitImage');
 
       try {
         await Diarys.createImage(content)

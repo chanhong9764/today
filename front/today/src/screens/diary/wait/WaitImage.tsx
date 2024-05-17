@@ -10,14 +10,14 @@ interface WaitImageProp {
   navigation: {
     replace: (arg0: string) => void;
     getState: () => RouteList;
+    navigate: any;
   };
 }
 
 function WaitImage({ navigation }: WaitImageProp) {
   
   function onPressGoHome() {
-    console.log(navigation)
-    // navigation.replace(navigation.getState().routeNames[0]);
+    navigation.navigate("DiaryList");
   }
   return (
     <S.WaitImage>
