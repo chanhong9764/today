@@ -20,7 +20,7 @@ type RenderNotiProps = {
 
 interface NotiScreenProp {
   navigation: {
-    push: (arg0: string, arg1?: { screen: string; params?: { diaryId: number } }) => void;
+    navigate:  (arg0: string, arg1?: { screen: string; params?: { diaryId: number } }) => void;
   };
 }
 
@@ -75,9 +75,9 @@ function NotificationScreen({ navigation }: NotiScreenProp) {
         content: item.content,
       });
       if (temp === 1) {
-        navigation.push('DiaryStack', { screen: 'SelectImage', params: { diaryId: item.diaryId } });
+        navigation.navigate('DiaryNav', { screen: "DiaryList", params: { screen: "SelectImage", diaryId: item.diaryId}} );
       } else {
-        navigation.push('DiaryStack', { screen: 'DiaryDetail', params: { diaryId: item.diaryId } });
+        navigation.navigate('DiaryNav', { screen: "DiaryList", params: { screen: "DiaryDetail", diaryId: item.diaryId }});
       }
     }
     return <NotificationItem item={item} onpress={onPressNoti} dispatch={dispatch} />;
