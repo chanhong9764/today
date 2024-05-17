@@ -1,47 +1,75 @@
-import { createContext, useState } from 'react';
+import { Dispatch, ReactNode, createContext, useContext, useReducer } from 'react';
 import { DiaryData } from '../types/datatype';
 
 interface Props {
   children: JSX.Element | Array<JSX.Element>;
 }
 
-interface DiaryContextProp {
-  diaryList: DiaryData[];
-  addDiaryList: (diarys: DiaryData[], page: number) => void;
-  // removeDiaryList: (index: number) => void;
-}
+type Actions =
+  | {
+      type: 'CREATE';
+      diarys: DiaryData[];
+      page: number;
+    }
+  | { type: 'TOGGLE'; id: number }
+  | { type: 'REMOVE'; id: number };
 
-interface DiaryListState {
+export interface DiaryListState {
   diarys: DiaryData[];
   page: number;
 }
 
-const DiaryContext = createContext<DiaryContextProp>({
-  diaryList: [],
-  addDiaryList: (diarys: DiaryData[], page: number): void => {},
-  // removeDiaryList: (index: number): void => {},
-});
+export const DiaryListContext = createContext<DiaryListState | undefined>(undefined);
+export const DiaryActionsContext = createContext<Dispatch<Actions> | undefined>(undefined);
 
-function DiaryContextProvider({ children }: Props) {
-  const [diaryList, setdiaryList] = useState<DiaryListState>({
+const diaryReducer = (state: DiaryListState, action: Actions) => {
+  switch (action.type) {
+    case 'CREATE':
+      return {
+        ...state,
+        diarys: [...state.diarys, ...action.diarys],
+        page: action.page,
+      };
+
+    case 'TOGGLE':
+      return {
+        ...state,
+        diarys: state.diarys.map(diary => (diary.id === action.id ? { ...diary, status: 2 } : diary)),
+      };
+
+    case 'REMOVE':
+      return {
+        ...state,
+        diarys: state.diarys.filter(diary => diary.id !== action.id),
+      };
+
+    default:
+      return state;
+  }
+};
+
+export function DiaryListProvider({ children }: { children: ReactNode }) {
+  const [diarys, dispatch] = useReducer(diaryReducer, {
     diarys: [],
     page: 0,
   });
 
-  const addDiaryList = (diarys: DiaryData[], page: number) => {
-    const newList = [...diaryList.diarys, ...diarys];
-    setdiaryList({ diarys: newList, page: page });
-  };
-
   return (
-    <DiaryContext.Provider
-      value={{
-        diaryList,
-        addDiaryList,
-      }}>
-      {children}
-    </DiaryContext.Provider>
+    <DiaryActionsContext.Provider value={dispatch}>
+      <DiaryListContext.Provider value={diarys}>{children}</DiaryListContext.Provider>
+    </DiaryActionsContext.Provider>
   );
 }
 
-export { DiaryContext, DiaryContextProvider };
+// 유효성 체크
+export function useDiaryListContext() {
+  const state = useContext(DiaryListContext);
+  if (!state) throw new Error('Provider is not found');
+  return state;
+}
+
+export function useDiaryListDispatchContext() {
+  const dispatch = useContext(DiaryActionsContext);
+  if (!dispatch) throw new Error('Provider is not found');
+  return dispatch;
+}

@@ -9,6 +9,7 @@ import { NoticeContext } from '../../../contexts/NoticeContext';
 interface DiaryListProp {
   navigation: {
     push: (arg0: string, arg2?: { diaryId: number }) => void;
+    getState: any;
   };
 }
 
@@ -29,17 +30,14 @@ function DiaryList({ navigation }: DiaryListProp) {
     //   return;
     // }
     // setLoading(true);
-    console.log("getdata 진입");
     
     Diarys.getDiarys(page, 2)
       .then(response => {
-        console.log(response.data);
         const newData = response.data?.content || [];
         setData(currentData => ({
           ...currentData,
           content: [...currentData.content, ...newData],
         }));
-        console.log(page);
       })
       .then(() => setLoading(false))
       .catch(err => {
@@ -51,6 +49,11 @@ function DiaryList({ navigation }: DiaryListProp) {
   // 페이지 진입시 데이터 초기화
   useFocusEffect(
     useCallback(() => {
+      if (navigation.getState().routes[0].params !== undefined) {
+        navigation.getState().routes[0].params = undefined;
+        navigation.push('SelectEmotion');
+      }
+
       setData({ content: [] });
       setPage(0);
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
@@ -64,7 +67,6 @@ function DiaryList({ navigation }: DiaryListProp) {
 
   useEffect(() => {
     if (isFirstRender.current || page == -1) {
-      console.log("page : "+page)
       isFirstRender.current = false;
     } else {
       getData();
@@ -75,8 +77,6 @@ function DiaryList({ navigation }: DiaryListProp) {
     if (notices && notices.length > 0) {
       setData({ content: [] });
       setPage(0);
-      
-      console.log("notices : "+notices);
     }
   }, [notices]);
 
