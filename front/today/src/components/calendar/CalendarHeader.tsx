@@ -5,20 +5,7 @@ import { useTheme } from 'styled-components/native';
 import { Header } from '../../types/calendartype/calendar';
 import * as S from './style';
 
-const monthToString = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+const monthToString = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 
 const CalendarHeader = ({ month, year, moveToNextMonth, moveToPreviousMonth }: Header) => {
   const theme = useTheme();
@@ -30,7 +17,8 @@ const CalendarHeader = ({ month, year, moveToNextMonth, moveToPreviousMonth }: H
       </Pressable>
       {/* 현재 출력되는 연도와 달 */}
       <S.CalendarTitle>
-        {monthToString[month - 1]} {year}
+        {year}
+        {'년'} {monthToString[month - 1]}
       </S.CalendarTitle>
       {/* 다음달로 이동 */}
       <Pressable onPress={moveToNextMonth.bind(this, month)}>
