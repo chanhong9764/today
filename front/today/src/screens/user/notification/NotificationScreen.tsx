@@ -35,11 +35,15 @@ function NotificationItem({ item, onpress, dispatch }: NotiItemProps) {
       .then(response => console.log('알림 삭제 성공'))
       .catch(error => console.log(error));
   }
+
+  const date = item.createdAt.split('T')[0];
+
   return (
     <S.NotiContainer onPress={onpress} backgroundColor={backgroundColor}>
       <S.IconContainer onPress={onPressDelete}>
         <Icon name="close" size={20} />
       </S.IconContainer>
+      <Text>{date}</Text>
       <Text>오늘의 {item.content} 번째 일기의 그림이 완성되었습니다!</Text>
       <Text>마음에 드는 그림을 선택해주세요</Text>
     </S.NotiContainer>
