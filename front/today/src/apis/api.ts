@@ -56,12 +56,7 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
-  async config => {
-    console.log(await AsyncStorage.getItem('accessToken'));
-    return config;
-  },
   async error => {
-    console.log(error.response.status);
     switch (error.response.status) {
       case 401: {
         await AsyncStorage.removeItem('accessToken');

@@ -28,7 +28,7 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
       Calendars.getCalendars(TodayDate)
         .then(response => {
           setDiaryData(response.data);
-
+          
           // { [날짜] : 이미지 } 배열 생성
           const newImageUrlByDate: { [key: string]: string } = {};
           response.data?.forEach(diary => {
