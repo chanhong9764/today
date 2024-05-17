@@ -57,7 +57,7 @@ function DiaryList({ navigation }: any) {
         }
         navigation.getState().routes[0].params = undefined;
       }
-
+      setPage(-1);
       setData({ content: [] });
       setPage(0);
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });

@@ -82,4 +82,9 @@ public class EsService {
         }
         esRepository.saveAll(diaryEs);
     }
+
+    public void deleteAll() {
+        esRepository.deleteAll();
+    }
+
 }
