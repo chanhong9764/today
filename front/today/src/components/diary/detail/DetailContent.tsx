@@ -30,9 +30,10 @@ const DetailContent = ({ diary }: DetailContentProps) => {
 
 const TextContent = styled.Text`
   text-align: justify;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.3px; // 글자 간격 (원래 예제에 있던대로 추가)
+  font-family: title;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: 0.3px; // 글자 간격
 `;
 
 export default DetailContent;
