@@ -74,8 +74,8 @@ export interface NoticeData {
   kind: string;
   content: number;
   confirm: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface PatchNoticeData {

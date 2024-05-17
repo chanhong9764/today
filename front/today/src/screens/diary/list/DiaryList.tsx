@@ -1,18 +1,19 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import React, { useCallback, useEffect, useRef, useState, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Alert, FlatList, SafeAreaView } from 'react-native';
 import { Diarys } from '../../../apis/DiaryApi';
 import { DiaryCard } from '../../../components/diary/list/DiaryCard';
-import { AllDiaryData, DiaryData } from '../../../types/datatype';
 import { NoticeContext } from '../../../contexts/NoticeContext';
+import { AllDiaryData, DiaryData } from '../../../types/datatype';
 
 interface DiaryListProp {
   navigation: {
     push: (arg0: string, arg2?: { diaryId: number }) => void;
+    getState: any;
   };
 }
 
-function DiaryList({ navigation }: DiaryListProp) {
+function DiaryList({ navigation }: any) {
   const flatListRef = useRef<FlatList<DiaryData>>(null);
   const isFocused = useIsFocused();
   const notices = useContext(NoticeContext);
@@ -29,17 +30,14 @@ function DiaryList({ navigation }: DiaryListProp) {
     //   return;
     // }
     // setLoading(true);
-    console.log("getdata 진입");
-    
+
     Diarys.getDiarys(page, 2)
       .then(response => {
-        console.log(response.data);
         const newData = response.data?.content || [];
         setData(currentData => ({
           ...currentData,
           content: [...currentData.content, ...newData],
         }));
-        console.log(page);
       })
       .then(() => setLoading(false))
       .catch(err => {
@@ -51,6 +49,16 @@ function DiaryList({ navigation }: DiaryListProp) {
   // 페이지 진입시 데이터 초기화
   useFocusEffect(
     useCallback(() => {
+      if (navigation.getState().routes[0].params !== undefined) {
+        // console.log(navigation.getState().routes[0].params)
+        if(navigation.getState().routes[0].params.screen !== "SelectEmotion"){ 
+          navigation.push(navigation.getState().routes[0].params.screen, { diaryId: navigation.getState().routes[0].params.diaryId });
+        } else {
+          navigation.push(navigation.getState().routes[0].params.screen);
+        }
+        navigation.getState().routes[0].params = undefined;
+      }
+      setPage(-1);
       setData({ content: [] });
       setPage(0);
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
@@ -58,13 +66,13 @@ function DiaryList({ navigation }: DiaryListProp) {
       return () => {
         setData({ content: [] });
         setPage(-1);
+        isFirstRender.current = true;
       };
     }, []),
   );
 
   useEffect(() => {
     if (isFirstRender.current || page == -1) {
-      console.log("page : "+page)
       isFirstRender.current = false;
     } else {
       getData();
@@ -73,10 +81,9 @@ function DiaryList({ navigation }: DiaryListProp) {
 
   useEffect(() => {
     if (notices && notices.length > 0) {
+      setPage(-1);
       setData({ content: [] });
       setPage(0);
-      
-      console.log("notices : "+notices);
     }
   }, [notices]);
 

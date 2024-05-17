@@ -42,7 +42,7 @@ export function DiaryCard({ item, onPress, backgroundColor }: ItemProps) {
               loop
               style={{
                 width: '100%',
-                height: 100,
+                height: 150,
               }}
             />
           </S.DefaultImage>

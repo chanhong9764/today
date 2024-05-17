@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { FlatList, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { useTheme } from 'styled-components/native';
 import { Diarys } from '../../../apis/DiaryApi';
 import { Notices } from '../../../apis/NoticeApi';
 import { NoticeContext, useDispatchContext } from '../../../contexts/NoticeContext';
@@ -19,12 +20,13 @@ type RenderNotiProps = {
 
 interface NotiScreenProp {
   navigation: {
-    push: (arg0: string, arg1?: { screen: string; params?: { diaryId: number } }) => void;
+    navigate:  (arg0: string, arg1?: { screen: string; params?: { diaryId: number } }) => void;
   };
 }
 
 function NotificationItem({ item, onpress, dispatch }: NotiItemProps) {
-  const backgroundColor = item.confirm ? '#fcfcfc' : '#dbdbdb';
+  const theme = useTheme();
+  const backgroundColor = item.confirm ? '#fcfcfc' : theme.colors.middlePink;
 
   function onPressDelete() {
     dispatch({
@@ -35,18 +37,21 @@ function NotificationItem({ item, onpress, dispatch }: NotiItemProps) {
       .then(response => console.log('알림 삭제 성공'))
       .catch(error => console.log(error));
   }
+
+  const date = item.createdAt.split('T')[0];
+
   return (
     <S.NotiContainer onPress={onpress} backgroundColor={backgroundColor}>
       <S.IconContainer onPress={onPressDelete}>
         <Icon name="close" size={20} />
       </S.IconContainer>
+      <Text>{date}</Text>
       <Text>오늘의 {item.content} 번째 일기의 그림이 완성되었습니다!</Text>
-      <Text>마음에 드는 그림을 선택해주세요</Text>
     </S.NotiContainer>
   );
 }
 
-function NotificationScreen({ navigation }: NotiScreenProp) {
+function NotificationScreen({ navigation }: any) {
   const [notiData, setNotiData] = useState<NoticeData[]>([]);
   const dispatch = useDispatchContext();
   const notices = useContext(NoticeContext);
@@ -64,15 +69,15 @@ function NotificationScreen({ navigation }: NotiScreenProp) {
         })
         .catch(error => console.log(error));
 
+      Notices.checkNotices({ noticeId: item.noticeId, confirm: true });
+      dispatch({
+        type: 'TOGGLE',
+        content: item.content,
+      });
       if (temp === 1) {
-        navigation.push('DiaryStack', { screen: 'SelectImage', params: { diaryId: item.diaryId } });
-        Notices.checkNotices({ noticeId: item.noticeId, confirm: true });
-        dispatch({
-          type: 'TOGGLE',
-          content: item.content,
-        });
+        navigation.navigate('DiaryNav', { screen: "DiaryList", params: { screen: "SelectImage", diaryId: item.diaryId}} );
       } else {
-        navigation.push('DiaryStack', { screen: 'DiaryDetail', params: { diaryId: item.diaryId } });
+        navigation.navigate('DiaryNav', { screen: "DiaryList", params: { screen: "DiaryDetail", diaryId: item.diaryId }});
       }
     }
     return <NotificationItem item={item} onpress={onPressNoti} dispatch={dispatch} />;

@@ -16,6 +16,7 @@ function Mypage() {
   const [analysisData, setAnalysisData] = useState<AnalysisData | undefined>();
   const { setIsLogin } = useContext(IsLoginContext);
   const isFocused = useIsFocused();
+  const month = new Date().getMonth();
   let MBTI = '';
 
   if (analysisData) {
@@ -53,7 +54,6 @@ function Mypage() {
             surprise: data.surprise,
           };
           setAnalysisData(scaledData);
-          console.log(scaledData);
         }
       })
       .catch(error => {
@@ -91,17 +91,21 @@ function Mypage() {
             </S.MyInfoContent>
           </S.MyInfo>
 
-          <S.MyPageSubTitle>{memberInfo?.nickName} 님의 성향은</S.MyPageSubTitle>
+          <S.MyPageSubTitle>
+            <S.PointWord>{memberInfo?.nickName}</S.PointWord>님의 성격 유형은
+          </S.MyPageSubTitle>
           <S.Line />
-          <S.MyInfoTitle>
-            <S.MBTItext>{MBTI}</S.MBTItext> 와 유사하네요!
-          </S.MyInfoTitle>
+          <S.MBTITitle>
+            <S.MBTItext>{MBTI}</S.MBTItext> 와 유사하네요
+          </S.MBTITitle>
           {analysisData ? (
             <Pyramid analysisData={analysisData} width={280} height={250} />
           ) : (
             <Text>일기를 작성해주시면 성향을 분석해드려요!</Text>
           )}
-          <S.MyPageSubTitle>{memberInfo?.nickName} 님의 감정은</S.MyPageSubTitle>
+          <S.MyPageSubTitle>
+            <S.PointWord>{memberInfo?.nickName}</S.PointWord>님의 {month}월 감정은
+          </S.MyPageSubTitle>
           <S.Line />
           {analysisData ? (
             <View style={{ height: 300, marginBottom: 30 }}>

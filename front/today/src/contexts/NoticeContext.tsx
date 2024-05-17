@@ -1,8 +1,8 @@
-import { Dispatch, ReactNode, createContext, useContext, useEffect, useReducer, useState } from 'react';
-import { Notices } from '../apis/NoticeApi';
+import { Dispatch, ReactNode, createContext, useContext, useReducer } from 'react';
 import { NoticeData } from '../types/datatype';
 
 type Actions =
+  | { type: 'INIT'; data: NoticeData[] }
   | {
       type: 'CREATE';
       noticeId: number;
@@ -10,8 +10,8 @@ type Actions =
       kind: string;
       content: number;
       confirm: boolean;
-      createdAt: Date;
-      updatedAt: Date;
+      createdAt: string;
+      updatedAt: string;
     }
   | { type: 'TOGGLE'; content: number }
   | { type: 'REMOVE'; content: number };
@@ -21,6 +21,8 @@ export const DispatchContext = createContext<Dispatch<Actions> | undefined>(unde
 
 const Reducer = (state: NoticeData[], action: Actions): NoticeData[] => {
   switch (action.type) {
+    case 'INIT':
+      return action.data;
     case 'CREATE':
       // 중복 확인 로직
       const isDuplicate = state.some(
@@ -58,17 +60,7 @@ const Reducer = (state: NoticeData[], action: Actions): NoticeData[] => {
 };
 
 export function NoticeProvider({ children }: { children: ReactNode }) {
-  const [initialNotice, setInitialNotice] = useState<NoticeData[]>([]);
-  useEffect(() => {
-    Notices.getNotices()
-      .then(response => {
-        if (response.data) {
-          setInitialNotice(response.data);
-        }
-      })
-      .catch(error => console.log(error));
-  }, []);
-  const [notices, dispatch] = useReducer(Reducer, initialNotice);
+  const [notices, dispatch] = useReducer(Reducer, []);
   return (
     <DispatchContext.Provider value={dispatch}>
       <NoticeContext.Provider value={notices}>{children}</NoticeContext.Provider>
