@@ -61,6 +61,7 @@ function DiaryList({ navigation }: DiaryListProp) {
       return () => {
         setData({ content: [] });
         setPage(-1);
+        isFirstRender.current = true;
       };
     }, []),
   );
@@ -75,6 +76,7 @@ function DiaryList({ navigation }: DiaryListProp) {
 
   useEffect(() => {
     if (notices && notices.length > 0) {
+      setPage(-1);
       setData({ content: [] });
       setPage(0);
     }
