@@ -49,9 +49,9 @@ function SelectImage({ navigation, route }: SelectImageProp) {
     return <Images item={item} onPress={() => setSelectedImg(item.imgUrl)} backgroundColor={backgroundColor} />;
   }
 
-  function createDiary() {
+  async function createDiary() {
     if (selectedImg) {
-      Diarys.addDiary({
+      await Diarys.addDiary({
         id: diaryId,
         imgUrl: selectedImg,
       })

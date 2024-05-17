@@ -55,7 +55,6 @@ export const DiaryListTitleContainer = styled.Pressable`
 export const DiaryListTitle = styled.Text`
   font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-  color: ${({ theme }) => theme.colors.mainPink};
 `;
 
 export const DefaultImage = styled.View`

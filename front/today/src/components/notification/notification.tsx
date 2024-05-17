@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { Notices } from '../../apis/NoticeApi';
 
 // 테스트 알림 보내는 함수
@@ -48,7 +48,7 @@ export async function registerForPushNotificationsAsync() {
       return;
     }
   } else {
-    alert('모바일 기기로 접속해주세요!');
+    Alert.alert('알림', '모바일 기기 접속 권장드립니다.');
   }
 }
 
