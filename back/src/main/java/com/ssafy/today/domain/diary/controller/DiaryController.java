@@ -48,6 +48,8 @@ public class DiaryController {
     public ResponseEntity<?> createDiary(HttpServletRequest request, @RequestBody DiaryContentRequest diaryContentRequest) {
         Long memberId = (Long) request.getAttribute("memberId");
         diaryContentRequest.setMemberId(memberId);
+        // 개행 문자 제거
+        diaryContentRequest.setContent(diaryContentRequest.getContent().replace("\n", ""));
         // 이미지를 제외한 diary 생성
         DiaryResponse diaryResponse = diaryService.createDiary(memberId, diaryContentRequest);
         // 임의 날짜 지정이 있을시 임의 지정한 값으로 설정
