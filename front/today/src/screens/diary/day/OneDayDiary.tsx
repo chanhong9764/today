@@ -21,7 +21,7 @@ interface DiaryItemProp {
 
 interface OneDayDiaryProp {
   navigation: {
-    push: (arg0: string, arg1?: { screen?: string; params?: { diaryId: number } }) => void;
+    navigate: (arg0: string, arg1?: { screen?: string; params?: { screen: string; diaryId: number } }) => void;
   };
   route: { params: { selectedDate: string } };
 }

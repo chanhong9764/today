@@ -52,7 +52,7 @@ function AnalysisContent({
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
       <S.CloseModal>
-        <Icon name="close" size={20} onPress={() => setModalVisible(false)} />
+        <Icon name="close" size={25} onPress={() => setModalVisible(false)} />
       </S.CloseModal>
       <Text></Text>
       <S.AnalysisTitle>오늘의 일기 분석 결과</S.AnalysisTitle>

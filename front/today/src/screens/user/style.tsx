@@ -46,10 +46,17 @@ export const MyPageSubTitle = styled.Text`
 `;
 
 export const MyInfoTitle = styled.Text`
-  font-size: ${({ theme }) => theme.fontSize.small};
+  font-size: ${({ theme }) => theme.fontSize.xsmall};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   margin-right: 20px;
   flex: 2;
+`;
+
+export const MBTITitle = styled.Text`
+  font-size: ${({ theme }) => theme.fontSize.regular};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
+  margin-bottom: 20px;
+  text-align: center;
 `;
 
 export const MyInfoContent = styled.View`
@@ -97,7 +104,8 @@ export const Logo = styled.Text`
 `;
 
 export const PointWord = styled.Text`
-  color: ${({ theme }) => theme.colors.middlePink};
+  color: ${({ theme }) => theme.colors.mainPink};
+  text-shadow: 1px 1px 3px gray;
 `;
 
 export const LoginText = styled.Text`
@@ -134,6 +142,6 @@ export const Line = styled.View`
 `;
 
 export const MBTItext = styled.Text`
-  color: ${({ theme }) => theme.colors.mainPink};
+  color: ${({ theme }) => theme.colors.pink};
   text-shadow: 1px 1px 3px gray;
 `;

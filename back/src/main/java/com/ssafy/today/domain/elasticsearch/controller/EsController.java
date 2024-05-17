@@ -6,6 +6,7 @@ import com.ssafy.today.domain.elasticsearch.dto.response.SearchResponseWrapper;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
 import com.ssafy.today.util.response.SuccessCode;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,10 @@ import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEnt
 
 @RestController
 @RequestMapping("/es")
+@RequiredArgsConstructor
 public class EsController {
 
-    @Autowired
-    private EsService esService;
+    private final EsService esService;
 
     private static final String PASSWORD = "today!";
 
@@ -74,6 +75,12 @@ public class EsController {
         if(pwd.equals(PASSWORD)) {
             esService.initEs();
         }
+        return getResponseEntity(SuccessCode.OK);
+    }
+
+    @DeleteMapping("/delete/es")
+    public ResponseEntity<?> delete() {
+        esService.deleteAll();
         return getResponseEntity(SuccessCode.OK);
     }
 }

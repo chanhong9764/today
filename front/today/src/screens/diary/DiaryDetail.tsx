@@ -19,9 +19,10 @@ interface DiaryDetailProp {
   route: { params: { diaryId: number } };
 }
 
-function DiaryDetail({ navigation, route }: DiaryDetailProp) {
+function DiaryDetail({ navigation, route }: any) {
   const [diary, setDiary] = useState<DiaryData | undefined>();
   const viewShotRef = useRef(null);
+  console.log(route);
   const { diaryId } = route.params;
 
   useEffect(() => {
