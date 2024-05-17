@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { setCustomText } from 'react-native-global-props';
 import { ThemeProvider } from 'styled-components';
 import { registerForPushNotificationsAsync } from './src/components/notification/notification';
+import { DiaryContextProvider } from './src/contexts/DiaryContext';
 import { IsLoginProvider } from './src/contexts/IsLoginContext';
 import { NoticeProvider } from './src/contexts/NoticeContext';
 import RootStack from './src/navigator/RootStack';
@@ -56,9 +57,11 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <IsLoginProvider>
           <NoticeProvider>
-            <NavigationContainer linking={linking}>
-              <RootStack />
-            </NavigationContainer>
+            <DiaryContextProvider>
+              <NavigationContainer linking={linking}>
+                <RootStack />
+              </NavigationContainer>
+            </DiaryContextProvider>
           </NoticeProvider>
         </IsLoginProvider>
       </ThemeProvider>

@@ -16,8 +16,9 @@ import { CalendarStackParam } from '../types/navigatortype/stack';
 
 interface CalendarStackProp {
   navigation: {
-    navigate: (arg0: string, arg1?: { searchData: SearchData[] }) => void;
+    navigate: (arg0: string, arg1?: { searchData?: SearchData[], screen?: string}) => void;
     push: (arg0: string, arg1?: { screen: string }) => void;
+    jumpTo: any;
   };
 }
 
@@ -51,8 +52,6 @@ export const CalendarNav = ({ navigation }: CalendarStackProp) => {
       initialRouteName="Calendar"
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTitle: () => <Logo onPress={() => navigation.push('CalendarStack')} />,
-        headerRight: () => <NotificationBadge onPress={() => navigation.push('NotificationScreen')} />,
       }}>
       <CalendarStack.Screen
         name="Calendar"
@@ -65,13 +64,13 @@ export const CalendarNav = ({ navigation }: CalendarStackProp) => {
                 <IconF name="search" size={27} onPress={onPressSearch} />
               </>
             ) : (
-              <Logo onPress={() => navigation.push('CalendarStack')} />
+              <Logo onPress={() => navigation.navigate('CalendarNav')} />
             ),
           headerLeft: () =>
             isSearching ? (
               <></>
             ) : (
-              <IconF name="plus" size={35} onPress={() => navigation.push('DiaryStack', { screen: 'SelectEmotion' })} />
+              <IconF name="plus" size={35} onPress={() => navigation.navigate('DiaryNav', { screen: "DiaryList", params: { screen: "SelectEmotion"} })} />
             ),
           headerRight: () =>
             isSearching ? (
