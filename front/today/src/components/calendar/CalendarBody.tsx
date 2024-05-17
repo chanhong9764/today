@@ -117,7 +117,7 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
   }
 
   return (
-    <S.CalendarBodyContainer>
+    <S.CalendarBodyContainer showsVerticalScrollIndicator={false}>
       <S.DayOfWeek>
         {dayOfWeek.map((day, index) => (
           <S.Box key={index}>

@@ -22,7 +22,7 @@ interface DiaryDetailProp {
 function DiaryDetail({ navigation, route }: any) {
   const [diary, setDiary] = useState<DiaryData | undefined>();
   const viewShotRef = useRef(null);
-  console.log(route);
+
   const { diaryId } = route.params;
 
   useEffect(() => {

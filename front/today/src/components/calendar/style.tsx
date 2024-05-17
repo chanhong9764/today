@@ -6,12 +6,14 @@ const center = css`
   align-items: center;
 `;
 
-export const CalendarBodyContainer = styled.View``;
+export const CalendarBodyContainer = styled.ScrollView`
+`;
 
 export const CalendarHeaderContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin: 15px 0;
 `;
 
 export const CalendarTitle = styled.Text`
