@@ -71,7 +71,7 @@ function RootStack() {
       });
     });
   }, []);
-  
+
   return (
     <Stack.Navigator>
       {isLogin ? (

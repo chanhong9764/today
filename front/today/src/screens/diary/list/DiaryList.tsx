@@ -1,8 +1,9 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Alert, FlatList, SafeAreaView } from 'react-native';
 import { Diarys } from '../../../apis/DiaryApi';
 import { DiaryCard } from '../../../components/diary/list/DiaryCard';
+import { DiaryContext } from '../../../contexts/DiaryContext';
 import { AllDiaryData, DiaryData } from '../../../types/datatype';
 
 interface DiaryListProp {
@@ -15,19 +16,20 @@ interface DiaryListProp {
 
 function DiaryList({ navigation, route }: DiaryListProp) {
   const flatListRef = useRef<FlatList<DiaryData>>(null);
-  
+
   useFocusEffect(
     useCallback(() => {
-      if(navigation.getState().routes[0].params !== undefined) {
-        navigation.getState().routes[0].params = undefined
-        navigation.push("SelectEmotion")
+      if (navigation.getState().routes[0].params !== undefined) {
+        navigation.getState().routes[0].params = undefined;
+        navigation.push('SelectEmotion');
       }
     }, []),
-  )
+  );
+  const { diaryList, addDiaryList } = useContext(DiaryContext);
 
   // 페이지네이션
   const [data, setData] = useState<AllDiaryData>({ content: [] });
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState<boolean>(false);
   const isFirstRender = useRef(true);
 
@@ -41,6 +43,7 @@ function DiaryList({ navigation, route }: DiaryListProp) {
     Diarys.getDiarys(page, 2)
       .then(response => {
         const newData = response.data?.content || [];
+        addDiaryList(newData);
         setData(currentData => ({
           ...currentData,
           content: [...currentData.content, ...newData],

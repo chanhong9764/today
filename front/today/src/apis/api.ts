@@ -57,7 +57,6 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   async config => {
-    console.log(config);
     console.log(await AsyncStorage.getItem('accessToken'));
     return config;
   },
