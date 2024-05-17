@@ -1,10 +1,10 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import React, { useCallback, useEffect, useRef, useState, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Alert, FlatList, SafeAreaView } from 'react-native';
 import { Diarys } from '../../../apis/DiaryApi';
 import { DiaryCard } from '../../../components/diary/list/DiaryCard';
-import { AllDiaryData, DiaryData } from '../../../types/datatype';
 import { NoticeContext } from '../../../contexts/NoticeContext';
+import { AllDiaryData, DiaryData } from '../../../types/datatype';
 
 interface DiaryListProp {
   navigation: {
@@ -13,7 +13,7 @@ interface DiaryListProp {
   };
 }
 
-function DiaryList({ navigation }: DiaryListProp) {
+function DiaryList({ navigation }: any) {
   const flatListRef = useRef<FlatList<DiaryData>>(null);
   const isFocused = useIsFocused();
   const notices = useContext(NoticeContext);
@@ -30,7 +30,7 @@ function DiaryList({ navigation }: DiaryListProp) {
     //   return;
     // }
     // setLoading(true);
-    
+
     Diarys.getDiarys(page, 2)
       .then(response => {
         const newData = response.data?.content || [];
@@ -66,6 +66,7 @@ function DiaryList({ navigation }: DiaryListProp) {
       return () => {
         setData({ content: [] });
         setPage(-1);
+        isFirstRender.current = true;
       };
     }, []),
   );
@@ -80,6 +81,7 @@ function DiaryList({ navigation }: DiaryListProp) {
 
   useEffect(() => {
     if (notices && notices.length > 0) {
+      setPage(-1);
       setData({ content: [] });
       setPage(0);
     }

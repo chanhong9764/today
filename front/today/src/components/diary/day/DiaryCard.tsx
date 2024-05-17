@@ -11,7 +11,7 @@ type ItemProps = {
   backgroundColor: string;
   starIcon: string;
   navigation: {
-    push: (arg0: string, arg1?: { screen?: string; params?: { diaryId: number } }) => void;
+    navigate: (arg0: string, arg1?: { screen?: string; params?: { screen: string; diaryId: number } }) => void;
   };
 };
 
@@ -90,10 +90,10 @@ export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navig
         Alert.alert('그림 생성 미완료', '아직 그림을 그리는 중이에요!');
         break;
       case 1:
-        navigation.push('DiaryStack', { screen: 'SelectImage', params: { diaryId: item.id } });
+        navigation.navigate('DiaryNav', { screen: 'DiaryList', params: { screen: 'SelectImage', diaryId: item.id } });
         break;
       case 2:
-        navigation.push('DiaryStack', { screen: 'DiaryDetail', params: { diaryId: item.id } });
+        navigation.navigate('DiaryNav', { screen: 'DiaryList', params: { screen: 'DiaryDetail', diaryId: item.id } });
         break;
       default:
         Alert.alert('그림 생성 미완료', '아직 그림을 그리는 중이에요!');

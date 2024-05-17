@@ -14,8 +14,6 @@ import KakaoLogin from '../screens/user/KakaoLogin';
 import NotificationScreen from '../screens/user/notification/NotificationScreen';
 import { NoticeData } from '../types/datatype';
 import { RootStackParam } from '../types/navigatortype/stack';
-import { CalendarNav } from './CalendarStack';
-import { DiaryNav } from './DairyStack';
 import MainTab from './MainTab';
 
 const Stack = createNativeStackNavigator<RootStackParam>();

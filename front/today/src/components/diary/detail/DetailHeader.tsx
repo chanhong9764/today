@@ -10,12 +10,11 @@ type DetailHeaderProps = {
 };
 
 const formatDate = (date: Date) => {
-  const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const dayNames = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
   const dayName = dayNames[date.getDay()];
-  return `${year}년 ${month}월 ${day}일 ${dayName}`;
+  return `${month}월 ${day}일 ${dayName}`;
 };
 
 const DetailHeader = ({ diary }: DetailHeaderProps) => {
@@ -34,20 +33,43 @@ const DetailHeader = ({ diary }: DetailHeaderProps) => {
       borderBottomWidth={0}>
       <HStack
         divider={<Divider borderWidth={1} borderColor="#FE8B8B" bg="#FE8B8B" />}
-        borderBottomWidth={2}
+        borderBottomWidth={3}
         borderBottomColor="#FE8B8B">
         <VStack flex={1}>
-          <Center height="50px" style={{ borderBottomWidth: 3, borderColor: '#FE8B8B' }}>
+          <Center
+            height="50px"
+            _text={{
+              fontSize: '18px',
+              fontFamily: 'base',
+            }}
+            style={{ borderBottomWidth: 3, borderColor: '#FE8B8B' }}>
             날짜
           </Center>
-          <Center height="50px">{createdAt ? formatDate(createdAt) : 'Unknown'}</Center>
+          <Center
+            height="60px"
+            _text={{
+              fontFamily: 'title',
+              fontSize: '28px',
+            }}>
+            {createdAt ? formatDate(createdAt) : 'Unknown'}
+          </Center>
         </VStack>
         <VStack flex={1}>
-          <Center height="50px" style={{ borderBottomWidth: 3, borderColor: '#FE8B8B' }}>
+          <Center
+            height="50px"
+            _text={{
+              fontSize: '18px',
+              fontFamily: 'base',
+            }}
+            style={{ borderBottomWidth: 3, borderColor: '#FE8B8B' }}>
             오늘의 기분
           </Center>
-          <Center height="50px">
-            {diary.feel ? <Image source={EmotionFiles[diary.feel]} style={{ width: 40, height: 40 }} /> : 'Unknown'}
+          <Center height="60px">
+            {diary.feel ? (
+              <Image source={EmotionFiles[diary.feel]} alt="emotion" style={{ width: 40, height: 40 }} />
+            ) : (
+              'Unknown'
+            )}
           </Center>
         </VStack>
       </HStack>

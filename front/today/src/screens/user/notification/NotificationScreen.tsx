@@ -51,7 +51,7 @@ function NotificationItem({ item, onpress, dispatch }: NotiItemProps) {
   );
 }
 
-function NotificationScreen({ navigation }: NotiScreenProp) {
+function NotificationScreen({ navigation }: any) {
   const [notiData, setNotiData] = useState<NoticeData[]>([]);
   const dispatch = useDispatchContext();
   const notices = useContext(NoticeContext);

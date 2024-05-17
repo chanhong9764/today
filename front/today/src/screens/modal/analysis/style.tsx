@@ -25,6 +25,6 @@ export const MBTItext = styled.Text`
 
 export const CloseModal = styled.View`
   width: 100%;
-  display: flex;
+  flex-direction: row;
   justify-content: flex-end;
 `;
