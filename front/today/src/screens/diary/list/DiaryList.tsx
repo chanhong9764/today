@@ -50,7 +50,6 @@ function DiaryList({ navigation }: any) {
   useFocusEffect(
     useCallback(() => {
       if (navigation.getState().routes[0].params !== undefined) {
-        // console.log(navigation.getState().routes[0].params)
         if(navigation.getState().routes[0].params.screen !== "SelectEmotion"){ 
           navigation.push(navigation.getState().routes[0].params.screen, { diaryId: navigation.getState().routes[0].params.diaryId });
         } else {
