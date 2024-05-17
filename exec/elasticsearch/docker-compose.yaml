@@ -7,6 +7,7 @@ services:
       cluster.name: es-docker-cluster
       discovery.type: single-node
       xpack.security.enabled: false  # 보안 기능 비활성화
+      TZ: Asia/Seoul
     ulimits:
       memlock:
         soft: -1
@@ -22,6 +23,7 @@ services:
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200  # SSL/TLS 비활성화
+      TZ: Asia/Seoul
     ports:
       - 5601:5601
     depends_on:
