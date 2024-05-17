@@ -93,7 +93,7 @@ const Graph = ({ analysisData }: RadarChartProps) => {
       <View style={styles.row}>
         {EmotionData.slice(3, 6).map((ed, index) => (
           <Text key={index} style={styles.emotionText}>
-            {ed.name}: {data[index]}%
+            {ed.name}: {data[index + 3]}%
           </Text>
         ))}
       </View>
