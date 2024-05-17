@@ -12,6 +12,7 @@ export interface Apis {
   analysismonth: (date: string) => Array;
   analysisday: (date: string) => Array;
   notice: string;
+  deleteNotice: (diaryId: number) => Array;
   noticeToken: string;
 }
 

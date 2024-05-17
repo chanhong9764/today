@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { Axios, AxiosResponse } from 'axios';
+import { setIsLoginGlobal } from '../contexts/IsLoginContext';
 import { APIResponse, Apis } from '../types/datatype/apis';
 
 const apis: Apis = {
@@ -9,6 +10,8 @@ const apis: Apis = {
   search: '/es/search',
   // 알림 조회
   notice: '/notices',
+  // 알림 삭제
+  deleteNotice: diaryId => `/notices/${diaryId}`,
   // 알림 token 전달
   noticeToken: '/notices/token',
 
@@ -52,20 +55,26 @@ instance.interceptors.request.use(
   },
 );
 
-instance.interceptors.response.use(undefined, 
+instance.interceptors.response.use(
+  async config => {
+    console.log(config);
+    console.log(await AsyncStorage.getItem('accessToken'));
+    return config;
+  },
   async error => {
-    console.log(error.response.status)
+    console.log(error.response.status);
     switch (error.response.status) {
       case 401: {
         await AsyncStorage.removeItem('accessToken');
+        setIsLoginGlobal(false);
         break;
       }
       default:
         break;
     }
-    return Promise.reject(error)
-  }
-)
+    return Promise.reject(error);
+  },
+);
 
 const responseBody = <T>(response: AxiosResponse<APIResponse<T>>) => response.data;
 

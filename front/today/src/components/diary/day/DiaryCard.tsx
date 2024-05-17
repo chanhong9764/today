@@ -61,7 +61,9 @@ export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navig
       case 2:
         return (
           <S.DefaultImage source={{ uri: item.imgUrl }}>
-            <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} style={{}} />
+            <S.IconContainer>
+              <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} />
+            </S.IconContainer>
           </S.DefaultImage>
         );
       default:

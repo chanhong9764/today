@@ -132,3 +132,8 @@ export const Line = styled.View`
   background-color: lightgray;
   margin: 15px 0px;
 `;
+
+export const MBTItext = styled.Text`
+  color: ${({ theme }) => theme.colors.mainPink};
+  text-shadow: 1px 1px 3px gray;
+`;

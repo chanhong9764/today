@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { SectionList, Text } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { Diarys } from '../../../apis/DiaryApi';
 import { Notices } from '../../../apis/NoticeApi';
 import { NoticeContext, useDispatchContext } from '../../../contexts/NoticeContext';
 import { NoticeData } from '../../../types/datatype';
@@ -8,18 +9,12 @@ import * as S from './style';
 
 type NotiItemProps = {
   item: NoticeData;
-  onPress: () => void;
+  onpress: any;
   dispatch: any;
 };
 
-type GroupedNotices = {
-  [date: string]: NoticeData[];
-};
-
-type SectionHeaderProps = {
-  section: {
-    title: string;
-  };
+type RenderNotiProps = {
+  item: NoticeData;
 };
 
 interface NotiScreenProp {
@@ -28,7 +23,7 @@ interface NotiScreenProp {
   };
 }
 
-function NotificationItem({ item, onPress, dispatch }: NotiItemProps) {
+function NotificationItem({ item, onpress, dispatch }: NotiItemProps) {
   const backgroundColor = item.confirm ? '#fcfcfc' : '#dbdbdb';
 
   function onPressDelete() {
@@ -36,9 +31,12 @@ function NotificationItem({ item, onPress, dispatch }: NotiItemProps) {
       type: 'REMOVE',
       content: item.content,
     });
+    Notices.deleteNotices(item.noticeId)
+      .then(response => console.log('알림 삭제 성공'))
+      .catch(error => console.log(error));
   }
   return (
-    <S.NotiContainer onPress={onPress} backgroundColor={backgroundColor}>
+    <S.NotiContainer onPress={onpress} backgroundColor={backgroundColor}>
       <S.IconContainer onPress={onPressDelete}>
         <Icon name="close" size={20} />
       </S.IconContainer>
@@ -57,59 +55,34 @@ function NotificationScreen({ navigation }: NotiScreenProp) {
     setNotiData(notices ?? []);
   }, [notices]);
 
-  let groupedNotices: GroupedNotices = {};
+  function renderNoti({ item }: RenderNotiProps) {
+    async function onPressNoti() {
+      let temp;
+      await Diarys.getSingleDiary(item.diaryId)
+        .then(response => {
+          temp = response.data?.status;
+        })
+        .catch(error => console.log(error));
 
-  notiData.map(notice => {
-    const date: Date = new Date(notice.createdAt);
-    const year: number = date.getFullYear();
-    const day: number = date.getDate();
-    const month: number = date.getMonth() + 1;
-
-    const formattedDate = year + '-' + ('00' + month.toString()).slice(-2) + '-' + ('00' + day.toString()).slice(-2);
-
-    if (!groupedNotices[formattedDate]) {
-      groupedNotices[formattedDate] = [];
+      if (temp === 1) {
+        navigation.push('DiaryStack', { screen: 'SelectImage', params: { diaryId: item.diaryId } });
+        Notices.checkNotices({ noticeId: item.noticeId, confirm: true });
+        dispatch({
+          type: 'TOGGLE',
+          content: item.content,
+        });
+      } else {
+        navigation.push('DiaryStack', { screen: 'DiaryDetail', params: { diaryId: item.diaryId } });
+      }
     }
-
-    groupedNotices[formattedDate].push(notice);
-  });
-
-  const sections = Object.keys(groupedNotices).map(date => ({
-    title: date,
-    data: groupedNotices[date],
-  }));
-
-  function renderNoti({ item }: { item: NoticeData }) {
-    function onPressNoti() {
-      navigation.push('DiaryStack', { screen: 'SelectImage', params: { diaryId: item.diaryId } });
-      Notices.checkNotices({ noticeId: item.noticeId, confirm: true });
-      dispatch({
-        type: 'TOGGLE',
-        content: item.content,
-      });
-    }
-    return (
-      <>
-        <NotificationItem item={item} onPress={onPressNoti} dispatch={dispatch} />
-      </>
-    );
-  }
-
-  function renderNotiHeader({ section: { title } }: SectionHeaderProps) {
-    return (
-      <>
-        <S.NotiTitle>{title}</S.NotiTitle>
-        <S.Line />
-      </>
-    );
+    return <NotificationItem item={item} onpress={onPressNoti} dispatch={dispatch} />;
   }
 
   return (
     <S.NoticePageContianer>
-      <SectionList
-        sections={sections}
+      <FlatList
+        data={notiData}
         keyExtractor={item => item?.diaryId.toString()}
-        renderSectionHeader={renderNotiHeader}
         renderItem={({ item }) => renderNoti({ item })}
         ListEmptyComponent={() => <Text style={{ textAlign: 'center', marginTop: 20 }}>아직 알림이 없어요!</Text>}
       />

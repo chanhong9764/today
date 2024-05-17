@@ -27,23 +27,26 @@ const DetailHeader = ({ diary }: DetailHeaderProps) => {
   return (
     <VStack
       borderColor="#FE8B8B"
-      borderWidth={1}
+      borderWidth={3}
       borderRadius={8}
       overflow="hidden"
       borderBottomRadius={0}
       borderBottomWidth={0}>
-      <HStack divider={<Divider bg="#FE8B8B" />} borderBottomWidth={1} borderBottomColor="#FE8B8B">
+      <HStack
+        divider={<Divider borderWidth={1} borderColor="#FE8B8B" bg="#FE8B8B" />}
+        borderBottomWidth={2}
+        borderBottomColor="#FE8B8B">
         <VStack flex={1}>
-          <Center height="45px" style={{ borderBottomWidth: 0.5, borderColor: '#FE8B8B' }}>
+          <Center height="50px" style={{ borderBottomWidth: 3, borderColor: '#FE8B8B' }}>
             날짜
           </Center>
-          <Center height="45px">{createdAt ? formatDate(createdAt) : 'Unknown'}</Center>
+          <Center height="50px">{createdAt ? formatDate(createdAt) : 'Unknown'}</Center>
         </VStack>
         <VStack flex={1}>
-          <Center height="45px" style={{ borderBottomWidth: 0.5, borderColor: '#FE8B8B' }}>
+          <Center height="50px" style={{ borderBottomWidth: 3, borderColor: '#FE8B8B' }}>
             오늘의 기분
           </Center>
-          <Center height="45px">
+          <Center height="50px">
             {diary.feel ? <Image source={EmotionFiles[diary.feel]} style={{ width: 40, height: 40 }} /> : 'Unknown'}
           </Center>
         </VStack>
