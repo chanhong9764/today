@@ -9,6 +9,7 @@ import * as S from './style';
 interface EditDiaryProp {
   navigation: {
     replace: (arg0: string, arg1?: { diaryId: number }) => void;
+    navigate: any;
   };
   route: { params: { diaryId: number; diaryContent: string } };
 }
@@ -32,7 +33,7 @@ function EditDiary({ navigation, route }: EditDiaryProp) {
   function onPressEdit() {
     Diarys.editDiary(diaryId, content)
       .then(res => {
-        navigation.replace('DiaryDetail', { diaryId: diaryId });
+        navigation.navigate('DiaryDetail', { diaryId: diaryId });
       })
       .catch(err => {
         console.log('일기 수정 실패', err);
