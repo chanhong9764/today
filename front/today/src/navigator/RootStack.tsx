@@ -79,8 +79,6 @@ function RootStack() {
       {isLogin ? (
         <>
           <Stack.Screen name="MainTab" component={MainTab} options={{ headerShown: false }} />
-          <Stack.Screen name="CalendarStack" component={CalendarNav} options={{ headerShown: false }} />
-          <Stack.Screen name="DiaryStack" component={DiaryNav} options={{ headerShown: false }} />
           <Stack.Screen
             name="NotificationScreen"
             component={NotificationScreen}

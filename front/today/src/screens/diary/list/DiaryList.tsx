@@ -8,11 +8,22 @@ import { AllDiaryData, DiaryData } from '../../../types/datatype';
 interface DiaryListProp {
   navigation: {
     push: (arg0: string, arg2?: { diaryId: number }) => void;
+    getState: any;
   };
+  route: any;
 }
 
-function DiaryList({ navigation }: DiaryListProp) {
+function DiaryList({ navigation, route }: DiaryListProp) {
   const flatListRef = useRef<FlatList<DiaryData>>(null);
+  
+  useFocusEffect(
+    useCallback(() => {
+      if(navigation.getState().routes[0].params !== undefined) {
+        navigation.getState().routes[0].params = undefined
+        navigation.push("SelectEmotion")
+      }
+    }, []),
+  )
 
   // 페이지네이션
   const [data, setData] = useState<AllDiaryData>({ content: [] });
