@@ -53,6 +53,7 @@ function Mypage() {
             surprise: data.surprise,
           };
           setAnalysisData(scaledData);
+          console.log(scaledData);
         }
       })
       .catch(error => {
