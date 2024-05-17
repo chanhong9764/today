@@ -22,14 +22,19 @@ function MainTab() {
   const theme = useTheme();
 
   useEffect(() => {
-    const test = async () => {
-      const url = await AsyncStorage.getItem('pendingURL'); // 저장된 URL 가져오기
-      if (url) {
-        await Linking.openURL(url);
-        await AsyncStorage.removeItem('pendingURL');
+    const noti = async () => {
+      const selectImageURL = await AsyncStorage.getItem('selectImageURL'); // 저장된 URL 가져오기
+      const writeDiaryURL = await AsyncStorage.getItem('writeDiaryURL');
+      if (selectImageURL) {
+        await Linking.openURL(selectImageURL);
+        await AsyncStorage.removeItem('selectImageURL');
+      }
+      if (writeDiaryURL) {
+        await Linking.openURL(writeDiaryURL);
+        await AsyncStorage.removeItem('writeDiaryURL');
       }
     };
-    test();
+    noti();
   }, []);
 
   return (

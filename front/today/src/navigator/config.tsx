@@ -23,6 +23,7 @@ export const linking = {
             screens: {
               SelectImage: 'SelectImage/:diaryId',
               DiaryList: 'DiaryList',
+              SelectEmotion: 'SelectEmotion',
             },
           },
         },
@@ -51,13 +52,25 @@ export const linking = {
 
     const subscription = Notifications.addNotificationResponseReceivedListener(async response => {
       const isLogin = await checkLogin();
-      const diaryId = response.notification.request.content.data.diaryId;
-      const url = `${prefix}SelectImage/${diaryId}`;
+      const responses = response.notification.request.content.data;
+
+      // content.data의 kind가 OFFER이면 => 일기 작성 페이지
+      // content.data의 kind가 COMPLETE => 이미지 선택 페이지
+      const selectImageURL = `${prefix}SelectImage/${responses.diaryId}`;
+      const writeDiaryURL = `${prefix}SelectEmotion`;
 
       if (!isLogin) {
-        await AsyncStorage.setItem('pendingURL', url);
+        if (responses.kind === 'COMPLETE') {
+          await AsyncStorage.setItem('selectImageURL', selectImageURL);
+        } else {
+          await AsyncStorage.setItem('writeDiaryURL', writeDiaryURL);
+        }
       } else {
-        listener(url);
+        if (responses.kind === 'COMPLETE') {
+          listener(selectImageURL);
+        } else {
+          listener(writeDiaryURL);
+        }
       }
     });
 
