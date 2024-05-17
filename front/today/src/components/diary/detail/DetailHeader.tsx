@@ -52,7 +52,12 @@ const DetailHeader = ({ diary }: DetailHeaderProps) => {
         </VStack>
       </HStack>
       <View style={{ height: imageHeight, width: '100%' }}>
-        <Image source={{ uri: diary.imgUrl }} style={{ width: '100%', height: '100%' }} resizeMode="stretch" />
+        <Image
+          source={{ uri: diary.imgUrl }}
+          alt="drawing_diary"
+          style={{ width: '100%', height: '100%' }}
+          resizeMode="stretch"
+        />
       </View>
     </VStack>
   );
