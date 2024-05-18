@@ -9,6 +9,10 @@ import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
 import com.ssafy.today.domain.elasticsearch.dto.response.SearchResponse;
 import com.ssafy.today.domain.elasticsearch.entity.DiaryEs;
 import com.ssafy.today.domain.elasticsearch.repository.EsRepository;
+import com.ssafy.today.util.response.ErrorCode;
+import com.ssafy.today.util.response.exception.GlobalException;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,22 +20,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EsService {
 
-    @Autowired
-    private EsRepository esRepository;
-
-    @Autowired
-    private DiaryRepository diaryRepository;
+    private final EsRepository esRepository;
+    private final DiaryRepository diaryRepository;
 
     public void saveEs(DiaryEsRequest diaryEsRequest) {
-        esRepository.save(DiaryEs.builder()
+        Optional<DiaryEs> diaryEs = esRepository.findByDiaryId(diaryEsRequest.getDiaryId());
+        if(diaryEs.isEmpty()) {
+            esRepository.save(DiaryEs.builder()
                 .content(diaryEsRequest.getContent())
                 .memberId(diaryEsRequest.getMemberId())
                 .diaryId(diaryEsRequest.getDiaryId())
                 .imgUrl(diaryEsRequest.getImgUrl())
                 .createdAt(diaryEsRequest.getCreatedAt())
                 .build());
+        }
     }
 
     public void update(UpdateDiaryRequest updateDiaryRequest) {
@@ -77,4 +82,9 @@ public class EsService {
         }
         esRepository.saveAll(diaryEs);
     }
+
+    public void deleteAll() {
+        esRepository.deleteAll();
+    }
+
 }

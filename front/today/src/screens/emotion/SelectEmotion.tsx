@@ -4,10 +4,15 @@ import { useTheme } from 'styled-components';
 import NextButton from '../../common/CommonButton';
 import Emotions from '../../components/diary/write/Emotions';
 import { EmotionData, EmotionDataProp } from '../../contexts/EmotionData';
-import { CalendarProp } from '../../types/navigatortype/stack';
 import * as S from './style';
 
-function SelectEmotion({ navigation }: CalendarProp) {
+interface SelectEmotionProp {
+  navigation: {
+    push: (arg0: string, arg1?: { feel: string }) => void;
+  };
+}
+
+function SelectEmotion({ navigation }: SelectEmotionProp) {
   const theme = useTheme();
   const [selectedFeel, setSelectedFeel] = useState<string>('');
 

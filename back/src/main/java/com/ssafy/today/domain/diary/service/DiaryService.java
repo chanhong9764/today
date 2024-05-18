@@ -1,20 +1,16 @@
 package com.ssafy.today.domain.diary.service;
 
-import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import com.ssafy.today.domain.diary.dto.request.DiaryContentCreated;
 import com.ssafy.today.domain.diary.dto.request.DiaryContentRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryImageRequest;
 import com.ssafy.today.domain.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.today.domain.diary.dto.response.DiaryResponse;
 import com.ssafy.today.domain.diary.entity.Diary;
-import com.ssafy.today.domain.diary.entity.MBTI;
 import com.ssafy.today.domain.diary.repository.DiaryRepository;
 import com.ssafy.today.domain.member.entity.Member;
 import com.ssafy.today.domain.member.repository.MemberRepository;
-import com.ssafy.today.global.security.oauth2.user.GoogleOAuth2UserInfo;
 import com.ssafy.today.util.response.ErrorCode;
 import com.ssafy.today.util.response.exception.GlobalException;
-import jakarta.persistence.Enumerated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,9 +40,10 @@ public class DiaryService {
         LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
 
         if(diaryRepository.existsByImportantIsTrueAndMemberIdAndCreatedAtBetween(memberId,startOfDay,endOfDay)){
-            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, false));
+            Integer count = diaryRepository.countByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay)+1;
+            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, false, count));
         }else{
-            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, true));
+            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, true, 1));
         }
         return DiaryResponse.fromEntity(save);
     }
@@ -67,6 +64,12 @@ public class DiaryService {
         return DiaryResponse.fromEntity(diary);
     }
 
+    public Diary getDiaryEntity(Long diaryId){
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow(
+                () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+        return diary;
+    }
+
     public Page<DiaryResponse> getDiaryPage(Long memberId, Pageable pageable){
         Page<Diary> all = diaryRepository.findAllByMemberId(memberId, pageable);
         return all.map(DiaryResponse::fromEntity);
@@ -83,7 +86,13 @@ public class DiaryService {
         // diary2 : 기존의 import 지정 되어 있는 다이어리
         Diary diary2 = diaryRepository.findFirstByMemberIdAndCreatedAtBetweenAndImportant(memberId,startOfDay,endOfDay,true);
         if(diary2 == null){
-            throw new GlobalException(ErrorCode.DIARY_NOT_FOUND);
+            // 하나도 지정이 안되어 있을 때 처리
+            diary1.updateImportant(true);
+            return;
+        }
+        if(diary1.getId().equals(diary2.getId())){
+            // 이미 important 일기를 또 지정할때 처리
+            return;
         }
         diary1.updateImportant(true);
         diary2.updateImportant(false);
@@ -93,6 +102,7 @@ public class DiaryService {
         Diary diary = diaryRepository.findById(diaryRequest.getId()).orElseThrow(
                 () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
         diary.updateImg(diaryRequest.getImgUrl());
+        diary.updateStatus(2);
     }
 
     /**
@@ -122,5 +132,11 @@ public class DiaryService {
      */
     public boolean checkDiaryBelongsToMember(Long diaryId, Long memberId){
         return diaryRepository.existsByIdAndMemberId(diaryId, memberId);
+    }
+
+    public void updateCreatedAt(Long id, LocalDateTime createdAt) {
+        Diary diary = diaryRepository.findById(id).orElseThrow(
+                () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+        diary.updateCreatedAt(createdAt);
     }
 }

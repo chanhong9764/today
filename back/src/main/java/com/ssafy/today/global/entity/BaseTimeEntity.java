@@ -18,4 +18,9 @@ public class BaseTimeEntity {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public void updateCreatedAt(LocalDateTime createdAt){
+        this.createdAt = createdAt;
+    }
+
 }

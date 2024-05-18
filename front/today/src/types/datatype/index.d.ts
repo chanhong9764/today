@@ -12,27 +12,26 @@ export interface DiaryData {
   feel: string | undefined;
   important: boolean;
   imgUrl: string;
+  status: number;
   content: string;
-  createdAt?: string | Date;
+  createdAt: string;
+  count: number;
 }
 
 export interface CalendarData {
   id: number;
+  status: number;
   memberId: number;
   important: boolean;
   imgUrl: string;
   content: string;
-  createdAt?: string | date;
+  createdAt: string;
 }
 
 export interface SearchData {
-  diaryId: number;
+  id: number;
   imgUrl: string;
   createdAt: string;
-  content: string;
-}
-
-export interface EditDiaryData {
   content: string;
 }
 
@@ -40,7 +39,63 @@ export interface AllDiaryData {
   content: DiaryData[];
 }
 
-export interface ImageData {
+export interface WriteDiaryData {
   feel: string | undefined;
   content: string;
+}
+
+export interface EditDiaryData {
+  content: string;
+}
+
+export interface SearchWord {
+  keyword: string;
+}
+
+export interface DeviceToken {
+  deviceToken: string;
+}
+
+export interface ImageDatas {
+  img1: string;
+  img2: string;
+  img3: string;
+  img4: string;
+}
+
+export interface ImageData {
+  id: number;
+  imgUrl: string;
+}
+
+export interface NoticeData {
+  noticeId: number;
+  diaryId: number;
+  kind: string;
+  content: number;
+  confirm: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PatchNoticeData {
+  noticeId: number;
+  confirm: boolean;
+}
+
+export interface AnalysisData {
+  i: number;
+  e: number;
+  s: number;
+  n: number;
+  t: number;
+  f: number;
+  p: number;
+  j: number;
+  angry: number;
+  disgust: number;
+  fear: number;
+  happiness: number;
+  sadness: number;
+  surprise: number;
 }

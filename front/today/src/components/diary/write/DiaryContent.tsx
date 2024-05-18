@@ -19,7 +19,9 @@ function DiaryContent({ value, onChangeText, onSubmitEditing }: CuntomInputProps
         onSubmitEditing={onSubmitEditing}
         style={{ textAlignVertical: 'top' }}
       />
-      <S.CountText>{value ? value.length : 0} / 200</S.CountText>
+      <S.CountTextContainer>
+        <S.CountText>{value ? value.length : 0} / 200</S.CountText>
+      </S.CountTextContainer>
     </S.DiaryContainer>
   );
 }

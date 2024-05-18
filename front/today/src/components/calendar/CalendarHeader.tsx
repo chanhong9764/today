@@ -1,52 +1,31 @@
 // CalendarHeader.tsx
 import { Ionicons } from '@expo/vector-icons';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import { Header } from '../../types/calendartype/calendar';
+import * as S from './style';
 
-const monthToString = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+const monthToString = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 
 const CalendarHeader = ({ month, year, moveToNextMonth, moveToPreviousMonth }: Header) => {
+  const theme = useTheme();
   return (
-    <View style={styles.header}>
+    <S.CalendarHeaderContainer>
       {/* 이전달로 이동 */}
       <Pressable onPress={moveToPreviousMonth.bind(this, month)}>
-        <Ionicons name="chevron-back" size={24} color="dodgerblue" />
+        <Ionicons name="chevron-back" size={26} color={theme.colors.mainPink} />
       </Pressable>
       {/* 현재 출력되는 연도와 달 */}
-      <Text style={styles.text}>
-        {monthToString[month - 1]} {year}
-      </Text>
+      <S.CalendarTitle>
+        {year}
+        {'년'} {monthToString[month - 1]}
+      </S.CalendarTitle>
       {/* 다음달로 이동 */}
       <Pressable onPress={moveToNextMonth.bind(this, month)}>
-        <Ionicons name="chevron-forward" size={24} color="dodgerblue" />
+        <Ionicons name="chevron-forward" size={26} color={theme.colors.mainPink} />
       </Pressable>
-    </View>
+    </S.CalendarHeaderContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginHorizontal: 14,
-  },
-  text: {
-    fontSize: 20,
-  },
-});
 
 export default CalendarHeader;

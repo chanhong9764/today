@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class SearchResponse {
-    private Long diaryId;
+    private Long id;
     private String imgUrl;
     private LocalDateTime createdAt;
     private String content;
 
     @Builder
-    public SearchResponse(Long diaryId, String imgUrl, LocalDateTime createdAt, String content) {
-        this.diaryId = diaryId;
+    public SearchResponse(Long id, String imgUrl, LocalDateTime createdAt, String content) {
+        this.id = id;
         this.imgUrl = imgUrl;
         this.createdAt = createdAt;
         this.content = content;
@@ -26,7 +26,7 @@ public class SearchResponse {
     public static SearchResponse fromEntity(DiaryEs diaryEs) {
         return SearchResponse.builder()
                 .content(diaryEs.getContent())
-                .diaryId(diaryEs.getDiaryId())
+                .id(diaryEs.getDiaryId())
                 .createdAt(diaryEs.getCreatedAt())
                 .imgUrl(diaryEs.getImgUrl())
                 .build();

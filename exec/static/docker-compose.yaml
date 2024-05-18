@@ -51,12 +51,42 @@ services:
       - 9999:8080
     environment:
       TZ: Asia/Seoul
-
 #    expose:
 #      - 9999
 #    environment:
 #      # 포트 번호를 8080 -> 9999 로 바꾸자
 #      JENKINS_OPTS: --httpPort=9999
+
+  kafka:
+    container_name: kafka
+    image: bitnami/kafka:latest
+    ports:
+      - '9092:9092'
+    expose:
+      - '9094'
+    environment:
+      # KRaft settings
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@127.0.0.1:9093
+      # Listeners
+      - KAFKA_CFG_LISTENERS=CONTROLLER://:9093,PLAINTEXT://:9094,EXTERNAL://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9094,EXTERNAL://43.203.230.215:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+
+  kafdrop:
+    container_name: kafdrop
+    image: obsidiandynamics/kafdrop
+    restart: "no"
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKER_CONNECT: "kafka:9094"
+    depends_on:
+      - kafka
+
 networks:
   default:
     name: today-net

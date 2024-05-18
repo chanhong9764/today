@@ -8,6 +8,6 @@ const memberRequests = {
 
 export const Members = {
   getMembers: (): Promise<APIResponse<MemberData>> => memberRequests.get(apis.members),
-  getMonthAnalysis: (date: string): Promise<APIResponse<MemberData>> => memberRequests.get(apis.analysisMonth(date)),
-  getDayAnalysis: (date: string): Promise<APIResponse<MemberData>> => memberRequests.get(apis.analysisDay(date)),
+  getMonthAnalysis: (date: string): Promise<APIResponse<MemberData>> => memberRequests.get(apis.analysismonth(date)),
+  getDayAnalysis: (date: string): Promise<APIResponse<MemberData>> => memberRequests.get(apis.analysisday(date)),
 };

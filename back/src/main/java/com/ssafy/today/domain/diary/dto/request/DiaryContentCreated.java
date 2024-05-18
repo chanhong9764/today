@@ -4,14 +4,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.today.domain.diary.entity.Diary;
 import com.ssafy.today.domain.member.entity.Member;
 import com.ssafy.today.domain.tempimg.entity.TempImg;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class DiaryContentCreated {
     private Long memberId;
@@ -25,6 +29,7 @@ public class DiaryContentCreated {
     private double sadness;
     private double surprise;
     private String mbti;
+    private Integer count;
 
     public TempImg toTempImgEntity(Diary diary, Member member) {
         return TempImg.builder()

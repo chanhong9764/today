@@ -3,6 +3,8 @@ package com.ssafy.today.domain.calendar.service;
 import com.ssafy.today.domain.calendar.dto.response.CalendarResponse;
 import com.ssafy.today.domain.diary.entity.Diary;
 import com.ssafy.today.domain.diary.repository.DiaryRepository;
+import com.ssafy.today.util.response.ErrorCode;
+import com.ssafy.today.util.response.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,10 @@ public class CalendarService {
         LocalDateTime startOfDay = day.atStartOfDay();
         LocalDateTime endOfDay = day.atTime(LocalTime.MAX);
 
-        List<Diary> diaries = diaryRepository.findAllByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay);
+        List<Diary> diaries = diaryRepository.findAllByMemberIdAndCreatedAtBetweenOrderByIdDesc(memberId, startOfDay, endOfDay);
+        if(diaries == null){
+            throw new GlobalException(ErrorCode.ANALYSIS_NOT_FOUND);
+        }
         return diaries.stream()
                 .map(CalendarResponse::fromEntity)
                 .collect(Collectors.toList());
@@ -35,6 +40,9 @@ public class CalendarService {
         System.out.println(startOfMonth);
         System.out.println(endOfMonth);
         List<Diary> diaries = diaryRepository.findByMemberIdAndImportantIsTrueAndCreatedAtBetween(memberId, startOfMonth, endOfMonth);
+        if(diaries == null){
+            throw new GlobalException(ErrorCode.ANALYSIS_NOT_FOUND);
+        }
         return diaries.stream()
                 .map(CalendarResponse::fromEntity)
                 .collect(Collectors.toList());

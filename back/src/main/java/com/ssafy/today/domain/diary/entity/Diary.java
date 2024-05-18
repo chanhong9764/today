@@ -51,9 +51,12 @@ public class Diary extends BaseTimeEntity {
     @ColumnDefault("0")
     private Integer status;
 
+    @ColumnDefault("1")
+    private Integer count;
+
 
     @Builder
-    public Diary(Member member, Feel feel, Boolean important, String imgUrl, String content, Double angry, Double disgust, Double fear, Double happiness, Double sadness, Double surprise, MBTI mbti, Integer status) {
+    public Diary(Member member, Feel feel, Boolean important, String imgUrl, String content, Double angry, Double disgust, Double fear, Double happiness, Double sadness, Double surprise, MBTI mbti, Integer status, Integer count) {
         this.member = member;
         this.feel = feel;
         this.important = important;
@@ -67,6 +70,7 @@ public class Diary extends BaseTimeEntity {
         this.surprise = surprise;
         this.mbti = mbti;
         this.status = status;
+        this.count = count;
     }
 
     public void updateContent(String content){
@@ -89,6 +93,9 @@ public class Diary extends BaseTimeEntity {
         this.mbti = MBTI.valueOf(mbti);
     }
 
+    public void updateCount(Integer count){
+        this.count = count;
+    }
     public void updateEmotions(Double angry, Double disgust, Double fear, Double happiness, Double sadness, Double surprise){
         this.angry = angry;
         this.disgust = disgust;

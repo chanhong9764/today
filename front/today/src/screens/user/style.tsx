@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
 export const center = css`
@@ -6,7 +7,17 @@ export const center = css`
 `;
 
 export const shadow = css`
-  box-shadow: 2px 2px 2px lightgray;
+  ${Platform.select({
+    ios: `
+      shadow-color: #ffffff;
+      shadow-offset: {width: 10, height: 10};
+      shadow-opacity: 0.5;
+      shadow-radius: 10;
+    `,
+    android: `
+      elevation: 5;
+    `,
+  })}
 `;
 
 // 마이페이지
@@ -18,6 +29,7 @@ export const MyPage = styled.SafeAreaView`
 
 export const MyPageContainer = styled.View`
   flex: 1;
+  width: 78%;
 `;
 
 export const MyPageTitle = styled.Text`
@@ -30,14 +42,21 @@ export const MyPageSubTitle = styled.Text`
   font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   ${shadow}
-  margin: 30px 0px;
+  margin-top: 30px;
 `;
 
 export const MyInfoTitle = styled.Text`
-  font-size: ${({ theme }) => theme.fontSize.small};
+  font-size: ${({ theme }) => theme.fontSize.xsmall};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   margin-right: 20px;
   flex: 2;
+`;
+
+export const MBTITitle = styled.Text`
+  font-size: ${({ theme }) => theme.fontSize.regular};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
+  margin-bottom: 20px;
+  text-align: center;
 `;
 
 export const MyInfoContent = styled.View`
@@ -58,38 +77,71 @@ export const MyInfo = styled.View`
   margin-bottom: 10px;
 `;
 
-// 로그인 페이지
-export const LoginContainer = styled.View`
-  flex: 1;
-  justify-content: center;
+export const SettingWrapper = styled.TouchableOpacity`
+  flex-direction: row;
+  padding: 8px 20px;
+  gap: 10px;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.lightPink};
+`;
+
+// 로그인 페이지
+export const LoginScreen = styled.SafeAreaView`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.mainPink};
+  justify-content: center;
+  gap: 120px;
+`;
+
+export const LoginContainer = styled.View`
+  ${center}
 `;
 
 export const Logo = styled.Text`
   font-family: title;
-  font-size: ${({ theme }) => theme.fontSize.large};
+  font-size: 105px;
+  color: ${({ theme }) => theme.colors.background};
+  margin: 5px;
 `;
 
 export const PointWord = styled.Text`
-  color: ${({ theme }) => theme.colors.pink};
+  color: ${({ theme }) => theme.colors.mainPink};
+  text-shadow: 1px 1px 3px gray;
 `;
 
-export const LoginButtonsContainer = styled.View`
-  width: 100%;
-  align-items: center;
-  padding: 10px;
+export const LoginText = styled.Text`
+  color: ${({ theme }) => theme.colors.background};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
+  font-size: 23px;
 `;
 
 export const LoginButton = styled.Image`
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+  border-radius: 3px;
 `;
 
 export const LinkButton = styled.TouchableOpacity`
-  width: 80%;
-  height: 70px;
+  width: 250px;
+  height: 60px;
   margin: 7px 0px;
-  box-shadow: 2px 2px 2px lightgray;
+  ${shadow}
+`;
+
+export const Introduce = styled.TouchableOpacity`
+  ${center}
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 2px solid white;
+  margin: 20px;
+`;
+
+export const Line = styled.View`
+  height: 1px;
+  background-color: lightgray;
+  margin: 15px 0px;
+`;
+
+export const MBTItext = styled.Text`
+  color: ${({ theme }) => theme.colors.pink};
+  text-shadow: 1px 1px 3px gray;
 `;

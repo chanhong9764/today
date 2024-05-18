@@ -5,6 +5,9 @@ const colors = {
   mainPink: 'rgb(255, 151, 151)',
   middlePink: 'rgb(255, 221, 221)',
   lightPink: 'rgb(255, 244, 244)',
+
+  background: '#fcfcfc',
+  lightgray: '#f5f5f5',
 };
 
 const fontSize = {
@@ -12,8 +15,8 @@ const fontSize = {
   big: '40px',
   medium: '25px',
   regular: '20px',
-  small: '17px',
-  xsmall: '14px',
+  small: '18px',
+  xsmall: '15px',
 };
 
 const fontWeight = {

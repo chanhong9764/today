@@ -2,6 +2,7 @@ package com.ssafy.today.domain.calendar.dto.response;
 
 
 import com.ssafy.today.domain.diary.entity.Diary;
+import com.ssafy.today.domain.diary.entity.Feel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,6 +16,8 @@ public class CalendarResponse {
     private Boolean important;
     private String imgUrl;
     private String content;
+    private Integer status;
+    private Feel feel;
     private LocalDateTime createdAt;
 
     public static CalendarResponse fromEntity(Diary diary){
@@ -24,6 +27,8 @@ public class CalendarResponse {
                 .important(diary.getImportant())
                 .imgUrl(diary.getImgUrl())
                 .content(diary.getContent())
+                .status(diary.getStatus())
+                .feel(diary.getFeel())
                 .createdAt(diary.getCreatedAt())
                 .build();
 

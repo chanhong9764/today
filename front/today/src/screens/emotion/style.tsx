@@ -26,7 +26,7 @@ export const ButtonContainer = styled.View`
   ${center}
   flex: 1;
   width: 100%;
-  margin: 20px;
+  margin-bottom: 30px;
 `;
 
 export const Title = styled.Text`

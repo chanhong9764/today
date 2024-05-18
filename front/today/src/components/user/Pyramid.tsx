@@ -2,52 +2,54 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { PopulationPyramid } from 'react-native-gifted-charts';
 import { PyramidItem } from '../../types/Pyramid';
+import { AnalysisData } from '../../types/datatype';
 
-type PyramidProp = {
-  height: number;
+type PyramidProps = {
+  analysisData: AnalysisData;
   width: number;
+  height: number;
 };
 
-const pyramidData: PyramidItem[] = [
-  {
-    left: 8, // I의 데이터
-    right: 10, // E의 데이터
-    leftBarColor: 'rgba(254, 139, 139, 0.5)',
-    rightBarColor: 'rgba(254, 139, 139, 0.3)',
-    leftBarLabel: 'I', // I의 라벨
-    rightBarLabel: 'E', // E의 라벨
-    leftBarLabelShift: -13,
-  },
-  {
-    left: 12, // S의 데이터
-    right: 14, // N의 데이터
-    leftBarColor: 'rgba(254, 139, 139, 0.3)',
-    rightBarColor: 'rgba(254, 139, 139, 0.5)',
-    leftBarLabel: 'S', // S의 라벨
-    rightBarLabel: 'N', // N의 라벨
-    leftBarLabelShift: -13,
-  },
-  {
-    left: 10, // T의 데이터
-    right: 15, // F의 데이터
-    leftBarColor: 'rgba(254, 139, 139, 0.5)',
-    rightBarColor: 'rgba(254, 139, 139, 0.3)',
-    leftBarLabel: 'T', // T의 라벨
-    rightBarLabel: 'F', // F의 라벨
-    leftBarLabelShift: -13,
-  },
-  {
-    left: 5, // J의 데이터
-    right: 10, // P의 데이터
-    leftBarColor: 'rgba(254, 139, 139, 0.3)',
-    rightBarColor: 'rgba(254, 139, 139, 0.5)',
-    leftBarLabel: 'J', // J의 라벨
-    rightBarLabel: 'P', // P의 라벨
-    leftBarLabelShift: -13,
-  },
-];
+const Pyramid = ({ analysisData, width, height }: PyramidProps) => {
+  const pyramidData: PyramidItem[] = [
+    {
+      left: analysisData.i, // I의 데이터
+      right: analysisData.e, // E의 데이터
+      leftBarColor: 'rgba(254, 139, 139, 0.5)',
+      rightBarColor: 'rgba(254, 139, 139, 0.3)',
+      leftBarLabel: 'I', // I의 라벨
+      rightBarLabel: 'E', // E의 라벨
+      leftBarLabelShift: -13,
+    },
+    {
+      left: analysisData.s, // S의 데이터
+      right: analysisData.n, // N의 데이터
+      leftBarColor: 'rgba(254, 139, 139, 0.3)',
+      rightBarColor: 'rgba(254, 139, 139, 0.5)',
+      leftBarLabel: 'S', // S의 라벨
+      rightBarLabel: 'N', // N의 라벨
+      leftBarLabelShift: -13,
+    },
+    {
+      left: analysisData.t, // T의 데이터
+      right: analysisData.f, // F의 데이터
+      leftBarColor: 'rgba(254, 139, 139, 0.5)',
+      rightBarColor: 'rgba(254, 139, 139, 0.3)',
+      leftBarLabel: 'T', // T의 라벨
+      rightBarLabel: 'F', // F의 라벨
+      leftBarLabelShift: -13,
+    },
+    {
+      left: analysisData.j, // J의 데이터
+      right: analysisData.p, // P의 데이터
+      leftBarColor: 'rgba(254, 139, 139, 0.3)',
+      rightBarColor: 'rgba(254, 139, 139, 0.5)',
+      leftBarLabel: 'J', // J의 라벨
+      rightBarLabel: 'P', // P의 라벨
+      leftBarLabelShift: -13,
+    },
+  ];
 
-const Pyramid = ({ height, width }: PyramidProp) => {
   return (
     <View style={styles.container}>
       <PopulationPyramid
@@ -64,7 +66,6 @@ const Pyramid = ({ height, width }: PyramidProp) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',

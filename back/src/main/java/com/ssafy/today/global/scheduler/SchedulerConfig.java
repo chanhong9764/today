@@ -22,8 +22,8 @@ public class SchedulerConfig {
   // You may use spring trick to qualify field by naming it with desired qualifier without @Qualifier annotation.
   private final Job job1;
 
-  //@Scheduled(fixedRate = 10000)
-  @Scheduled(cron = "0 0 19 * * ?")
+//  @Scheduled(fixedRate = 100000)
+  @Scheduled(cron = "0 0 20 * * ?")
   public void findYetUser() {
     log.info("스케줄러 실행한다 ~");
     try {

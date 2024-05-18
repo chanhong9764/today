@@ -1,14 +1,12 @@
 package com.ssafy.today.domain.elasticsearch.controller;
 
-import com.ssafy.today.domain.elasticsearch.dto.request.DeleteRequest;
-import com.ssafy.today.domain.elasticsearch.dto.request.DiaryEsRequest;
-import com.ssafy.today.domain.elasticsearch.dto.request.SearchRequest;
-import com.ssafy.today.domain.elasticsearch.dto.request.UpdateDiaryRequest;
+import com.ssafy.today.domain.elasticsearch.dto.request.*;
 import com.ssafy.today.domain.elasticsearch.dto.response.SearchResponse;
 import com.ssafy.today.domain.elasticsearch.dto.response.SearchResponseWrapper;
 import com.ssafy.today.domain.elasticsearch.service.EsService;
 import com.ssafy.today.util.response.SuccessCode;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +17,10 @@ import static com.ssafy.today.util.response.SuccessResponseEntity.getResponseEnt
 
 @RestController
 @RequestMapping("/es")
+@RequiredArgsConstructor
 public class EsController {
 
-    @Autowired
-    private EsService esService;
+    private final EsService esService;
 
     private static final String PASSWORD = "today!";
 
@@ -47,10 +45,10 @@ public class EsController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<?> search(HttpServletRequest request, @RequestBody String keyword) {
+    public ResponseEntity<?> search(HttpServletRequest request, @RequestBody KeywordRequest keywordRequest) {
         Long memberId = (Long) request.getAttribute("memberId");
         List<SearchResponse> searchRes = esService.search(SearchRequest.builder()
-                .keyword(keyword)
+                .keyword(keywordRequest.getKeyword())
                 .memberId(memberId)
                 .build());
         return getResponseEntity(SuccessCode.OK, searchRes);
@@ -73,10 +71,14 @@ public class EsController {
     }
 
     @PostMapping("/init/es")
-    public ResponseEntity<?> initEs(HttpServletRequest request, @RequestBody String pwd) {
-        if(pwd.equals(PASSWORD)) {
-            esService.initEs();
-        }
+    public ResponseEntity<?> initEs(HttpServletRequest request) {
+        esService.initEs();
+        return getResponseEntity(SuccessCode.OK);
+    }
+
+    @DeleteMapping("/delete/es")
+    public ResponseEntity<?> delete() {
+        esService.deleteAll();
         return getResponseEntity(SuccessCode.OK);
     }
 }

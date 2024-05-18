@@ -1,34 +1,75 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useContext, useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import { analysis } from '../../apis/AnalysisApi';
 import { Members } from '../../apis/MemberApi';
-import CommonButton from '../../common/CommonButton';
 import Graph from '../../components/user/Graph';
 import Pyramid from '../../components/user/Pyramid';
 import { IsLoginContext } from '../../contexts/IsLoginContext';
-import { MemberData } from '../../types/datatype';
-import { UserProp } from '../../types/navigatortype/stack';
+import { AnalysisData, MemberData } from '../../types/datatype';
 import * as S from './style';
 
-function Mypage({ navigation }: UserProp) {
+function Mypage() {
   const [memberInfo, setMemberInfo] = useState<MemberData | undefined>();
+  const [analysisData, setAnalysisData] = useState<AnalysisData | undefined>();
   const { setIsLogin } = useContext(IsLoginContext);
+  const isFocused = useIsFocused();
+  const month = new Date().getMonth();
+  let MBTI = '';
+
+  if (analysisData) {
+    MBTI += analysisData['e'] > analysisData['i'] ? 'E' : 'I';
+    MBTI += analysisData['s'] > analysisData['n'] ? 'S' : 'N';
+    MBTI += analysisData['f'] > analysisData['t'] ? 'F' : 'T';
+    MBTI += analysisData['p'] > analysisData['j'] ? 'P' : 'J';
+  }
 
   useEffect(() => {
     Members.getMembers()
       .then(response => {
         setMemberInfo(response.data);
-        console.log(response.data);
       })
       .catch(err => {
         console.log(err);
       });
   }, []);
 
+  const loadAnalysisData = useCallback(() => {
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
+
+    analysis
+      .getAnalysismonth(today)
+      .then(response => {
+        const data = response.data;
+        if (data) {
+          const scaledData = {
+            ...data,
+            angry: data.angry,
+            disgust: data.disgust,
+            fear: data.fear,
+            happiness: data.happiness,
+            sadness: data.sadness,
+            surprise: data.surprise,
+          };
+          setAnalysisData(scaledData);
+        }
+      })
+      .catch(error => {
+        console.error('Graph error', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      loadAnalysisData();
+    }
+  }, [isFocused, loadAnalysisData]);
+
   async function Logout() {
     await AsyncStorage.removeItem('accessToken');
     setIsLogin(false);
-    console.log('로그아웃함');
   }
 
   return (
@@ -36,6 +77,7 @@ function Mypage({ navigation }: UserProp) {
       <S.MyPage>
         <S.MyPageContainer>
           <S.MyPageSubTitle>MY INFO</S.MyPageSubTitle>
+          <S.Line />
           <S.MyInfo>
             <S.MyInfoTitle>닉네임</S.MyInfoTitle>
             <S.MyInfoContent>
@@ -49,15 +91,43 @@ function Mypage({ navigation }: UserProp) {
             </S.MyInfoContent>
           </S.MyInfo>
 
-          <S.MyPageSubTitle>{memberInfo?.nickName} 님의 성향은</S.MyPageSubTitle>
-          <Pyramid height={200} width={300} />
-          <S.MyPageSubTitle>{memberInfo?.nickName} 님의 감정은</S.MyPageSubTitle>
-          <View style={{ height: 300, marginBottom: 30 }}>
-            <Graph labels={['행복', '슬픔', '분노', '짜증', '불안', '놀람']} data={[15, 17, 5, 8, 11, 6]} />
-          </View>
-          <View style={{ alignItems: 'center', marginBottom: 30 }}>
-            <CommonButton content="로그아웃" onPress={Logout} />
-          </View>
+          <S.MyPageSubTitle>
+            <S.PointWord>{memberInfo?.nickName}</S.PointWord>님의 MBTI
+          </S.MyPageSubTitle>
+          <S.Line />
+          <S.MBTITitle>
+            <S.MBTItext>{MBTI}</S.MBTItext> 와 유사하네요
+          </S.MBTITitle>
+          {analysisData ? (
+            <Pyramid analysisData={analysisData} width={280} height={250} />
+          ) : (
+            <Text>일기를 작성해주시면 성향을 분석해드려요!</Text>
+          )}
+          <S.MyPageSubTitle>
+            <S.PointWord>{memberInfo?.nickName}</S.PointWord>님의 {month}월 감정
+          </S.MyPageSubTitle>
+          <S.Line />
+          {analysisData ? (
+            <View style={{ height: 300, marginBottom: 30 }}>
+              <Graph analysisData={analysisData} />
+            </View>
+          ) : (
+            <Text>일기를 작성해주시면 감정을 분석해드려요!</Text>
+          )}
+          {/* <S.Line />
+          <S.SettingWrapper>
+            <View style={{ width: 45, alignItems: 'center', marginRight: 18 }}>
+              <Icon name="lock" size={28} />
+            </View>
+            <Text>비밀번호 설정</Text>
+          </S.SettingWrapper> */}
+          <S.Line />
+          <S.SettingWrapper style={{ marginBottom: 20 }} onPress={Logout}>
+            <View style={{ width: 37, alignItems: 'center', marginRight: 28 }}>
+              <Icon name="logout" size={28} />
+            </View>
+            <Text>로그아웃</Text>
+          </S.SettingWrapper>
         </S.MyPageContainer>
       </S.MyPage>
     </ScrollView>

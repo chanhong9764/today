@@ -4,6 +4,7 @@ import com.ssafy.today.domain.analysis.dto.response.AnalysisResponse;
 import com.ssafy.today.domain.analysis.entity.Analysis;
 import com.ssafy.today.domain.analysis.repository.AnalysisRepository;
 import com.ssafy.today.domain.diary.dto.request.DiaryContentCreated;
+import com.ssafy.today.domain.diary.entity.Diary;
 import com.ssafy.today.domain.diary.repository.DiaryRepository;
 import com.ssafy.today.domain.member.entity.Member;
 import com.ssafy.today.domain.member.repository.MemberRepository;
@@ -39,7 +40,7 @@ public class AnalysisService {
         YearMonth yearMonth = YearMonth.from(date);
         LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
         LocalDateTime endOfMonth = yearMonth.atEndOfMonth().atStartOfDay();
-        List<Analysis> analysisList = analysisRepository.findByMemberIdAndCreatedAtBetween(memberId, startOfMonth, endOfMonth);
+        List<Analysis> analysisList = analysisRepository.findByMemberIdAndDiaryDateBetween(memberId, startOfMonth, endOfMonth);
         return analysisConvertFromEntitys(analysisList);
     }
 
@@ -52,7 +53,7 @@ public class AnalysisService {
     public AnalysisResponse getAnalysisByMemberIdAndDay(Long memberId, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
-        Analysis analysis = analysisRepository.findFirstByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay);
+        Analysis analysis = analysisRepository.findFirstByMemberIdAndDiaryDateBetween(memberId, startOfDay, endOfDay);
         return analysisConvertFromEntity(analysis);
     }
 
@@ -136,9 +137,9 @@ public class AnalysisService {
         LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
         LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
 
-        if(analysisRepository.existsByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay)){
+        if(analysisRepository.existsByMemberIdAndDiaryDateBetween(memberId, startOfDay, endOfDay)){
             // 만약 있다면 기존의 통계에 값 업데이트
-            Analysis analysis = analysisRepository.findFirstByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay);
+            Analysis analysis = analysisRepository.findFirstByMemberIdAndDiaryDateBetween(memberId, startOfDay, endOfDay);
             for (char c : diaryContentCreated.getMbti().toCharArray()) {
                 // 값에따른 값 증가
                 analysis.increaseType(c);
@@ -184,9 +185,38 @@ public class AnalysisService {
                     .happiness(diaryContentCreated.getHappiness())
                     .sadness(diaryContentCreated.getSadness())
                     .surprise(diaryContentCreated.getSurprise())
+                    .diaryDate(diaryContentCreated.getCreatedAt())
                     .build();
             analysisRepository.save(analysis);
         }
 
+    }
+
+    public void deleteOrSubtractAnalysis(Diary diary) {
+
+        LocalDate date = diary.getCreatedAt().toLocalDate();
+        LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);
+
+        Analysis analysis = analysisRepository.findFirstByMemberIdAndDiaryDateBetween(diary.getMember().getId(), startOfDay, endOfDay);
+        if (analysis == null) { return ; }
+
+        if(analysis.getCount() == 1){
+            analysisRepository.deleteById(analysis.getId());
+        }else{
+            for (char c : diary.getMbti().toString().toCharArray()) {
+                // 값에따른 값 감소
+                analysis.decreaseType(c);
+            }
+            analysis.subtractEmotions(
+                    analysis.getAngry(),
+                    analysis.getDisgust(),
+                    analysis.getFear(),
+                    analysis.getHappiness(),
+                    analysis.getSadness(),
+                    analysis.getSurprise()
+            );
+            analysis.decreaseCount();
+        }
     }
 }

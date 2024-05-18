@@ -1,33 +1,65 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, FlatList } from 'react-native';
 import { useTheme } from 'styled-components';
+import { Diarys } from '../../../apis/DiaryApi';
 import NextButton from '../../../common/CommonButton';
 import Images from '../../../components/diary/select/ResultImage';
-import dummy from '../../../db/data.json';
-import { DiaryData } from '../../../types/datatype';
-import { DiaryProp } from '../../../types/navigatortype/stack';
+import { ImageData, ImageDatas } from '../../../types/datatype';
 import * as S from './style';
 
-function SelectImage({ navigation }: DiaryProp) {
+interface SelectImageProp {
+  navigation: {
+    replace: (arg0: string, arg1?: { diaryId: number }) => void;
+  };
+  route: { params: { diaryId: number } };
+}
+
+function SelectImage({ navigation, route }: SelectImageProp) {
   const theme = useTheme();
+  const { diaryId } = route.params;
   const today: string = format(new Date(), 'yyyy. MM. dd');
-  const [selectedImg, setSelectedImg] = useState<number>();
+  const [images, setImages] = useState<ImageDatas>();
+  const [selectedImg, setSelectedImg] = useState<string>();
 
-  function renderImage({ item }: { item: DiaryData }) {
-    const backgroundColor = item.id === selectedImg ? theme.colors.middlePink : 'white';
+  useEffect(() => {
+    Diarys.getImage(diaryId)
+      .then(response => {
+        if (response.data) {
+          setImages(response.data);
+        }
+      })
+      .catch(error => console.log(error));
+  }, []);
 
-    return <Images item={item} onPress={() => setSelectedImg(item.id)} backgroundColor={backgroundColor} />;
+  const imageUrls: ImageData[] = [];
+
+  if (images) {
+    const values = Object.values(images);
+    for (let i = 0; i < values.length; i++) {
+      const idx = i + 1; // 각각의 키
+      const value = values[i]; // 각각의 키에 해당하는 각각의 값
+      imageUrls.push({ id: idx, imgUrl: value });
+    }
   }
 
-  function createDiary() {
+  function renderImage({ item }: { item: ImageData }) {
+    const backgroundColor = item.imgUrl === selectedImg ? theme.colors.middlePink : 'white';
+
+    return <Images item={item} onPress={() => setSelectedImg(item.imgUrl)} backgroundColor={backgroundColor} />;
+  }
+
+  async function createDiary() {
     if (selectedImg) {
-      navigation.navigate('DiaryDetail');
-      // Diarys.addDiary(data)
-      //   .then(res => {})
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
+      await Diarys.addDiary({
+        id: diaryId,
+        imgUrl: selectedImg,
+      })
+        .then(res => {})
+        .catch(err => {
+          console.log(err);
+        });
+      navigation.replace('DiaryDetail', { diaryId: diaryId });
     } else {
       Alert.alert(
         '그림 선택', // 제목
@@ -44,9 +76,11 @@ function SelectImage({ navigation }: DiaryProp) {
       <S.TodayDate>{today}</S.TodayDate>
       <S.SelecImageTitle>마음에 드는 그림을 선택해주세요!</S.SelecImageTitle>
       <S.ImagesContainer>
-        <FlatList data={dummy.data} renderItem={renderImage} numColumns={2} keyExtractor={item => item.id.toString()} />
+        <FlatList data={imageUrls} renderItem={renderImage} numColumns={2} keyExtractor={item => item.id.toString()} />
       </S.ImagesContainer>
-      <NextButton content="일기 작성 완료하기" onPress={createDiary} />
+      <S.ButtonContainer>
+        <NextButton content="작성 완료" onPress={createDiary} />
+      </S.ButtonContainer>
     </S.SelectImageContainer>
   );
 }

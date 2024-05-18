@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 export const WaitImage = styled.SafeAreaView`
   flex: 1;
+  background-color: ${({ theme }) => theme.colors.lightPink};
 `;
 
 export const WaitImageContainer = styled.View`
@@ -13,13 +14,13 @@ export const WaitImageContainer = styled.View`
 export const WaitImageTitle = styled.Text`
   font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 `;
 
 export const WaitImageContent = styled.Text`
   font-size: ${({ theme }) => theme.fontSize.regular};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-  margin: 8px;
+  margin-bottom: 20px;
 `;
 
 export const WaitImageExplane = styled.Text`
@@ -30,5 +31,5 @@ export const WaitImageExplane = styled.Text`
 `;
 
 export const ButtonContainer = styled.View`
-  margin: 20px 0px;
+  margin-top: 40px;
 `;

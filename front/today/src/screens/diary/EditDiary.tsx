@@ -4,8 +4,15 @@ import { Diarys } from '../../apis/DiaryApi';
 import CommonButton from '../../common/CommonButton';
 import TodayDate from '../../common/TodayDate';
 import DiaryContent from '../../components/diary/write/DiaryContent';
-import { EditDiaryProp } from '../../types/navigatortype/stack';
 import * as S from './style';
+
+interface EditDiaryProp {
+  navigation: {
+    replace: (arg0: string, arg1?: { diaryId: number }) => void;
+    navigate: any;
+  };
+  route: { params: { diaryId: number; diaryContent: string } };
+}
 
 function EditDiary({ navigation, route }: EditDiaryProp) {
   const { diaryId, diaryContent } = route.params;
@@ -24,10 +31,9 @@ function EditDiary({ navigation, route }: EditDiaryProp) {
   };
 
   function onPressEdit() {
-    navigation.navigate('DiaryDetail');
     Diarys.editDiary(diaryId, content)
       .then(res => {
-        console.log('일기 수정 성공', content);
+        navigation.navigate('DiaryDetail', { diaryId: diaryId });
       })
       .catch(err => {
         console.log('일기 수정 실패', err);
@@ -35,15 +41,15 @@ function EditDiary({ navigation, route }: EditDiaryProp) {
   }
 
   return (
-    <KeyboardAwareScrollView>
-      <S.WriteDiaryInner>
+    <KeyboardAwareScrollView contentContainerStyle={{ flex: 1 }}>
+      <S.WriteDiaryContainer>
         <TodayDate />
         <S.WriteDiaryTitle>오늘 하루는 어땠나요?</S.WriteDiaryTitle>
         <DiaryContent value={content.content} onChangeText={onChangeContent} onSubmitEditing={onPressEdit} />
         <S.WriteDiaryButton>
           <CommonButton content="일기 수정 완료" onPress={onPressEdit} />
         </S.WriteDiaryButton>
-      </S.WriteDiaryInner>
+      </S.WriteDiaryContainer>
     </KeyboardAwareScrollView>
   );
 }

@@ -1,7 +1,8 @@
 // DetailContent.tsx
-import { Text, VStack } from 'native-base';
+import { VStack } from 'native-base';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
+import styled from 'styled-components/native';
 
 import { DiaryData } from '../../../types/datatype';
 
@@ -11,22 +12,28 @@ interface DetailContentProps {
 
 const DetailContent = ({ diary }: DetailContentProps) => {
   const { height } = useWindowDimensions();
-  const contentHeight = height * 0.25; // 전체 화면의 35% 높이로 설정
+  const contentHeight = height * 0.3; // 전체 화면의 35% 높이로 설정
 
   return (
     <VStack
       padding={4}
       borderColor="#FE8B8B"
-      borderWidth={1}
-      borderBottomWidth={1}
+      borderWidth={3}
       borderBottomColor="#FE8B8B"
       borderRadius={8}
       borderTopRadius={0}
-      marginBottom={4}
       height={contentHeight}>
-      <Text style={{ textAlign: 'justify' }}>{diary.content}</Text>
+      <TextContent>{diary.content}</TextContent>
     </VStack>
   );
 };
+
+const TextContent = styled.Text`
+  text-align: justify;
+  font-family: title;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: 0.3px; // 글자 간격
+`;
 
 export default DetailContent;
