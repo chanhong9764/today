@@ -5,6 +5,7 @@ from typing import List
 class createImageIn(BaseModel):
     diaryId: int
     memberId: int
+    count: int
     feel: str
     content: str
     createdAt: datetime
@@ -21,3 +22,4 @@ class createImageOut(BaseModel):
     sadness: float
     surprise: float
     mbti: str
+    count: int
