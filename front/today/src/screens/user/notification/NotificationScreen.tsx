@@ -10,7 +10,7 @@ import * as S from './style';
 
 type NotiItemProps = {
   item: NoticeData;
-  onpress: any;
+  onpress: () => void;
   dispatch: any;
 };
 
@@ -20,7 +20,7 @@ type RenderNotiProps = {
 
 interface NotiScreenProp {
   navigation: {
-    navigate:  (arg0: string, arg1?: { screen: string; params?: { diaryId: number } }) => void;
+    navigate: (arg0: string, arg1?: { screen: string; params?: { diaryId: number } }) => void;
   };
 }
 
@@ -34,7 +34,7 @@ function NotificationItem({ item, onpress, dispatch }: NotiItemProps) {
       content: item.content,
     });
     Notices.deleteNotices(item.noticeId)
-      .then(response => console.log('알림 삭제 성공'))
+      .then(response => {})
       .catch(error => console.log(error));
   }
 
@@ -75,9 +75,15 @@ function NotificationScreen({ navigation }: any) {
         content: item.content,
       });
       if (temp === 1) {
-        navigation.navigate('DiaryNav', { screen: "DiaryList", params: { screen: "SelectImage", diaryId: item.diaryId}} );
+        navigation.navigate('DiaryNav', {
+          screen: 'SelectImage',
+          params: { diaryId: item.diaryId },
+        });
       } else {
-        navigation.navigate('DiaryNav', { screen: "DiaryList", params: { screen: "DiaryDetail", diaryId: item.diaryId }});
+        navigation.navigate('DiaryNav', {
+          screen: 'DiaryDetail',
+          params: { diaryId: item.diaryId },
+        });
       }
     }
     return <NotificationItem item={item} onpress={onPressNoti} dispatch={dispatch} />;

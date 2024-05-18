@@ -1,5 +1,4 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, Text, View } from 'react-native';
 import { useTheme } from 'styled-components/native';
@@ -9,19 +8,11 @@ import CommonButton from '../../../common/CommonButton';
 import { DiaryCard } from '../../../components/diary/day/DiaryCard';
 import DateFilter from '../../../components/diary/list/DateFilter';
 import { CalendarData } from '../../../types/datatype';
-import { DiaryStackParam } from '../../../types/navigatortype/stack';
 import Analysis from '../../modal/analysis/Analysis';
-
-interface DiaryItemProp {
-  item: CalendarData;
-  selectedDate: string;
-  setDailyDiaryData: (item: CalendarData[]) => void;
-  navigate: NativeStackNavigationProp<DiaryStackParam>;
-}
 
 interface OneDayDiaryProp {
   navigation: {
-    navigate: (arg0: string, arg1?: { screen?: string; params?: { screen: string; diaryId: number } }) => void;
+    push: (arg0: string, arg1?: { screen?: string; params?: { diaryId: number } }) => void;
   };
   route: { params: { selectedDate: string } };
 }
@@ -78,9 +69,11 @@ function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fcfcfc' }}>
       <DateFilter date={date} setDate={setDate} />
-      {dailyDiaryData && dailyDiaryData.filter((item) => item.status !== 0).length > 0 &&<View style={{ alignItems: 'center', paddingBottom: 20 }}>
-        <CommonButton content="오늘의 분석결과" onPress={() => setOpenAnalysis(!openAnalysis)} />
-      </View>}
+      {dailyDiaryData && dailyDiaryData.filter(item => item.status !== 0).length > 0 && (
+        <View style={{ alignItems: 'center', paddingBottom: 20 }}>
+          <CommonButton content="오늘의 분석결과" onPress={() => setOpenAnalysis(!openAnalysis)} />
+        </View>
+      )}
       {dailyDiaryData && dailyDiaryData.length > 0 ? (
         <FlatList
           data={dailyDiaryData}

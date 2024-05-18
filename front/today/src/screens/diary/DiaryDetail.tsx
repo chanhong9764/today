@@ -1,10 +1,13 @@
 // DiaryDetail.tsx
+import LottieView from 'lottie-react-native';
 import { Box } from 'native-base';
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Alert, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import ViewShot from 'react-native-view-shot';
+import '../../../assets/lotties/loadingPage.json';
+
 import { Diarys } from '../../apis/DiaryApi';
 import SaveButton from '../../common/SaveButton';
 import DetailContent from '../../components/diary/detail/DetailContent';
@@ -19,8 +22,10 @@ interface DiaryDetailProp {
   route: { params: { diaryId: number } };
 }
 
-function DiaryDetail({ navigation, route }: any) {
+function DiaryDetail({ navigation, route }: DiaryDetailProp) {
   const [diary, setDiary] = useState<DiaryData | undefined>();
+  const { width } = useWindowDimensions();
+  const imagePadding = (width - width * 0.85) / 2 - 5;
   const viewShotRef = useRef(null);
 
   const { diaryId } = route.params;
@@ -72,26 +77,40 @@ function DiaryDetail({ navigation, route }: any) {
   }
 
   if (!diary) {
-    return <Text>Loading...</Text>;
+    return (
+      <View style={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <LottieView
+          source={require('../../../assets/lotties/drawing.json')}
+          autoPlay
+          loop
+          style={{
+            width: '100%',
+            height: 200,
+          }}
+        />
+      </View>
+    );
   }
 
   return (
-    <ScrollView style={styles.container}  showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: '#fcfcfc', paddingHorizontal: imagePadding }}
+      showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <SaveButton viewShotRef={viewShotRef} />
         <View style={styles.rightIcons}>
-          <Icon name="edit" size={24} color="#667085" onPress={onPressEdit} style={{ marginRight: 16 }} />
-          <AntDesign name="closecircleo" size={24} color="#667085" onPress={onPressDelete} />
+          <Icon name="edit" size={24} onPress={onPressEdit} style={{ marginRight: 16 }} />
+          <Fontisto name="close" size={24} onPress={onPressDelete} />
         </View>
       </View>
-      <Box style={{ marginTop: -25, padding: 20 }}>
-          <ViewShot
-            ref={viewShotRef}
-            options={{ format: 'jpg', quality: 0.9 }}
-            style={{ backgroundColor: 'white', borderRadius: 8 }}>
-            <DetailHeader diary={diary} />
-            <DetailContent diary={diary} />
-          </ViewShot>
+      <Box style={{ alignItems: 'center' }}>
+        <ViewShot
+          ref={viewShotRef}
+          options={{ format: 'jpg', quality: 0.9 }}
+          style={{ backgroundColor: 'white', borderRadius: 8 }}>
+          <DetailHeader diary={diary} />
+          <DetailContent diary={diary} />
+        </ViewShot>
       </Box>
     </ScrollView>
   );
@@ -105,12 +124,13 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
     alignItems: 'center',
+    paddingVertical: 20,
+    marginHorizontal: 5,
   },
   rightIcons: {
     flexDirection: 'row',
-    marginRight: 20,
+    gap: 3,
   },
 });
 export default DiaryDetail;

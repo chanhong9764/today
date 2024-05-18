@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Feather';
 import Logo from '../common/Logo';
 import NotificationBadge from '../common/noti/NotificationBadge';
+import { useNavigationState } from '../contexts/NavigationContext';
 import DiaryDetail from '../screens/diary/DiaryDetail';
 import EditDiary from '../screens/diary/EditDiary';
 import WriteDiary from '../screens/diary/WriteDiary';
@@ -10,28 +11,40 @@ import SelectImage from '../screens/diary/select/SelectImage';
 import WaitImage from '../screens/diary/wait/WaitImage';
 import SelectEmotion from '../screens/emotion/SelectEmotion';
 import { DiaryStackParam } from '../types/navigatortype/stack';
-import { useEffect } from 'react';
 
 interface DiaryStackProp {
   navigation: {
-    navigate: (arg0: string) => void;
     push: (arg0: string, arg1?: { screen: string }) => void;
-    getState: any;
+    reset: any;
   };
-  route: any;
 }
 
 const DiaryStack = createNativeStackNavigator<DiaryStackParam>();
 
 export const DiaryNav = ({ navigation }: DiaryStackProp) => {
-
+  const { currentTab, setCurrentTab } = useNavigationState();
   return (
     <DiaryStack.Navigator
       initialRouteName="DiaryList"
       screenOptions={{
         headerTitleAlign: 'center',
         headerTitle: ({ children }) => (
-          <Logo onPress={() => navigation.navigate('CalendarNav')} />
+          <Logo
+            onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [
+                  {
+                    name: 'CalendarNav',
+                    state: {
+                      routes: [{ name: 'Calendar' }],
+                    },
+                  },
+                ],
+              });
+              setCurrentTab('Calendar');
+            }}
+          />
         ),
 
         headerRight: () => (
@@ -48,10 +61,7 @@ export const DiaryNav = ({ navigation }: DiaryStackProp) => {
         options={{ headerLeft: () => <Icon name="plus" size={35} onPress={() => navigation.push('SelectEmotion')} /> }}
       />
       <DiaryStack.Screen name="SelectImage" component={SelectImage} />
-      <DiaryStack.Screen
-        name="SelectEmotion"
-        component={SelectEmotion}
-      />
+      <DiaryStack.Screen name="SelectEmotion" component={SelectEmotion} />
       <DiaryStack.Screen name="EditDiary" component={EditDiary} />
       <DiaryStack.Screen name="WriteDiary" component={WriteDiary} />
       <DiaryStack.Screen name="DiaryDetail" component={DiaryDetail} />

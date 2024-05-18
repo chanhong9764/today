@@ -1,9 +1,13 @@
 export type RootStackParam = {
   LoginScreen: undefined;
   KakaoLogin: undefined;
-  MainTab: undefined;
-  CalendarStack: undefined;
-  DiaryStack: undefined;
+  MainTab?: undefined;
+  MainScreen?: undefined;
+
+  CalendarNav: undefined;
+  DiaryNav: undefined;
+  UserNav: undefined;
+
   NotificationScreen: undefined;
   Intro1: undefined;
   Intro2: undefined;

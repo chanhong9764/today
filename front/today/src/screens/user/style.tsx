@@ -103,9 +103,14 @@ export const Logo = styled.Text`
   margin: 5px;
 `;
 
+export const LoginPointWord = styled.Text`
+  color: ${({ theme }) => theme.colors.middlePink};
+  text-shadow: 1px 1px 3px lightgray;
+`;
+
 export const PointWord = styled.Text`
   color: ${({ theme }) => theme.colors.mainPink};
-  text-shadow: 1px 1px 3px gray;
+  text-shadow: 1px 1px 3px lightgray;
 `;
 
 export const LoginText = styled.Text`
@@ -129,7 +134,7 @@ export const LinkButton = styled.TouchableOpacity`
 
 export const Introduce = styled.TouchableOpacity`
   ${center}
-  padding: 10px 20px;
+  padding: 10px 20px 13px;
   border-radius: 30px;
   border: 2px solid white;
   margin: 20px;

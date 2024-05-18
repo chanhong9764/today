@@ -17,7 +17,14 @@ export function DiaryCard({ item, onPress, backgroundColor }: ItemProps) {
 
   return (
     <S.SingleDiaryContainer onPress={onPress} backgroundColor={backgroundColor}>
-      <Image source={{ uri: item.imgUrl }} style={{ height: 200, width: '100%' }} />
+      {item.imgUrl === null ? (
+        <Text
+          style={{ height: 200, textAlign: 'center', textAlignVertical: 'center', fontFamily: 'title', fontSize: 24 }}>
+          이미지를 선택해주세요!
+        </Text>
+      ) : (
+        <Image source={{ uri: item.imgUrl }} style={{ height: 200, width: '100%' }} />
+      )}
       <S.SingleDiaryContent>
         <S.SingleDiaryDates>
           <S.SingleDiaryDate>{date}</S.SingleDiaryDate>

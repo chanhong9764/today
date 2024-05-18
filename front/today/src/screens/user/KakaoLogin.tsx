@@ -1,12 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Constants from 'expo-constants';
 import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
 import { getDeviceToken } from '../../components/notification/notification';
 import { IsLoginContext } from '../../contexts/IsLoginContext';
 
-const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('안녕')`;
+const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage()`;
 // 로그인에 성공하게 되면 어떤 주소로 이동 => injectedJavaScript에 적은 코드가 실행
 
 function KakaoLogin() {
@@ -30,7 +31,7 @@ function KakaoLogin() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, paddingTop: Constants.statusBarHeight }}>
       <WebView
         style={{ flex: 1 }}
         source={{

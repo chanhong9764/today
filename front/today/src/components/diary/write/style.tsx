@@ -51,7 +51,7 @@ export const Emotion = styled.Image`
 export const EmotionContainer = styled.TouchableOpacity<EmotionContainerProps>`
   justify-content: center;
   align-items: center;
-  padding: 20px 30px;
+  padding: 20px 25px;
   margin: 5px;
   border-radius: 8px;
   ${Platform.select({

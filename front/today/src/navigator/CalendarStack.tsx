@@ -17,6 +17,7 @@ import { CalendarStackParam } from '../types/navigatortype/stack';
 interface CalendarStackProp {
   navigation: {
     navigate: (arg0: string, arg1?: { searchData?: SearchData[]; screen?: string }) => void;
+    reset: any;
     push: (arg0: string, arg1?: { screen: string }) => void;
     jumpTo: any;
   };
@@ -52,7 +53,23 @@ export const CalendarNav = ({ navigation }: CalendarStackProp) => {
       initialRouteName="Calendar"
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTitle: ({ children }) => <Logo onPress={() => navigation.navigate('CalendarNav')} />,
+        headerTitle: ({ children }) => (
+          <Logo
+            onPress={() =>
+              navigation.reset({
+                index: 0,
+                routes: [
+                  {
+                    name: 'CalendarNav',
+                    state: {
+                      routes: [{ name: 'Calendar' }],
+                    },
+                  },
+                ],
+              })
+            }
+          />
+        ),
       }}>
       <CalendarStack.Screen
         name="Calendar"
@@ -65,19 +82,27 @@ export const CalendarNav = ({ navigation }: CalendarStackProp) => {
                 <IconF name="search" size={27} onPress={onPressSearch} />
               </>
             ) : (
-              <Logo onPress={() => navigation.navigate('CalendarNav')} />
+              <Logo
+                onPress={() =>
+                  navigation.reset({
+                    index: 0,
+                    routes: [
+                      {
+                        name: 'CalendarNav',
+                        state: {
+                          routes: [{ name: 'Calendar' }],
+                        },
+                      },
+                    ],
+                  })
+                }
+              />
             ),
           headerLeft: () =>
             isSearching ? (
               <></>
             ) : (
-              <IconF
-                name="plus"
-                size={35}
-                onPress={() =>
-                  navigation.navigate('DiaryNav', { screen: 'DiaryList', params: { screen: 'SelectEmotion' } })
-                }
-              />
+              <IconF name="plus" size={35} onPress={() => navigation.push('DiaryNav', { screen: 'SelectEmotion' })} />
             ),
           headerRight: () =>
             isSearching ? (

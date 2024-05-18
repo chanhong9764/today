@@ -49,15 +49,17 @@ function DiaryList({ navigation }: any) {
   // 페이지 진입시 데이터 초기화
   useFocusEffect(
     useCallback(() => {
-      if (navigation.getState().routes[0].params !== undefined) {
-        if(navigation.getState().routes[0].params.screen !== "SelectEmotion"){ 
-          navigation.push(navigation.getState().routes[0].params.screen, { diaryId: navigation.getState().routes[0].params.diaryId });
-        } else {
-          navigation.push(navigation.getState().routes[0].params.screen);
-        }
-        navigation.getState().routes[0].params = undefined;
-      }
-      console.log(page)
+      // if (navigation.getState().routes[0].params !== undefined) {
+      //   if (navigation.getState().routes[0].params.screen !== 'SelectEmotion') {
+      //     navigation.push(navigation.getState().routes[0].params.screen, {
+      //       diaryId: navigation.getState().routes[0].params.diaryId,
+      //     });
+      //   } else {
+      //     navigation.push(navigation.getState().routes[0].params.screen);
+      //   }
+      //   navigation.getState().routes[0].params = undefined;
+      // }
+      console.log(page);
       setPage(-1);
       setData({ content: [] });
       setPage(0);

@@ -2,13 +2,16 @@
 import * as MediaLibrary from 'expo-media-library';
 import React, { useEffect } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
+// import Icon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/Feather';
+import { useTheme } from 'styled-components/native';
 
 export type SaveButtonProps = {
   viewShotRef: React.RefObject<any>;
 };
 
 const SaveButton = ({ viewShotRef }: SaveButtonProps) => {
+  const theme = useTheme();
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
 
   useEffect(() => {
@@ -41,8 +44,9 @@ const SaveButton = ({ viewShotRef }: SaveButtonProps) => {
   };
 
   return (
-    <TouchableOpacity onPress={handleSavePhoto} style={{ padding: 10 }}>
-      <Icon name="save" size={25} color="#667085" />
+    <TouchableOpacity onPress={handleSavePhoto}>
+      <Icon name="save" size={25} />
+      {/* <Text style={{ color: 'white', fontWeight: '800' }}>저장</Text> */}
     </TouchableOpacity>
   );
 };
