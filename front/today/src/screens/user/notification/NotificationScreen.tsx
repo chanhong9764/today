@@ -75,12 +75,12 @@ function NotificationScreen({ navigation }: any) {
         content: item.content,
       });
       if (temp === 1) {
-        navigation.navigate('DiaryNav', {
+        navigation.push('DiaryNav', {
           screen: 'SelectImage',
           params: { diaryId: item.diaryId },
         });
       } else {
-        navigation.navigate('DiaryNav', {
+        navigation.push('DiaryNav', {
           screen: 'DiaryDetail',
           params: { diaryId: item.diaryId },
         });

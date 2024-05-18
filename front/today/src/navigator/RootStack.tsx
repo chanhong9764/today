@@ -39,7 +39,6 @@ function RootStack() {
         // 2. 초기 알림 데이터 로드
         const response = await Notices.getNotices();
         if (response.data) {
-          console.log(response.data);
           dispatch({ type: 'INIT', data: response.data });
         }
 
