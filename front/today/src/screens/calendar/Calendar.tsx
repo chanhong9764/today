@@ -49,7 +49,6 @@ function Calendar({ navigation }: CalendarNavProp) {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
       <S.CalenderContainer>
         <S.CalenderWrapper>
-          <S.CalendarheaderContainer>
             <CalendarHeader
               month={month}
               year={year}
@@ -59,10 +58,7 @@ function Calendar({ navigation }: CalendarNavProp) {
               moveToPreviousMonth={moveToPreviousMonth}
               moveToSpecificYearAndMonth={moveToSpecificYearAndMonth}
             />
-          </S.CalendarheaderContainer>
-          <S.CalendarBodyContainer>
             <CalendarBody month={month} year={year} date={date} navigation={navigation} />
-          </S.CalendarBodyContainer>
         </S.CalenderWrapper>
       </S.CalenderContainer>
     </KeyboardAvoidingView>

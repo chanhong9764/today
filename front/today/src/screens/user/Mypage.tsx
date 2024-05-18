@@ -92,7 +92,7 @@ function Mypage() {
           </S.MyInfo>
 
           <S.MyPageSubTitle>
-            <S.PointWord>{memberInfo?.nickName}</S.PointWord>님의 성격 유형은
+            <S.PointWord>{memberInfo?.nickName}</S.PointWord>님의 MBTI
           </S.MyPageSubTitle>
           <S.Line />
           <S.MBTITitle>
@@ -104,7 +104,7 @@ function Mypage() {
             <Text>일기를 작성해주시면 성향을 분석해드려요!</Text>
           )}
           <S.MyPageSubTitle>
-            <S.PointWord>{memberInfo?.nickName}</S.PointWord>님의 {month}월 감정은
+            <S.PointWord>{memberInfo?.nickName}</S.PointWord>님의 {month}월 감정
           </S.MyPageSubTitle>
           <S.Line />
           {analysisData ? (

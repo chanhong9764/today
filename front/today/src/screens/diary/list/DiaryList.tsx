@@ -23,6 +23,7 @@ function DiaryList({ navigation }: any) {
   const [page, setPage] = useState(-1);
   const [loading, setLoading] = useState<boolean>(false);
   const isFirstRender = useRef(true);
+  const [reloadFlag, setReloadFlag] = useState(false);
 
   // 전체 다이어리 조회 => 페이지 변환 시
   function getData() {
@@ -50,7 +51,6 @@ function DiaryList({ navigation }: any) {
   useFocusEffect(
     useCallback(() => {
       if (navigation.getState().routes[0].params !== undefined) {
-        // console.log(navigation.getState().routes[0].params)
         if(navigation.getState().routes[0].params.screen !== "SelectEmotion"){ 
           navigation.push(navigation.getState().routes[0].params.screen, { diaryId: navigation.getState().routes[0].params.diaryId });
         } else {
@@ -58,7 +58,6 @@ function DiaryList({ navigation }: any) {
         }
         navigation.getState().routes[0].params = undefined;
       }
-      setPage(-1);
       setData({ content: [] });
       setPage(0);
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
@@ -77,13 +76,13 @@ function DiaryList({ navigation }: any) {
     } else {
       getData();
     }
-  }, [page]);
+  }, [page, reloadFlag]);
 
   useEffect(() => {
     if (notices && notices.length > 0) {
-      setPage(-1);
       setData({ content: [] });
       setPage(0);
+      setReloadFlag(prev => !prev)
     }
   }, [notices]);
 

@@ -22,13 +22,12 @@ interface DiaryDetailProp {
 function DiaryDetail({ navigation, route }: any) {
   const [diary, setDiary] = useState<DiaryData | undefined>();
   const viewShotRef = useRef(null);
-  console.log(route);
+
   const { diaryId } = route.params;
 
   useEffect(() => {
     Diarys.getSingleDiary(diaryId)
       .then(response => {
-        console.log(response.data);
         setDiary(response.data);
       })
       .catch(error => {
@@ -77,7 +76,7 @@ function DiaryDetail({ navigation, route }: any) {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}  showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <SaveButton viewShotRef={viewShotRef} />
         <View style={styles.rightIcons}>
@@ -86,7 +85,6 @@ function DiaryDetail({ navigation, route }: any) {
         </View>
       </View>
       <Box style={{ marginTop: -25, padding: 20 }}>
-        <ScrollView>
           <ViewShot
             ref={viewShotRef}
             options={{ format: 'jpg', quality: 0.9 }}
@@ -94,9 +92,8 @@ function DiaryDetail({ navigation, route }: any) {
             <DetailHeader diary={diary} />
             <DetailContent diary={diary} />
           </ViewShot>
-        </ScrollView>
       </Box>
-    </View>
+    </ScrollView>
   );
 }
 
