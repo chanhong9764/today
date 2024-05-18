@@ -27,9 +27,6 @@ export function DiaryCard({ item, onPressPatch, backgroundColor, starIcon, navig
       case 0:
         return (
           <S.DefaultImage>
-            <S.IconContainer>
-              <Icon name={starIcon} size={35} color={'pink'} onPress={onPressPatch} />
-            </S.IconContainer>
             <LottieView
               source={require('../../../../assets/lotties/loading.json')}
               autoPlay

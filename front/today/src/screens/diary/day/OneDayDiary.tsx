@@ -78,7 +78,7 @@ function OneDayDiary({ navigation, route }: OneDayDiaryProp) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fcfcfc' }}>
       <DateFilter date={date} setDate={setDate} />
-      {dailyDiaryData && dailyDiaryData.length > 0 &&<View style={{ alignItems: 'center', paddingBottom: 20 }}>
+      {dailyDiaryData && dailyDiaryData.filter((item) => item.status !== 0).length > 0 &&<View style={{ alignItems: 'center', paddingBottom: 20 }}>
         <CommonButton content="오늘의 분석결과" onPress={() => setOpenAnalysis(!openAnalysis)} />
       </View>}
       {dailyDiaryData && dailyDiaryData.length > 0 ? (

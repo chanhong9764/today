@@ -57,6 +57,7 @@ function DiaryList({ navigation }: any) {
         }
         navigation.getState().routes[0].params = undefined;
       }
+      console.log(page)
       setPage(-1);
       setData({ content: [] });
       setPage(0);

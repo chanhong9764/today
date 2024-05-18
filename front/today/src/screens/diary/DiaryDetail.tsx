@@ -28,7 +28,6 @@ function DiaryDetail({ navigation, route }: any) {
   useEffect(() => {
     Diarys.getSingleDiary(diaryId)
       .then(response => {
-        console.log(response.data);
         setDiary(response.data);
       })
       .catch(error => {

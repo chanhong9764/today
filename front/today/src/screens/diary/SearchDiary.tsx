@@ -6,7 +6,7 @@ import * as S from './style';
 
 interface SearchDiaryProp {
   navigation: {
-    push: (arg0: string, arg1?: { diaryId: number }) => void;
+    navigate: any;
   };
   route: { params: { searchData: SearchData[] } };
 }
@@ -19,7 +19,7 @@ function SearchDiary({ navigation, route }: SearchDiaryProp) {
     return (
       <DiaryCard
         item={item}
-        onPress={() => navigation.push('DiaryDetail', { diaryId: item.id })}
+        onPress={() => navigation.navigate('DiaryNav', { screen: 'DiaryList', params: { screen: 'DiaryDetail', diaryId: item.id }})}
         backgroundColor="white"
       />
     );
