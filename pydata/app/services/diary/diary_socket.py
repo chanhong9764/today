@@ -15,7 +15,7 @@ def make_image(data):
     # 핵심 단어 추출
     keyword = diary_keyword(translate_prompt)
     # 이미지 추출 및 저장
-    images_url = create_image(keyword)
+    images_url = create_image(data.feel, keyword)
     # 감정 분석 
     emotion_result = emotion(data.content)
     # MBTI 분석
@@ -34,6 +34,7 @@ def make_image(data):
                 happiness=emotion_result["happiness"],
                 sadness=emotion_result["sadness"],
                 surprise=emotion_result["surprise"],
-                mbti=mbti_result
+                mbti=mbti_result,
+                count=data.count
             ).model_dump(mode='dict')
 
