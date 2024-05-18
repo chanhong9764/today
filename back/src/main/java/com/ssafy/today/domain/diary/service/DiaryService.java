@@ -43,7 +43,7 @@ public class DiaryService {
             Integer count = diaryRepository.countByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay)+1;
             save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, false, count));
         }else{
-            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, true, 1));
+            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, false, 1));
         }
         return DiaryResponse.fromEntity(save);
     }
@@ -102,6 +102,13 @@ public class DiaryService {
         Diary diary = diaryRepository.findById(diaryRequest.getId()).orElseThrow(
                 () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
         diary.updateImg(diaryRequest.getImgUrl());
+        LocalDate today = diary.getCreatedAt().toLocalDate();
+        LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
+
+        if(!diaryRepository.existsByImportantIsTrueAndMemberIdAndCreatedAtBetween(diary.getMember().getId(),startOfDay,endOfDay)){
+            diary.updateImportant(true);
+        }
         diary.updateStatus(2);
     }
 

@@ -6,3 +6,5 @@ clf_loaded = {}
 mbti = {}
 openai_client = {}
 socket = {}
+producer = {}
+consumer = {}

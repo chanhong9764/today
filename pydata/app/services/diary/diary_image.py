@@ -6,7 +6,7 @@ import os
 import uuid
 import io
 
-def create_image(prompt):
+def create_image(emotion, prompt):
     # 모델 설정
     base = app.utils.global_vars.base
     s3 = app.utils.global_vars.s3
@@ -28,8 +28,8 @@ def create_image(prompt):
     for i in range(4):
         base.set_adapters(lora_types[i])
         image = base(
-            prompt=types[i] + prompt,
-            guidance_scale=7,
+            prompt=types[i] + emotion + prompt,
+            #guidance_scale=7,
             negative_prompt=negative_prompt,
             num_inference_steps=n_steps,
         ).images[0]
