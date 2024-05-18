@@ -12,3 +12,5 @@ openai==1.25.0
 pydantic===2.7.1
 peft==0.10.0
 websockets==12.0
+stomper==0.4.3
+kafka-python==2.0.2

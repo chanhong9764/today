@@ -292,7 +292,8 @@ IDF (Inverse Document Frequency): 특정 단어가 전체 문서 집합에서 �
 
 - `김수환(팀짱)` : Elastic-Search | 분석AI | 발표
 - `한성현` : SPRING
-  **AI**
+
+**AI**
 
 - `박찬홍` : AI | FRONT-END | 설문알리미
 
