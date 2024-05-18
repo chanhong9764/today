@@ -102,6 +102,13 @@ public class DiaryService {
         Diary diary = diaryRepository.findById(diaryRequest.getId()).orElseThrow(
                 () -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
         diary.updateImg(diaryRequest.getImgUrl());
+        LocalDate today = diary.getCreatedAt().toLocalDate();
+        LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
+
+        if(!diaryRepository.existsByImportantIsTrueAndMemberIdAndCreatedAtBetween(diary.getMember().getId(),startOfDay,endOfDay)){
+            diary.updateImportant(true);
+        }
         diary.updateStatus(2);
     }
 
@@ -121,13 +128,6 @@ public class DiaryService {
                 diaryContentCreated.getSadness(),
                 diaryContentCreated.getSurprise()
         );
-        LocalDate today = diaryContentCreated.getCreatedAt().toLocalDate();
-        LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
-        LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
-
-        if(!diaryRepository.existsByImportantIsTrueAndMemberIdAndCreatedAtBetween(diaryContentCreated.getMemberId(),startOfDay,endOfDay)){
-            diary.updateImportant(true);
-        }
         diary.updateStatus(1);
     }
 
