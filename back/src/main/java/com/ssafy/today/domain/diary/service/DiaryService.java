@@ -35,7 +35,7 @@ public class DiaryService {
 
         Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new GlobalException(ErrorCode.MEMBER_NOT_FOUND));
-        LocalDate today = diaryContentRequest.getCreatedAt().toLocalDate();
+        LocalDate today = LocalDate.now();
         LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
         LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
 
