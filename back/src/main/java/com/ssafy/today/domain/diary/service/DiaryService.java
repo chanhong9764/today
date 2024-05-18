@@ -35,7 +35,7 @@ public class DiaryService {
 
         Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new GlobalException(ErrorCode.MEMBER_NOT_FOUND));
-        LocalDate today = LocalDate.now();
+        LocalDate today = diaryContentRequest.getCreatedAt().toLocalDate();
         LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
         LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
 
@@ -43,7 +43,7 @@ public class DiaryService {
             Integer count = diaryRepository.countByMemberIdAndCreatedAtBetween(memberId, startOfDay, endOfDay)+1;
             save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, false, count));
         }else{
-            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, true, 1));
+            save = diaryRepository.save(DiaryContentRequest.toEntity(diaryContentRequest, member, false, 1));
         }
         return DiaryResponse.fromEntity(save);
     }
@@ -121,6 +121,13 @@ public class DiaryService {
                 diaryContentCreated.getSadness(),
                 diaryContentCreated.getSurprise()
         );
+        LocalDate today = diaryContentCreated.getCreatedAt().toLocalDate();
+        LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
+
+        if(!diaryRepository.existsByImportantIsTrueAndMemberIdAndCreatedAtBetween(diaryContentCreated.getMemberId(),startOfDay,endOfDay)){
+            diary.updateImportant(true);
+        }
         diary.updateStatus(1);
     }
 
