@@ -6,14 +6,14 @@ const center = css`
   align-items: center;
 `;
 
-export const CalendarBodyContainer = styled.ScrollView`
-`;
+export const CalendarBodyContainer = styled.ScrollView``;
 
 export const CalendarHeaderContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin: 15px 0;
+  flex: 8;
 `;
 
 export const CalendarTitle = styled.Text`
@@ -65,10 +65,25 @@ export const ImageContainer = styled.TouchableOpacity`
   })}
 `;
 
+export const EmotionContainer = styled.TouchableOpacity`
+  width: 95%;
+  height: 95%;
+  border-radius: 3px;
+  padding: 5px;
+
+  ${center};
+`;
+
 export const ImageBackgroundStyled = styled.ImageBackground`
   ${center}
   width: 100%;
   height: 100%;
+`;
+
+export const EmotionBackgroundStyled = styled.Image`
+  ${center};
+  box-shadow: 1px 1px 1px gray;
+  width: 100%;
 `;
 
 export const DateText = styled.Text<{ textColor: string }>`

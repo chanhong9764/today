@@ -1,6 +1,7 @@
 // Calendar.tsx
 import React, { useState } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, Switch, View } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import CalendarBody from '../../components/calendar/CalendarBody';
 import CalendarHeader from '../../components/calendar/CalendarHeader';
 import * as S from './style';
@@ -12,11 +13,15 @@ interface CalendarNavProp {
 }
 
 function Calendar({ navigation }: CalendarNavProp) {
+  const theme = useTheme();
   const DATE = new Date();
   const YEAR = DATE.getFullYear();
   const MONTH = DATE.getMonth() + 1;
   const DAY = DATE.getDate();
-  const today = { year: YEAR, month: MONTH, date: DAY };
+
+  // 캘린더 토글
+  // true: feel, false: img
+  const [toggleCalendar, setToggleCalendar] = useState<boolean>(false);
 
   const [month, setMonth] = useState(MONTH);
   const [year, setYear] = useState(YEAR);
@@ -49,6 +54,7 @@ function Calendar({ navigation }: CalendarNavProp) {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
       <S.CalenderContainer>
         <S.CalenderWrapper>
+          <View style={{ flexDirection: 'row' }}>
             <CalendarHeader
               month={month}
               year={year}
@@ -58,7 +64,23 @@ function Calendar({ navigation }: CalendarNavProp) {
               moveToPreviousMonth={moveToPreviousMonth}
               moveToSpecificYearAndMonth={moveToSpecificYearAndMonth}
             />
-            <CalendarBody month={month} year={year} date={date} navigation={navigation} />
+            <Switch
+              trackColor={{ false: '#767577', true: theme.colors.middlePink }}
+              thumbColor={toggleCalendar ? theme.colors.mainPink : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => setToggleCalendar(!toggleCalendar)}
+              value={toggleCalendar}
+              style={{ flex: 3 }}
+            />
+          </View>
+          <CalendarBody
+            month={month}
+            year={year}
+            date={date}
+            navigation={navigation}
+            toggleCalendar={toggleCalendar}
+            setToggleCalendar={setToggleCalendar}
+          />
         </S.CalenderWrapper>
       </S.CalenderContainer>
     </KeyboardAvoidingView>
