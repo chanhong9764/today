@@ -4,21 +4,24 @@ import { useCallback, useEffect, useState } from 'react';
 import { Calendars } from '../../apis/CalendarApi';
 import { dayType } from '../../types/calendartype/calendar';
 import { CalendarData } from '../../types/datatype';
+import { EmotionFiles } from '../diary/write/Emotions';
 import * as S from './style';
 
 type CalendarBodyProp = {
   year: number;
   month: number;
   date: number;
+  toggleCalendar: boolean;
+  setToggleCalendar: (toggleCalendar: boolean) => void;
   navigation: {
     push: (arg0: string, arg1?: { selectedDate: string }) => void;
   };
 };
 const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
+const CalendarBody = ({ month, year, date, toggleCalendar, setToggleCalendar, navigation }: CalendarBodyProp) => {
   // 날짜별 이미지 URL 매핑 객체 생성
-  const [imageUrlByDate, setImageUrlByDate] = useState<{ [key: string]: string }>({});
+  const [imageUrlByDate, setImageUrlByDate] = useState<{ [key: string]: { imageUrl: string; emotion: string } }>({});
   const TodayDate = year + '-' + ('00' + month.toString()).slice(-2) + '-' + ('00' + date.toString()).slice(-2);
   const [diaryData, setDiaryData] = useState<CalendarData[]>();
 
@@ -28,13 +31,17 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
       Calendars.getCalendars(TodayDate)
         .then(response => {
           setDiaryData(response.data);
-          
+
           // { [날짜] : 이미지 } 배열 생성
-          const newImageUrlByDate: { [key: string]: string } = {};
+          const newImageUrlByDate: { [key: string]: { imageUrl: string; emotion: string } } = {};
           response.data?.forEach(diary => {
-            if (diary.imgUrl && diary.createdAt) {
+            if (diary.imgUrl && diary.createdAt && diary.feel) {
               const formattedDate = diary.createdAt.split('T')[0];
-              newImageUrlByDate[formattedDate] = diary.imgUrl;
+              if (!newImageUrlByDate[formattedDate]) {
+                newImageUrlByDate[formattedDate] = { imageUrl: '', emotion: '' };
+              }
+              newImageUrlByDate[formattedDate].imageUrl = diary.imgUrl;
+              newImageUrlByDate[formattedDate].emotion = diary.feel;
             }
           });
           setImageUrlByDate(newImageUrlByDate);
@@ -134,11 +141,17 @@ const CalendarBody = ({ month, year, date, navigation }: CalendarBodyProp) => {
             return (
               <S.DayBoxContainer key={index} onPress={() => navigateToDay(dateString)}>
                 {imageUrl ? (
-                  <S.ImageContainer onPress={() => navigateToDay(dateString)}>
-                    <S.ImageBackgroundStyled source={{ uri: imageUrl }} imageStyle={{ borderRadius: 3 }}>
-                      <S.DateTextInImg textColor={textColor}>{day}</S.DateTextInImg>
-                    </S.ImageBackgroundStyled>
-                  </S.ImageContainer>
+                  toggleCalendar ? (
+                    <S.EmotionContainer onPress={() => navigateToDay(dateString)}>
+                      <S.EmotionBackgroundStyled source={EmotionFiles[imageUrl.emotion]} resizeMode="contain" />
+                    </S.EmotionContainer>
+                  ) : (
+                    <S.ImageContainer onPress={() => navigateToDay(dateString)}>
+                      <S.ImageBackgroundStyled source={{ uri: imageUrl.imageUrl }} imageStyle={{ borderRadius: 3 }}>
+                        <S.DateTextInImg textColor={textColor}>{day}</S.DateTextInImg>
+                      </S.ImageBackgroundStyled>
+                    </S.ImageContainer>
+                  )
                 ) : (
                   <S.DateText textColor={textColor}>{day}</S.DateText>
                 )}

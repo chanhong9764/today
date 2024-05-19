@@ -23,7 +23,6 @@ export const shadow = css`
 // 마이페이지
 export const MyPage = styled.SafeAreaView`
   flex: 1;
-  background-color: white;
   ${center}
 `;
 
