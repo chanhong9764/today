@@ -1,5 +1,6 @@
 import LottieView from 'lottie-react-native';
 import CommonButton from '../../../common/CommonButton';
+import { useNavigationState } from '../../../contexts/NavigationContext';
 import * as S from './style';
 
 interface RouteList {
@@ -8,16 +9,28 @@ interface RouteList {
 
 interface WaitImageProp {
   navigation: {
-    replace: (arg0: string) => void;
+    reset: any;
+    replace: (arg0: string, arg1?: { screen: string }) => void;
     getState: () => RouteList;
     navigate: any;
   };
 }
 
 function WaitImage({ navigation }: WaitImageProp) {
-  
+  const { currentTab, setCurrentTab } = useNavigationState();
   function onPressGoHome() {
-    navigation.navigate("DiaryList");
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: 'CalendarNav',
+          state: {
+            routes: [{ name: 'Calendar' }],
+          },
+        },
+      ],
+    });
+    setCurrentTab('Calendar');
   }
   return (
     <S.WaitImage>

@@ -2,19 +2,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Notifications from 'expo-notifications';
 import { useContext, useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
 import { Notices } from '../apis/NoticeApi';
 import { IsLoginContext, useIsLoginState } from '../contexts/IsLoginContext';
 import { useDispatchContext } from '../contexts/NoticeContext';
 import LoginScreen from '../screens/LoginScreen';
+import MainScreen from '../screens/MainScreen';
 import Intro1 from '../screens/intro/Intro1';
 import Intro2 from '../screens/intro/Intro2';
 import Intro3 from '../screens/intro/Intro3';
 import KakaoLogin from '../screens/user/KakaoLogin';
-import NotificationScreen from '../screens/user/notification/NotificationScreen';
 import { NoticeData } from '../types/datatype';
 import { RootStackParam } from '../types/navigatortype/stack';
-import MainTab from './MainTab';
 
 const Stack = createNativeStackNavigator<RootStackParam>();
 
@@ -70,10 +68,6 @@ function RootStack() {
             updatedAt: convertedResponse.updatedAt,
           });
         });
-
-        // return () => {
-        //   notificationSubscription.remove(); // 알림 리스너 제거
-        // };
       } catch (error) {
         console.error('Error initializing app: ', error);
       }
@@ -85,21 +79,7 @@ function RootStack() {
   return (
     <Stack.Navigator>
       {isLogin ? (
-        <Stack.Group>
-          <Stack.Screen name="MainTab" component={MainTab} options={{ headerShown: false }} />
-          <Stack.Screen
-            name="NotificationScreen"
-            component={NotificationScreen}
-            options={{
-              headerTitleAlign: 'center',
-              headerTitle: ({ children }) => (
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                  <Text style={{ fontFamily: 'title', fontSize: 38 }}>알림</Text>
-                </View>
-              ),
-            }}
-          />
-        </Stack.Group>
+        <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
       ) : (
         <Stack.Group>
           <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />

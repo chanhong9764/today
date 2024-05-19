@@ -52,8 +52,8 @@ export default function App() {
     return null;
   }
   return (
-    <NativeBaseProvider>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <NativeBaseProvider>
         <IsLoginProvider>
           <NoticeProvider>
             <NavigationContainer linking={linking}>
@@ -61,7 +61,7 @@ export default function App() {
             </NavigationContainer>
           </NoticeProvider>
         </IsLoginProvider>
-      </ThemeProvider>
-    </NativeBaseProvider>
+      </NativeBaseProvider>
+    </ThemeProvider>
   );
 }

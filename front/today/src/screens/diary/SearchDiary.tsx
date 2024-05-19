@@ -6,7 +6,7 @@ import * as S from './style';
 
 interface SearchDiaryProp {
   navigation: {
-    navigate: any;
+    push: (arg0: string, arg1?: { screen: string; params: { diaryId: number } }) => void;
   };
   route: { params: { searchData: SearchData[] } };
 }
@@ -16,13 +16,14 @@ function SearchDiary({ navigation, route }: SearchDiaryProp) {
 
   // 다이어리 렌더 함수
   function renderDiary({ item }: { item: SearchData }) {
-    return (
-      <DiaryCard
-        item={item}
-        onPress={() => navigation.navigate('DiaryNav', { screen: 'DiaryList', params: { screen: 'DiaryDetail', diaryId: item.id }})}
-        backgroundColor="white"
-      />
-    );
+    function onPressSearchDiary() {
+      if (item.imgUrl === null) {
+        navigation.push('DiaryNav', { screen: 'SelectImage', params: { diaryId: item.id } });
+      } else {
+        navigation.push('DiaryNav', { screen: 'DiaryDetail', params: { diaryId: item.id } });
+      }
+    }
+    return <DiaryCard item={item} onPress={onPressSearchDiary} backgroundColor="white" />;
   }
 
   // 빈배열일 경우

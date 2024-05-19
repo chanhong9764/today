@@ -13,9 +13,9 @@ async function checkLogin() {
 export const linking = {
   prefixes: [prefix],
   config: {
-    initialRouteName: 'MainTab',
+    initialRouteName: 'MainScreen',
     screens: {
-      MainTab: {
+      MainScreen: {
         initialRouteName: 'DiaryNav',
         screens: {
           DiaryNav: {
@@ -41,8 +41,8 @@ export const linking = {
       return url;
     }
 
-    // const response = await Notifications.getLastNotificationResponseAsync();
-    // return response?.notification.request.content.data.url;
+    const response = await Notifications.getLastNotificationResponseAsync();
+    return response?.notification.request.content.data.url;
   },
 
   subscribe(listener: any) {

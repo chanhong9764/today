@@ -2,6 +2,7 @@
 import { Center, Divider, HStack, Image, VStack } from 'native-base';
 import React from 'react';
 import { View, useWindowDimensions } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import { DiaryData } from '../../../types/datatype';
 import { EmotionFiles } from '../write/Emotions';
 
@@ -18,23 +19,26 @@ const formatDate = (date: Date) => {
 };
 
 const DetailHeader = ({ diary }: DetailHeaderProps) => {
+  const theme = useTheme();
+  const mainColor = theme.colors.mainPink;
   const createdAt = diary.createdAt ? new Date(diary.createdAt) : undefined;
 
-  const { height } = useWindowDimensions();
-  const imageHeight = height * 0.33; // 전체 화면의 35% 높이로 설정
+  const { width } = useWindowDimensions();
+  const imageWidth = width * 0.85;
 
   return (
     <VStack
-      borderColor="#FE8B8B"
+      borderColor={mainColor}
       borderWidth={3}
       borderRadius={8}
       overflow="hidden"
       borderBottomRadius={0}
-      borderBottomWidth={0}>
+      borderBottomWidth={0}
+      width={imageWidth}>
       <HStack
-        divider={<Divider borderWidth={1} borderColor="#FE8B8B" bg="#FE8B8B" />}
+        divider={<Divider borderWidth={1} borderColor={mainColor} bg={mainColor} />}
         borderBottomWidth={3}
-        borderBottomColor="#FE8B8B">
+        borderBottomColor={mainColor}>
         <VStack flex={1}>
           <Center
             height="50px"
@@ -42,7 +46,7 @@ const DetailHeader = ({ diary }: DetailHeaderProps) => {
               fontSize: '18px',
               fontFamily: 'base',
             }}
-            style={{ borderBottomWidth: 3, borderColor: '#FE8B8B' }}>
+            style={{ borderBottomWidth: 3, borderColor: mainColor }}>
             날짜
           </Center>
           <Center
@@ -61,24 +65,24 @@ const DetailHeader = ({ diary }: DetailHeaderProps) => {
               fontSize: '18px',
               fontFamily: 'base',
             }}
-            style={{ borderBottomWidth: 3, borderColor: '#FE8B8B' }}>
+            style={{ borderBottomWidth: 3, borderColor: mainColor }}>
             오늘의 기분
           </Center>
           <Center height="60px">
             {diary.feel ? (
-              <Image source={EmotionFiles[diary.feel]} alt="emotion" style={{ width: 40, height: 40 }} />
+              <Image source={EmotionFiles[diary.feel]} alt="emotion" style={{ width: 38, height: 38 }} />
             ) : (
               'Unknown'
             )}
           </Center>
         </VStack>
       </HStack>
-      <View style={{ height: imageHeight, width: '100%' }}>
+      <View style={{ width: imageWidth, height: imageWidth }}>
         <Image
           source={{ uri: diary.imgUrl }}
           alt="drawing_diary"
           style={{ width: '100%', height: '100%' }}
-          resizeMode="stretch"
+          resizeMode="contain"
         />
       </View>
     </VStack>

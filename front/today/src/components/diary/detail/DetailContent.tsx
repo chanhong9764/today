@@ -11,8 +11,8 @@ interface DetailContentProps {
 }
 
 const DetailContent = ({ diary }: DetailContentProps) => {
-  const { height } = useWindowDimensions();
-  const contentHeight = height * 0.3; // 전체 화면의 35% 높이로 설정
+  const { width } = useWindowDimensions();
+  const imageWidth = width * 0.85; // 전체 화면의 35% 높이로 설정
 
   return (
     <VStack
@@ -22,7 +22,7 @@ const DetailContent = ({ diary }: DetailContentProps) => {
       borderBottomColor="#FE8B8B"
       borderRadius={8}
       borderTopRadius={0}
-      height={contentHeight}>
+      width={imageWidth}>
       <TextContent>{diary.content}</TextContent>
     </VStack>
   );
@@ -32,7 +32,7 @@ const TextContent = styled.Text`
   text-align: justify;
   font-family: title;
   font-size: 32px;
-  line-height: 36px;
+  line-height: 32px;
   letter-spacing: 0.3px; // 글자 간격
 `;
 
