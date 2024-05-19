@@ -209,12 +209,12 @@ public class AnalysisService {
                 analysis.decreaseType(c);
             }
             analysis.subtractEmotions(
-                    analysis.getAngry(),
-                    analysis.getDisgust(),
-                    analysis.getFear(),
-                    analysis.getHappiness(),
-                    analysis.getSadness(),
-                    analysis.getSurprise()
+                    diary.getAngry(),
+                    diary.getDisgust(),
+                    diary.getFear(),
+                    diary.getHappiness(),
+                    diary.getSadness(),
+                    diary.getSurprise()
             );
             analysis.decreaseCount();
         }
