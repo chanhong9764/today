@@ -3,7 +3,8 @@ import styled from 'styled-components/native';
 export const BottomNavContainer = styled.View`
   flex-direction: row;
   height: 65px;
-  border-top: black solid 1px;
+  border-top-width: 1px;
+  border-color: #EAEAEA;
   justify-content: space-around;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.background};

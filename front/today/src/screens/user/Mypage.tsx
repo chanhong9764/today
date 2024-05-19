@@ -95,11 +95,13 @@ function Mypage() {
             <S.PointWord>{memberInfo?.nickName}</S.PointWord>님의 MBTI
           </S.MyPageSubTitle>
           <S.Line />
-          <S.MBTITitle>
-            <S.MBTItext>{MBTI}</S.MBTItext> 와 유사하네요
-          </S.MBTITitle>
           {analysisData ? (
-            <Pyramid analysisData={analysisData} width={280} height={250} />
+            <>
+              <Pyramid analysisData={analysisData} width={280} height={250} />
+              <S.MBTITitle>
+                <S.MBTItext>{MBTI}</S.MBTItext> 와 유사하네요
+              </S.MBTITitle>
+            </>
           ) : (
             <Text>일기를 작성해주시면 성향을 분석해드려요!</Text>
           )}
