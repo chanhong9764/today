@@ -43,7 +43,7 @@ function RootStack() {
         }
 
         // 3. 알림 오면 받아서 context에 저장
-        Notifications.addNotificationReceivedListener(notification => {
+        await Notifications.addNotificationReceivedListener(notification => {
           const response = notification.request.content.data;
           const convertedResponse: NoticeData = {
             noticeId: response.noticeId,
