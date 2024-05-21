@@ -3,7 +3,7 @@
     "name": "당일",
     "slug": "today",
     "scheme": "today",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -20,7 +20,7 @@
     "ios": {
       "bundleIdentifier": "com.dangil.today",
       "supportsTablet": true,
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.2"
     },
     "android": {
       "permissions": ["WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE", "INTERNET", "ACCESS_NETWORK_STATE"],
@@ -30,7 +30,7 @@
       },
       "package": "com.dangil.today",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 1
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"
